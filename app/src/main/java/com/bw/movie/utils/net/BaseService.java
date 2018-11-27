@@ -1,4 +1,4 @@
-package com.bw.movie.net;
+package com.bw.movie.utils.net;
 
 
 import java.util.Map;

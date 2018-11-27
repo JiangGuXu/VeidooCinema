@@ -1,7 +1,7 @@
 package com.bw.movie;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,9 +9,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //小黑不许测试--2018年11月27日 10:42:01
-        //Cbhhhhhh
-        //Cbhhhhhh//Cbhhhhhh
-        //Cbhhhhhh//Cbhhhhhh
+
+
     }
 }
