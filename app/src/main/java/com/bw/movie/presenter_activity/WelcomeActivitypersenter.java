@@ -1,14 +1,17 @@
 package com.bw.movie.presenter_activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.MainActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 
@@ -20,6 +23,7 @@ public class WelcomeActivitypersenter extends AppDelage {
     private static final String LOG = "GuideActivity";
     private ViewPager viewPager;
     private List<Integer> imageIDList=new ArrayList<>();
+    private Button mExperience;
 
     @Override
     public int getLayoutId() {
@@ -32,6 +36,13 @@ public class WelcomeActivitypersenter extends AppDelage {
         //初始化引导数据
         initGuideData();
         SharedPreferencesUtils.putBoolean(context,"isfrist",true);
+        mExperience = get(R.id.welcome_experience);
+        mExperience.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, MainActivity.class));
+            }
+        });
         viewPager = (ViewPager) get(R.id.welcome_pager);
         viewPager.setAdapter(new GuideAdapter());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -42,7 +53,11 @@ public class WelcomeActivitypersenter extends AppDelage {
 
             @Override
             public void onPageSelected(int position) {
-                Log.i("Guide", "监听改变" + position);
+                if(imageIDList.size()-1==position){
+                    mExperience.setVisibility(View.VISIBLE);
+                }else{
+                    mExperience.setVisibility(View.GONE);
+                }
             }
 
             @Override

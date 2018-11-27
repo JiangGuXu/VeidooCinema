@@ -27,7 +27,7 @@ public class SplashActivitypersenter extends AppDelage {
     @Override
     public void initData() {
         super.initData();
-        mSecibds = get(R.id.seconds_splash);
+        mSecibds = get(R.id.splash_seconds);
         myHanlder.sendEmptyMessageDelayed(0, 1000);
     }
 
