@@ -1,0 +1,73 @@
+Index: app/src/main/java/com/bw/movie/Activitypersenter/SplashActivitypersenter.java
+===================================================================
+--- app/src/main/java/com/bw/movie/Activitypersenter/SplashActivitypersenter.java	(date 1543303012000)
++++ app/src/main/java/com/bw/movie/presenter_activity/SplashActivitypersenter.java	(date 1543303185992)
+@@ -1,4 +1,4 @@
+-package com.bw.movie.Activitypersenter;
++package com.bw.movie.presenter_activity;
+ 
+ import android.content.Context;
+ import android.content.Intent;
+@@ -6,9 +6,9 @@
+ import android.os.Message;
+ import android.widget.TextView;
+ 
+-import com.bw.movie.Activity.MainActivity;
+-import com.bw.movie.Activity.SplashActivity;
+-import com.bw.movie.Activity.WelcomeActivity;
++import com.bw.movie.activity.MainActivity;
++import com.bw.movie.activity.SplashActivity;
++import com.bw.movie.activity.WelcomeActivity;
+ import com.bw.movie.R;
+ import com.bw.movie.mvp.view.AppDelage;
+ import com.bw.movie.utils.net.SharedPreferencesUtils;
+Index: app/src/main/java/com/bw/movie/MainActivity.java
+===================================================================
+--- app/src/main/java/com/bw/movie/MainActivity.java	(date 1543303012000)
++++ app/src/main/java/com/bw/movie/MainActivity.java	(date 1543303012000)
+@@ -1,13 +0,0 @@
+-package com.bw.movie;
+-
+-import android.os.Bundle;
+-import android.support.v7.app.AppCompatActivity;
+-
+-public class MainActivity extends AppCompatActivity {
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_main);
+-    }
+-}
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(date 1543303012000)
++++ app/src/main/AndroidManifest.xml	(date 1543303492037)
+@@ -12,21 +12,17 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-<<<<<<< Updated upstream
+         <activity android:name=".activity.MainActivity">
+-=======
+-        <activity android:name=".Activity.MainActivity">
+ 
+         </activity>
+-        <activity android:name=".Activity.SplashActivity">
+->>>>>>> Stashed changes
++        <activity android:name=".activity.SplashActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".Activity.WelcomeActivity"></activity>
++        <activity android:name=".activity.WelcomeActivity"></activity>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file

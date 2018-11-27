@@ -1,4 +1,4 @@
-package com.bw.movie.Activitypersenter;
+package com.bw.movie.presenter_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
 
-import com.bw.movie.Activity.MainActivity;
-import com.bw.movie.Activity.SplashActivity;
-import com.bw.movie.Activity.WelcomeActivity;
+import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.SplashActivity;
+import com.bw.movie.activity.WelcomeActivity;
 import com.bw.movie.R;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.SharedPreferencesUtils;

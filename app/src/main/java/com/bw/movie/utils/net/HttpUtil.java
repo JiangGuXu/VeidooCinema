@@ -82,6 +82,7 @@ public class HttpUtil {
         observable = baseService.part(url, map, part);
         setObservable();
         return this;
+
     }
 
     //被观察者订阅观察者
