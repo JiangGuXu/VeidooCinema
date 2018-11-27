@@ -6,11 +6,15 @@ import com.bw.movie.R;
 import com.bw.movie.mvp.view.AppDelage;
 
 /*
-* 2018年11月27日 15:03:25
-* 焦浩康
-* 创建了基本的这个fragment
-* */
+ * 我的页面presenter
+ * 2018年11月27日 15:18:42
+ * 焦浩康
+ * 创建了基本的这个presenter
+ * */
 public class MyFragmentPresenter extends AppDelage {
+
+    private Context context;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_my;
@@ -18,6 +22,12 @@ public class MyFragmentPresenter extends AppDelage {
 
     @Override
     public void getContext(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
 
     }
 }
