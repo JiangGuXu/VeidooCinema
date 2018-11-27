@@ -7,6 +7,6 @@
     <string name="welcome_page3_title">净化你的灵魂</string>
     <string name="welcome_page4_title1">八维西东通信学院作品</string>
     <string name="welcome_page4_title2">带你开启一段美好的电影之旅</string>
-
+    <string name="my_name_text">请登录</string>
     <string name="welcome_button_text">立即体验</string>
 </resources>

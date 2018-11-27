@@ -27,7 +27,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_film_selected" />
+                android:background="@drawable/com_icon_film_selected" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -41,7 +41,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_cinema_default" />
+                android:background="@drawable/com_icon_cinema_default" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,7 +55,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_my_default" />
+                android:background="@drawable/com_icon_my_default" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
