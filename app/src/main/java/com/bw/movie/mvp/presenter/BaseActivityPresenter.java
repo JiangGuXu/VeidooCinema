@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.bw.movie.mvp.view.AppDelage;
 /**
- * 赵瑜峰
- * 2018年11月27日 11:58:01
+ *
+ * author:赵瑜峰
+ * date:2018/11/27
  */
 public abstract class BaseActivityPresenter<T extends AppDelage> extends AppCompatActivity {
 
     protected T daleagt;
-
     public abstract Class<T> getClassPresenter();
     public BaseActivityPresenter(){
         try {
