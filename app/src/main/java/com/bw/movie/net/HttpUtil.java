@@ -49,14 +49,7 @@ public class HttpUtil {
                 .build();
         baseService = retrofit.create(BaseService.class);
     }
-    private static HttpUtil retrofitUtils;
-    //单利模式
-    public static HttpUtil getRetrofitUtils() {
-        if(retrofitUtils==null){
-            retrofitUtils=new HttpUtil();
-        }
-        return retrofitUtils;
-    }
+
     //get请求
     public HttpUtil get(String url, Map<String,String> map){
         if(map==null){
