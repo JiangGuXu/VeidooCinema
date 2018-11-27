@@ -43,7 +43,7 @@ public class HttpUtil {
             }
         }).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.wanandroid.com/")
+                .baseUrl("http://172.17.8.100/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
