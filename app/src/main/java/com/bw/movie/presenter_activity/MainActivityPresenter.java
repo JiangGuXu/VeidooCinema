@@ -78,6 +78,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         list.add(main_img_02);
         list.add(main_img_03);
     }
+
     //设置图片变大时的宽高
     public void setSizeMax(ImageView imageView) {
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
@@ -85,6 +86,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         params.width = 70 * (width / 2) / 160;
         imageView.setLayoutParams(params);
     }
+
     //设置图片变小时的宽高
     public void setSizeMin(ImageView imageView) {
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
@@ -93,6 +95,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         params.width = 55 * (width / 2) / 160;
         imageView.setLayoutParams(params);
     }
+
     //点击切换
     @Override
     public void onClick(View v) {
@@ -102,27 +105,27 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         switch (v.getId()) {
             case R.id.main_img_01:
                 setSizeMax(main_img_01);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_selected);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_default);
+                main_img_01.setImageResource(R.drawable.com_icon_film_selected);
+                main_img_02.setImageResource(R.drawable.com_icon_cinema_default);
+                main_img_03.setImageResource(R.drawable.com_icon_my_default);
                 manager.beginTransaction().show(filmFragment).commit();
                 manager.beginTransaction().hide(myFragment).commit();
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 break;
             case R.id.main_img_02:
                 setSizeMax(main_img_02);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_fault);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_selected);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_default);
+                main_img_01.setImageResource(R.drawable.com_icon_film_fault);
+                main_img_02.setImageResource(R.drawable.com_icon_cinema_selected);
+                main_img_03.setImageResource(R.drawable.com_icon_my_default);
                 manager.beginTransaction().show(cinemaFragment).commit();
                 manager.beginTransaction().hide(myFragment).commit();
                 manager.beginTransaction().hide(filmFragment).commit();
                 break;
             case R.id.main_img_03:
                 setSizeMax(main_img_03);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_fault);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_selected);
+                main_img_01.setImageResource(R.drawable.com_icon_film_fault);
+                main_img_02.setImageResource(R.drawable.com_icon_cinema_default);
+                main_img_03.setImageResource(R.drawable.com_icon_my_selected);
                 manager.beginTransaction().show(myFragment).commit();
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 manager.beginTransaction().hide(filmFragment).commit();

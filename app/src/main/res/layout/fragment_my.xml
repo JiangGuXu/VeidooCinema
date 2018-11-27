@@ -1,10 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--2018年11月27日 15:09:01 焦浩康 基本的创建-->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?><!--2018年11月27日 15:09:01 焦浩康 基本的创建-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_220"
+        android:scaleType="fitXY"
+        android:src="@drawable/my_background" />
+
+
+    <ImageView
+        android:id="@+id/my_remind"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:src="@drawable/my_icon_remind_default"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginLeft="@dimen/dp_24"/>
+
+
+    <ImageView
+        android:id="@+id/my_head_icon"
+        android:layout_width="@dimen/dp_72"
+        android:layout_height="@dimen/dp_72"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_70"
+        android:src="@drawable/my_head_icon" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_head_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/my_name_text"
+        android:textColor="@color/colord8d8d8"
+        android:textSize="@dimen/sp_14" />
 
 
 </RelativeLayout>
