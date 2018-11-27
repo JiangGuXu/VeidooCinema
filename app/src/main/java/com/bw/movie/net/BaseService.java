@@ -14,6 +14,7 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 /**
  * 赵瑜峰
+ * 2018年11月27日 11:38:01
  */
 public interface BaseService {
 
