@@ -11,15 +11,16 @@ public class MainActivityPresenter extends AppDelage {
     public int getLayoutId() {
         return R.layout.activity_main;
     }
+
     private Context context;
+
     @Override
     public void getContext(Context context) {
-        this.context=context;
+        this.context = context;
     }
 
     @Override
     public void initData() {
         super.initData();
-
     }
 }

@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
+<<<<<<< Updated upstream
  * author:赵瑜峰
+=======
+ * author:AbnerMing
+>>>>>>> Stashed changes
  * date:2018/10/17
  * 存储工具类
  */
