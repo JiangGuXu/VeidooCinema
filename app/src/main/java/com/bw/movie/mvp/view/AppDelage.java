@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 /**
- * 赵瑜峰
- * 2018年11月27日 11:58:01
+ *
+ * author:赵瑜峰
+ * date:2018/11/27
  */
 public abstract class AppDelage implements IDelage {
 
