@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_48"
 
-        android:id="@+id/film_map"/>
+    <ImageView
+        android:id="@+id/film_map"
+        android:layout_width="wrap_content"
+
+        android:layout_height="@dimen/dp_48" />
 </RelativeLayout>
