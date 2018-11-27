@@ -12,7 +12,6 @@ import com.bw.movie.mvp.view.AppDelage;
 public abstract class BaseActivityPresenter<T extends AppDelage> extends AppCompatActivity {
 
     protected T daleagt;
-
     public abstract Class<T> getClassPresenter();
     public BaseActivityPresenter(){
         try {
