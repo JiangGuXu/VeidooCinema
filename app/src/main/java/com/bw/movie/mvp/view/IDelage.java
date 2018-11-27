@@ -18,4 +18,5 @@ public interface IDelage {
     void getContext(Context context);
     //获取view
     View view();
+
 }
