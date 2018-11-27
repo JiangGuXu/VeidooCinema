@@ -14,7 +14,6 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 
 public class SplashActivitypersenter extends AppDelage {
-    private static final int MAG = 123;
     private int i = 3;
     private MyHanlder myHanlder = new MyHanlder();
     private TextView mSecibds;
@@ -31,22 +30,26 @@ public class SplashActivitypersenter extends AppDelage {
         myHanlder.sendEmptyMessageDelayed(0, 1000);
     }
 
-    class MyHanlder extends Handler {
+    private class MyHanlder extends Handler {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            i--;
-            mSecibds.setText(i + "s");            if (i < 1) {
-                myHanlder.removeCallbacksAndMessages(null);
-                if(SharedPreferencesUtils.getBoolean(context,"isfrist")){
-                    context.startActivity(new Intent(context, MainActivity.class));
-                }else{
-                    context.startActivity(new Intent(context, WelcomeActivity.class));
+            if(msg.what==0){
+                i--;
+                mSecibds.setText(i + "s");
+                if (i < 1) {
+                    myHanlder.removeCallbacksAndMessages(null);
+                    if(SharedPreferencesUtils.getBoolean(context,"isfrist")){
+                        context.startActivity(new Intent(context, MainActivity.class));
+                    }else{
+                        context.startActivity(new Intent(context, WelcomeActivity.class));
+                    }
+                    ((SplashActivity) context).finish();
+                } else {
+                    myHanlder.sendEmptyMessageDelayed(0, 1000);
                 }
-                ((SplashActivity) context).finish();
-            } else {
-                myHanlder.sendEmptyMessageDelayed(0, 1000);
             }
+
         }
     }
 
