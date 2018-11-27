@@ -13,6 +13,7 @@
     <dimen name="dp_30">30dp</dimen>
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
 
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_400">400dp</dimen>
