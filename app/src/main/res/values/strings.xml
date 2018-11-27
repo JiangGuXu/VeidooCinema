@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">VeidooCinema</string>
+
+    <string name="welcome_page_title">一场电影</string>
+    <string name="welcome_page1_title">荡涤你的心</string>
+    <string name="welcome_page2_title">看遍人生百态</string>
+    <string name="welcome_page3_title">净化你的灵魂</string>
+    <string name="welcome_page4_title1">八维西东通信学院作品</string>
+    <string name="welcome_page4_title2">带你开启一段美好的电影之旅</string>
+
+    <string name="welcome_button_text">立即体验</string>
 </resources>
