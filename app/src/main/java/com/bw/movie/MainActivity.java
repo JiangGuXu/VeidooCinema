@@ -1,4 +1,4 @@
-package com.bawei.veidoocinema;
+package com.bw.movie;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
