@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
@@ -22,8 +25,9 @@ public class WelcomeActivitypersenter extends AppDelage {
 
     private static final String LOG = "GuideActivity";
     private ViewPager viewPager;
-    private List<Integer> imageIDList=new ArrayList<>();
+    private List<Integer> layoutIDList = new ArrayList<>();
     private Button mExperience;
+    private RadioGroup welcome_radiogroup;
 
     @Override
     public int getLayoutId() {
@@ -35,15 +39,21 @@ public class WelcomeActivitypersenter extends AppDelage {
         super.initData();
         //初始化引导数据
         initGuideData();
-        SharedPreferencesUtils.putBoolean(context,"isfrist",true);
+        SharedPreferencesUtils.putBoolean(context, "isfrist", true);
         mExperience = get(R.id.welcome_experience);
+
+
         mExperience.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, MainActivity.class));
             }
         });
+
+
         viewPager = (ViewPager) get(R.id.welcome_pager);
+        welcome_radiogroup = get(R.id.welcome_radiogroup);
+        welcome_radiogroup.check(welcome_radiogroup.getChildAt(0).getId());
         viewPager.setAdapter(new GuideAdapter());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -53,9 +63,12 @@ public class WelcomeActivitypersenter extends AppDelage {
 
             @Override
             public void onPageSelected(int position) {
-                if(imageIDList.size()-1==position){
+
+                welcome_radiogroup.check(welcome_radiogroup.getChildAt(position).getId());
+
+                if (layoutIDList.size() - 1 == position) {
                     mExperience.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mExperience.setVisibility(View.GONE);
                 }
             }
@@ -70,11 +83,11 @@ public class WelcomeActivitypersenter extends AppDelage {
 
 
     private void initGuideData() {
-        imageIDList = new ArrayList();
-        imageIDList.add(R.drawable.welcome1);
-        imageIDList.add(R.drawable.welcome2);
-        imageIDList.add(R.drawable.welcome3);
-        imageIDList.add(R.drawable.welcome4);
+        layoutIDList = new ArrayList();
+        layoutIDList.add(R.layout.welcome_page1_layout);
+        layoutIDList.add(R.layout.welcome_page2_layout);
+        layoutIDList.add(R.layout.welcome_page3_layout);
+        layoutIDList.add(R.layout.welcome_page4_layout);
 
     }
 
@@ -90,7 +103,7 @@ public class WelcomeActivitypersenter extends AppDelage {
 
         @Override
         public int getCount() {
-            return imageIDList.size();
+            return layoutIDList.size();
         }
 
         /**
@@ -139,10 +152,9 @@ public class WelcomeActivitypersenter extends AppDelage {
          */
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ImageView imageView = new ImageView(context);
-            imageView.setImageResource(imageIDList.get(position));
-            container.addView(imageView);
-            return imageView;
+            View view = View.inflate(context, layoutIDList.get(position), null);
+            container.addView(view);
+            return view;
         }
     }
 }
