@@ -11,6 +11,7 @@ import com.bw.movie.Activity.SplashActivity;
 import com.bw.movie.Activity.WelcomeActivity;
 import com.bw.movie.R;
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
 
 public class SplashActivitypersenter extends AppDelage {
     private static final int MAG = 123;
@@ -38,7 +39,11 @@ public class SplashActivitypersenter extends AppDelage {
             mSecibds.setText(i + "s");
             if (i < 1) {
                 myHanlder.removeCallbacksAndMessages(null);
-
+                if(SharedPreferencesUtils.getBoolean(context,"isfrist")){
+                    context.startActivity(new Intent(context, MainActivity.class));
+                }else{
+                    context.startActivity(new Intent(context, WelcomeActivity.class));
+                }
                 ((SplashActivity) context).finish();
             } else {
                 myHanlder.sendEmptyMessageDelayed(0, 1000);
