@@ -24,7 +24,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 /**
  * 赵瑜峰
  * 封装网络工具类
- * 2018年11月27日 11:35801
+ * 2018年11月27日 11:38:01
  *
  */
 
