@@ -20,6 +20,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 /**
  * 赵瑜峰
  * 网络工具类
@@ -30,7 +31,7 @@ public class HttpUtil {
     private final BaseService baseService;
     private Observable<ResponseBody> observable;
 
-    public HttpUtil(){
+    public HttpUtil() {
         //拦截器
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @Override
@@ -38,12 +39,12 @@ public class HttpUtil {
                 Request request = chain.request();
                 RequestBody body = request.body();
                 String method = request.method();
-                Log.i("HttpUtil","intercept:"+body+"===="+method);
+                Log.i("HttpUtil", "intercept:" + body + "====" + method);
                 return chain.proceed(request);
             }
         }).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.wanandroid.com/")
+                .baseUrl("http://172.17.8.100/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
@@ -51,38 +52,42 @@ public class HttpUtil {
     }
 
     //get请求
-    public HttpUtil get(String url, Map<String,String> map){
-        if(map==null){
-            map=new HashMap<>();
+    public HttpUtil get(String url, Map<String, String> map) {
+        if (map == null) {
+            map = new HashMap<>();
         }
         observable = baseService.get(url, map);
         setObservable();
         return this;
     }
+
     //post请求
-    public HttpUtil post(String url, Map<String,String> map){
-        if(map==null){
-            map=new HashMap<>();
+    public HttpUtil post(String url, Map<String, String> map) {
+        if (map == null) {
+            map = new HashMap<>();
         }
         observable = baseService.post(url, map);
         setObservable();
         return this;
     }
+
     //上传文件
-    public HttpUtil part(String url, Map<String,String> map, MultipartBody.Part part){
-        if(map==null){
+    public HttpUtil part(String url, Map<String, String> map, MultipartBody.Part part) {
+        if (map == null) {
             map = new HashMap<>();
         }
-        observable = baseService.part(url, map,part);
+        observable = baseService.part(url, map, part);
         setObservable();
         return this;
     }
+
     //被观察者订阅观察者
     private void setObservable() {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
     //观察者
     private Observer observer = new Observer<ResponseBody>() {
         @Override
@@ -113,11 +118,14 @@ public class HttpUtil {
     };
     //接口回调
     private HttpListener listener;
-    public void result (HttpListener listener){
-        this.listener=listener;
+
+    public void result(HttpListener listener) {
+        this.listener = listener;
     }
-    public  interface HttpListener{
+
+    public interface HttpListener {
         void success(String data);
+
         void fail(String data);
     }
 }
