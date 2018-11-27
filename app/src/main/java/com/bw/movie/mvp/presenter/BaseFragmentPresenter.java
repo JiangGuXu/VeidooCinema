@@ -11,8 +11,9 @@ import android.view.ViewGroup;
 import com.bw.movie.mvp.view.AppDelage;
 
 /**
- * 赵瑜峰
- * 2018年11月27日 11:58:01
+ *
+ * author:赵瑜峰
+ * date:2018/11/27
  */
 public abstract class BaseFragmentPresenter<T extends AppDelage> extends Fragment {
     protected T daleagt;

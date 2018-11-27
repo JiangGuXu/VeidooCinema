@@ -14,10 +14,9 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * 赵瑜峰
- * Created by xiaoming.li on 2016/3/4.
+ * author:赵瑜峰
+ * date:2018/11/27
  * 网络工具
- * 2018年11月27日 13:35:01
  */
 public class NetworkUtils {
 
