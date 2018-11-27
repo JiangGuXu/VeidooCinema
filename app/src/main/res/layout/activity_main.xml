@@ -23,11 +23,11 @@
 
             <ImageView
                 android:id="@+id/main_img_01"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_film_selected_hdpi" />
+                android:background="@mipmap/com_icon_film_selected" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -37,11 +37,11 @@
 
             <ImageView
                 android:id="@+id/main_img_02"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_cinema_default_hdpi" />
+                android:background="@mipmap/com_icon_cinema_default" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -51,11 +51,11 @@
 
             <ImageView
                 android:id="@+id/main_img_03"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/com_icon_my_default_hdip" />
+                android:background="@mipmap/com_icon_my_default" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

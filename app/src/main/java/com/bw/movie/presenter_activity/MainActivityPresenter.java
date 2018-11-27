@@ -102,27 +102,27 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         switch (v.getId()) {
             case R.id.main_img_01:
                 setSizeMax(main_img_01);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_selected_hdpi);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default_hdpi);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_default_hdip);
+                main_img_01.setImageResource(R.mipmap.com_icon_film_selected);
+                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default);
+                main_img_03.setImageResource(R.mipmap.com_icon_my_default);
                 manager.beginTransaction().show(filmFragment).commit();
                 manager.beginTransaction().hide(myFragment).commit();
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 break;
             case R.id.main_img_02:
                 setSizeMax(main_img_02);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_fault_hdpi);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_selected_hdpi);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_default_hdip);
+                main_img_01.setImageResource(R.mipmap.com_icon_film_fault);
+                main_img_02.setImageResource(R.mipmap.com_icon_cinema_selected);
+                main_img_03.setImageResource(R.mipmap.com_icon_my_default);
                 manager.beginTransaction().show(cinemaFragment).commit();
                 manager.beginTransaction().hide(myFragment).commit();
                 manager.beginTransaction().hide(filmFragment).commit();
                 break;
             case R.id.main_img_03:
                 setSizeMax(main_img_03);
-                main_img_01.setImageResource(R.mipmap.com_icon_film_fault_hdpi);
-                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default_hdpi);
-                main_img_03.setImageResource(R.mipmap.com_icon_my_selected_hdpi);
+                main_img_01.setImageResource(R.mipmap.com_icon_film_fault);
+                main_img_02.setImageResource(R.mipmap.com_icon_cinema_default);
+                main_img_03.setImageResource(R.mipmap.com_icon_my_selected);
                 manager.beginTransaction().show(myFragment).commit();
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 manager.beginTransaction().hide(filmFragment).commit();
