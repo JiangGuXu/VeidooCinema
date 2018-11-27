@@ -9,4 +9,11 @@
     <string name="welcome_page4_title2">带你开启一段美好的电影之旅</string>
     <string name="my_name_text">请登录</string>
     <string name="welcome_button_text">立即体验</string>
+
+    <string name="my_messiage_text">我的信息</string>
+    <string name="my_rccord_text">购票记录</string>
+    <string name="my_attention_text">我的关注</string>
+    <string name="my_feedback_text">意见反馈</string>
+    <string name="my_version_text">最新版本</string>
+
 </resources>

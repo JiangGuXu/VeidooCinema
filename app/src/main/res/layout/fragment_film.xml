@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_186"
-        android:background="@drawable/film_background"></RelativeLayout>
-    <RelativeLayout
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
         android:layout_width="@dimen/dp_48"
         android:layout_height="@dimen/dp_48"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_15"
-        android:id="@+id/film_relat_map">
-        <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:src="@drawable/com_icon_loc_white_default"
-            android:layout_centerInParent="true"
-            android:id="@+id/film_map"/>
-    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/film_map_text"
-        android:textSize="@dimen/sp_14"
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_toRightOf="@id/film_relat_map"
-        />
-    <RelativeLayout
-        android:layout_width="@dimen/dp_220"
-        android:layout_height="@dimen/dp_24"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dp_30"
-        android:background="@drawable/film_search_shape"
-        android:layout_marginRight="@dimen/dp_f170">
-        <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_marginLeft="@dimen/dp_6"
-            android:src="@drawable/com_icon_search_default"
-            android:id="@+id/film_search"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_223"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_85"
-        android:layout_marginBottom="@dimen/dp_20">
-
-    </RelativeLayout>
+        android:id="@+id/film_map"/>
 </RelativeLayout>
