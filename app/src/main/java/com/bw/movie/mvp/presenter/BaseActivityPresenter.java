@@ -13,6 +13,7 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
 
     protected T daleagt;
 
+
     public abstract Class<T> getClassPresenter();
     public BaseActivityPresenter(){
         try {
