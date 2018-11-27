@@ -1,47 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/activity_search"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_30"
-        android:background="#d43c3c"
-        android:src="@mipmap/com_icon_loc_white_default" />
-
-    <TextView
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_24"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dp_30"
-        android:background="#fad961" />
-
-    <Button
-        android:id="@+id/activity_recommended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_80"
-        android:layout_marginTop="@dimen/dp_60"
-        android:text="推荐影院" />
-
-    <Button
-        android:id="@+id/activity_near"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_32"
-        android:layout_marginTop="@dimen/dp_60"
-        android:layout_toRightOf="@+id/activity_recommended"
-        android:text="附近影院" />
-
-    <android.support.v7.widget.RecyclerView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/activity_near">
-
-    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

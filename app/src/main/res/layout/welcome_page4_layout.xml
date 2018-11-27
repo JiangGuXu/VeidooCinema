@@ -9,7 +9,7 @@
         android:layout_height="@dimen/dp_205"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_150"
-        android:src="@mipmap/welcome4" />
+        android:src="@drawable/welcome4" />
 
     <TextView
 

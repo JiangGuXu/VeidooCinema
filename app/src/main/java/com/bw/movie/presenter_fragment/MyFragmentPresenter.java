@@ -29,5 +29,6 @@ public class MyFragmentPresenter extends AppDelage {
     public void initData() {
         super.initData();
 
+
     }
 }

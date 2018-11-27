@@ -8,7 +8,7 @@
         android:layout_width="@dimen/dp_205"
         android:layout_height="@dimen/dp_205"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/welcome2"
+        android:src="@drawable/welcome2"
         android:layout_marginTop="@dimen/dp_150" />
 
     <TextView
