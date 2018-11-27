@@ -23,7 +23,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * 赵瑜峰
- * 网络工具类
+ * 封装网络工具类
+ * 2018年11月27日 11:35801
+ *
  */
 
 public class HttpUtil {
