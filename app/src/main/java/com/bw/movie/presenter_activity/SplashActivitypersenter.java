@@ -36,8 +36,7 @@ public class SplashActivitypersenter extends AppDelage {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             i--;
-            mSecibds.setText(i + "s");
-            if (i < 1) {
+            mSecibds.setText(i + "s");            if (i < 1) {
                 myHanlder.removeCallbacksAndMessages(null);
                 if(SharedPreferencesUtils.getBoolean(context,"isfrist")){
                     context.startActivity(new Intent(context, MainActivity.class));
