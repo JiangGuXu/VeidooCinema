@@ -1,4 +1,4 @@
-package com.bw.movie.utils;
+package com.bw.movie.utils.net;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
