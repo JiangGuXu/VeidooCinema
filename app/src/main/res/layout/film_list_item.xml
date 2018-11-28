@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20">
+        android:layout_marginTop="@dimen/dp_20"
+        android:id="@+id/film_relative1_item">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textColor="@color/color333333"
             android:id="@+id/film_list_title"
             android:textSize="@dimen/sp_16"/>
@@ -27,10 +27,12 @@
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_3"
         android:background="@drawable/film_gradient1"
+        android:layout_below="@+id/film_relative1_item"
         android:id="@+id/film_list_divider"></View>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_164"
         android:layout_marginTop="@dimen/dp_20"
+        android:layout_below="@id/film_list_divider"
         android:id="@+id/fiml_list_recyler"></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+</RelativeLayout>
