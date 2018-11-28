@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#d43c3c</color>
     <color name="colorAccent">#d43c3c</color>
 
+    <color name="color440a33">#440a33</color>
+    <color name="colore8174e">#e8174e</color>
+
     <color name="colorffffff">#ffffff</color>
+    <color name="FFFFFF99">#99FFFFFF</color>
     <color name="colore8e8e8">#e8e8e8</color>
     <color name="color999">#999999</color>
     <color name="color999tou">#99999999</color>
@@ -21,4 +25,5 @@
     <color name="colore440a33">#440a33</color>
     <color name="colord8d8d8">#d8d8d8</color>
     <color name="colora440a33">#440a33</color>
+    <color name="colorf2f2f2">#F2F2F2</color>
 </resources>
