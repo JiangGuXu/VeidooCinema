@@ -36,9 +36,11 @@
             android:name="design_height_in_dp"
             android:value="731" />
 
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
-            //开发者申请的key
-        </meta-data>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
+            //开发者申请的key</meta-data>
+
         <activity android:name=".activity.MainActivity">
 
         </activity>
@@ -52,6 +54,7 @@
         <activity android:name=".activity.WelcomeActivity"></activity>
         <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.UserAttentionActivity"></activity>
     </application>
 
 </manifest>
