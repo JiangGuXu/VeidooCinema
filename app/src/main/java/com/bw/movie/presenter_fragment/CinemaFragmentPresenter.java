@@ -16,6 +16,7 @@ import com.bw.movie.mvp.view.AppDelage;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /*
  * 影院页面presenter
@@ -49,6 +50,14 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         imageView = (ImageView) get(R.id.activity_loca);
         imageView.setOnClickListener(this);
         mlocationClient = new AMapLocationClient(context);
+
+        dohttp();
+
+    }
+
+    private void dohttp() {
+        HashMap<String, String> map = new HashMap<>();
+//        map.put("")
     }
 
 
@@ -106,4 +115,11 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 break;
         }
     }
+
+
+
+
+
+
+
 }
