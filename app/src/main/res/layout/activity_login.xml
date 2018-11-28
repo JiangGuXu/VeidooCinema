@@ -50,7 +50,7 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:src="@drawable/log_icon_lock_default"/>
         <EditText
-            android:layout_width="@dimen/dp_265"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:background="@null"
             android:hint="密  码"
@@ -58,11 +58,6 @@
             android:id="@+id/login_pass"
             android:paddingLeft="@dimen/dp_10"
             android:textColorHint="@color/colorffffff"/>
-        <ImageView
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:padding="@dimen/dp_12"
-            android:src="@drawable/log_icon_eye_default"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -108,11 +103,48 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="@dimen/dp_330"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:background="@drawable/login_btn_background"
         android:textColor="@color/colorffffff"
         android:textSize="@dimen/sp_20"
         android:text="登录"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/login_re"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_380">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_toLeftOf="@+id/text_fastlogin"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/colorffffff"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第三方账号快速登录"
+            android:id="@+id/text_fastlogin"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/colorffffff"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_toRightOf="@+id/text_fastlogin"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@color/colorffffff"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:src="@drawable/log_icon_weixin_default"
+        android:layout_below="@+id/login_re"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

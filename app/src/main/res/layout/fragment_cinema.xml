@@ -16,7 +16,7 @@
         android:layout_height="@dimen/dp_24"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_f170"
+        android:layout_marginRight="@dimen/dp_170"
         android:id="@+id/film_search_relative"
         android:background="@drawable/film_search_shape">
 
