@@ -4,12 +4,20 @@ import android.content.Context;
 import android.widget.ListView;
 
 import com.bw.movie.R;
+import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.model.FilmList;
+import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.net.HttpUtil;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import recycler.coverflow.RecyclerCoverFlow;
 
 
 /*
@@ -24,6 +32,8 @@ public class FilmFragmentPresenter extends AppDelage {
     private ListView mListView;
     private MyAdapterFilmList myAdapterFilmList;
     private List<FilmList> lists =new ArrayList<>();
+    private RecyclerCoverFlow mRecyclerCoverFlow;
+    private MyAdapterFilmBanner myAdapterFilmBanner;
 
     @Override
     public int getLayoutId() {
@@ -38,12 +48,50 @@ public class FilmFragmentPresenter extends AppDelage {
     @Override
     public void initData() {
         super.initData();
+        //添加数据
         addlist();
-
+        //轮播图
+        mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
+        myAdapterFilmBanner = new MyAdapterFilmBanner(context);
+        mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
+        myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
+            @Override
+            public void onClick(int position) {
+                mRecyclerCoverFlow.scrollToPosition(position);
+            }
+        });
+        //请求轮播数据
+        doHttpBanner();
+        //电影展示
         mListView = get(R.id.film_list_view);
         myAdapterFilmList = new MyAdapterFilmList(context);
         mListView.setAdapter(myAdapterFilmList);
         myAdapterFilmList.setList(lists);
+    }
+    //请求轮播数据
+    private void doHttpBanner() {
+        String url = "/movieApi/movie/v1/findHotMovieList";
+        Map<String,String> map = new HashMap<>();
+        map.put("page","1");
+        map.put("count","10");
+        new HttpUtil().get(url,map).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Gson gson = new Gson();
+                FilmListData filmListData = gson.fromJson(data, FilmListData.class);
+                List<FilmListData.ResultBean> result = filmListData.getResult();
+                if(result.size()==0){
+                    doHttpBanner();
+                }
+                myAdapterFilmBanner.setList(result);
+                mRecyclerCoverFlow.scrollToPosition(2);
+            }
+
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
 
     private void addlist() {
