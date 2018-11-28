@@ -10,8 +10,11 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.UserAttentionActivity;
 import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.encrypt.Base64;
+import com.bw.movie.utils.encrypt.Base64EncryptUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 
 /*
@@ -32,6 +35,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private ImageView my_head_icon;
     private RelativeLayout my_messiage_layout;
     private Boolean isLogin;
+    private RelativeLayout my_attention_layout;
 
     @Override
     public int getLayoutId() {
@@ -56,6 +60,11 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
         my_messiage_layout = get(R.id.my_messiage_layout);
         my_messiage_layout.setOnClickListener(this);
 
+
+        //我的关注布局 图片加文字
+        my_attention_layout = get(R.id.my_attention_layout);
+        my_attention_layout.setOnClickListener(this);
+
     }
 
     @Override
@@ -79,6 +88,13 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     Intent intent = new Intent(context, UserInfoActivity.class);
                     (context).startActivity(intent);
                 }
+                break;
+
+
+            //点击我的关注跳转到关注页面
+            case R.id.my_attention_layout:
+                Intent intent = new Intent(context, UserAttentionActivity.class);
+                (context).startActivity(intent);
                 break;
         }
     }
