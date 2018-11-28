@@ -2,6 +2,7 @@ package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.widget.ListView;
 
 import com.bambootang.viewpager3d.FlowTransformer;
 import com.bambootang.viewpager3d.LinearLocationTransformer;
@@ -21,6 +22,7 @@ import com.bw.movie.mvp.view.AppDelage;
 public class FilmFragmentPresenter extends AppDelage {
 
     private Context context;
+    private ListView mListView;
 
     @Override
     public int getLayoutId() {
@@ -35,6 +37,7 @@ public class FilmFragmentPresenter extends AppDelage {
     @Override
     public void initData() {
         super.initData();
+        mListView = get(R.id.film_list_view);
 
     }
 }
