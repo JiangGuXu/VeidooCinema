@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.WelcomeActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 
@@ -50,6 +51,7 @@ public class WelcomeActivitypersenter extends AppDelage {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, MainActivity.class));
+                ((WelcomeActivity)context).finish();
             }
         });
 
