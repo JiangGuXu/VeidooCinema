@@ -57,18 +57,28 @@
         android:id="@+id/film_vp_relative">
 
     </RelativeLayout>
+
     <View
         android:layout_width="@dimen/dp_312"
         android:layout_height="@dimen/dp_3"
         android:id="@+id/film_divider_view"
         android:layout_below="@+id/film_vp_relative"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/film_gradient3"
         ></View>
+    <View
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="3dp"
+        android:background="@drawable/film_gradient1"
+        android:layout_below="@id/film_vp_relative"
+        android:layout_centerHorizontal="true">
+    </View>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/film_divider_view"
+        android:layout_marginLeft="@dimen/dp_24"
         android:id="@+id/film_list_view">
 
     </ListView>
