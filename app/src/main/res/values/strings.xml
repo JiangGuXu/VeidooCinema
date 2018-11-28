@@ -26,5 +26,8 @@
     <string name="user_info_emil">邮箱</string>
     <string name="user_info_reset">重置密码</string>
     <string name="user_info_reset_pwd">重置密码</string>
+    <string name="user_attention_title">我的关注</string>
+    <string name="user_attention_film">电影</string>
+    <string name="user_attention_cinema">影院</string>
 
 </resources>
