@@ -111,5 +111,8 @@
         android:layout_marginTop="350dp"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/login_btn_background"
+        android:textColor="@color/colorffffff"
+        android:textSize="@dimen/sp_20"
         android:text="登录"/>
 </RelativeLayout>

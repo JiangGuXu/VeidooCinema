@@ -9,6 +9,8 @@
     <color name="color999">#999999</color>
     <color name="colordfdfdf">#dfdfdf</color>
     <color name="colorFCDD45">#FCDD45</color>
+    <color name="colorEEEE00">#EEEE00</color>
+    <color name="colorFF7F00">#FF7F00</color>
     <color name="colorF00">#FF0000</color>
     <color name="color0000">#000000</color>
     <color name="colorfad961">#fad961</color>
@@ -16,5 +18,4 @@
     <color name="color333333">#333333</color>
     <color name="colord8d8d8">#d8d8d8</color>
     <color name="colora440a33">#440a33</color>
-
 </resources>
