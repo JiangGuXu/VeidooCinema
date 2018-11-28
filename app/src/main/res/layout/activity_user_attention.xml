@@ -4,42 +4,36 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:id="@+id/my_attention_layout1"
-        android:layout_marginTop="@dimen/dp_50"
-        android:layout_centerHorizontal="true"
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_50"
         android:orientation="horizontal">
-        <LinearLayout
-            android:background="@drawable/my_attention_title_shape"
+
+        <RadioButton
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_23"
+            android:background="@drawable/my_attention_radiobutton_selector"
+            android:button="@null"
             android:gravity="center"
+            android:text="@string/user_attention_film"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/sp_14" />
+
+
+        <RadioButton
             android:layout_width="@dimen/dp_83"
-            android:layout_height="@dimen/dp_23">
-            <TextView
-                android:gravity="center"
-                android:textColor="@color/color333333"
-                android:textSize="@dimen/sp_14"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/user_attention_film"/>
-        </LinearLayout>
-        <LinearLayout
+            android:layout_height="@dimen/dp_23"
             android:layout_marginLeft="@dimen/dp_32"
-            android:background="@drawable/my_attention_title_shape"
-            android:layout_width="@dimen/dp_83"
-            android:layout_height="@dimen/dp_23">
-            <TextView
-                android:gravity="center"
-                android:textColor="@color/color333333"
-                android:textSize="@dimen/sp_14"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/user_attention_cinema"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:background="@drawable/my_attention_radiobutton_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/user_attention_cinema"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/sp_14" />
 
-
+    </RadioGroup>
 
 
 </RelativeLayout>
