@@ -1,13 +1,8 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.widget.ListView;
 
-import com.bambootang.viewpager3d.FlowTransformer;
-import com.bambootang.viewpager3d.LinearLocationTransformer;
-import com.bambootang.viewpager3d.LinearRotationTransformer;
-import com.bambootang.viewpager3d.LinearScaleTransformer;
 import com.bw.movie.R;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.model.FilmList;
@@ -29,6 +24,7 @@ public class FilmFragmentPresenter extends AppDelage {
     private ListView mListView;
     private MyAdapterFilmList myAdapterFilmList;
     private List<FilmList> lists =new ArrayList<>();
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_film;
@@ -43,6 +39,7 @@ public class FilmFragmentPresenter extends AppDelage {
     public void initData() {
         super.initData();
         addlist();
+
         mListView = get(R.id.film_list_view);
         myAdapterFilmList = new MyAdapterFilmList(context);
         mListView.setAdapter(myAdapterFilmList);
