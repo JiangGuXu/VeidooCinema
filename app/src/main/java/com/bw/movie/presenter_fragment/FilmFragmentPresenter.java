@@ -1,12 +1,7 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 
-import com.bambootang.viewpager3d.FlowTransformer;
-import com.bambootang.viewpager3d.LinearLocationTransformer;
-import com.bambootang.viewpager3d.LinearRotationTransformer;
-import com.bambootang.viewpager3d.LinearScaleTransformer;
 import com.bw.movie.R;
 import com.bw.movie.mvp.view.AppDelage;
 

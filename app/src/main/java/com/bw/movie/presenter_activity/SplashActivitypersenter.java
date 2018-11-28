@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bw.movie.activity.MainActivity;
@@ -27,6 +28,13 @@ public class SplashActivitypersenter extends AppDelage {
     public void initData() {
         super.initData();
         mSecibds = get(R.id.splash_seconds);
+        mSecibds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, MainActivity.class));
+            }
+        });
+
         myHanlder.sendEmptyMessageDelayed(0, 1000);
     }
 
@@ -34,6 +42,16 @@ public class SplashActivitypersenter extends AppDelage {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+<<<<<<< HEAD
+            i--;
+            mSecibds.setText(i + "s");
+            if (i < 1) {
+                myHanlder.removeCallbacksAndMessages(null);
+                if (SharedPreferencesUtils.getBoolean(context, "isfrist")) {
+                    context.startActivity(new Intent(context, MainActivity.class));
+                } else {
+                    context.startActivity(new Intent(context, WelcomeActivity.class));
+=======
             if(msg.what==0){
                 i--;
                 mSecibds.setText(i + "s");
@@ -47,6 +65,7 @@ public class SplashActivitypersenter extends AppDelage {
                     ((SplashActivity) context).finish();
                 } else {
                     myHanlder.sendEmptyMessageDelayed(0, 1000);
+>>>>>>> origin/master
                 }
             }
 
@@ -59,5 +78,6 @@ public class SplashActivitypersenter extends AppDelage {
     public void getContext(Context context) {
         this.context = context;
     }
+
 
 }
