@@ -20,7 +20,10 @@ import com.bw.movie.utils.net.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 启动页页面
+ * 程丹妮
+ */
 public class WelcomeActivitypersenter extends AppDelage {
 
     private static final String LOG = "GuideActivity";
