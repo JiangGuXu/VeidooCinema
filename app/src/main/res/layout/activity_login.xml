@@ -50,7 +50,7 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:src="@drawable/log_icon_lock_default"/>
         <EditText
-            android:layout_width="@dimen/dp_265"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:background="@null"
             android:hint="密  码"
@@ -58,11 +58,6 @@
             android:id="@+id/login_pass"
             android:paddingLeft="@dimen/dp_10"
             android:textColorHint="@color/colorffffff"/>
-        <ImageView
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:padding="@dimen/dp_12"
-            android:src="@drawable/log_icon_eye_default"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
