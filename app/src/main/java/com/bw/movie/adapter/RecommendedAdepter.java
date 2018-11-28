@@ -1,16 +1,15 @@
-package com.bw.movie.Adaepter;
+package com.bw.movie.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.Recommendedbean;
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
     // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
         String images = list.get(i).getLogo();
         String[] split = images.split("\\|");
-        Picasso.with(context).load(split[0]).fit().into(sRecommendedAdepter.recommendimg);
+        sRecommendedAdepter.recommendimg.setImageURI(split[0]);
     }
 
     @Override
@@ -49,15 +48,15 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
 
     public class sRecommendedAdepter extends RecyclerView.ViewHolder {
 
-        private final ImageView recommendimg;
-        private final TextView text;
-        private final TextView address;
+        private SimpleDraweeView recommendimg;
+        private TextView text;
+        private TextView address;
          TextView distance;
 
         public sRecommendedAdepter(@NonNull View itemView) {
             super(itemView);
 
-            recommendimg = (ImageView) itemView.findViewById(R.id.activity_recommendimg);
+            recommendimg = (SimpleDraweeView) itemView.findViewById(R.id.activity_recommendimg);
             text = (TextView) itemView.findViewById(R.id.activity_text);
             address = (TextView) itemView.findViewById(R.id.activity_address);
             distance = (TextView) itemView.findViewById(R.id.activity_distance);

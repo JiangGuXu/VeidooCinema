@@ -1,7 +1,6 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,7 +12,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.bw.movie.Adaepter.RecommendedAdepter;
+import com.bw.movie.adapter.RecommendedAdepter;
 import com.bw.movie.R;
 import com.bw.movie.bean.Recommendedbean;
 import com.bw.movie.mvp.view.AppDelage;

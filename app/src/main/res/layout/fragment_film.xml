@@ -84,14 +84,13 @@
             android:layout_centerHorizontal="true">
         </View>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/film_divider_view"
             android:layout_marginLeft="@dimen/dp_24"
             android:id="@+id/film_list_view">
-
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
 </ScrollView>

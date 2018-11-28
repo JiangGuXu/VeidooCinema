@@ -1,7 +1,8 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.bw.movie.R;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
@@ -29,7 +30,7 @@ import recycler.coverflow.RecyclerCoverFlow;
 public class FilmFragmentPresenter extends AppDelage {
 
     private Context context;
-    private ListView mListView;
+    private RecyclerView mListView;
     private MyAdapterFilmList myAdapterFilmList;
     private List<FilmList> lists =new ArrayList<>();
     private RecyclerCoverFlow mRecyclerCoverFlow;
@@ -63,8 +64,11 @@ public class FilmFragmentPresenter extends AppDelage {
         //请求轮播数据
         doHttpBanner();
         //电影展示
-        mListView = get(R.id.film_list_view);
+        mListView =(RecyclerView) get(R.id.film_list_view);
         myAdapterFilmList = new MyAdapterFilmList(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mListView.setLayoutManager(linearLayoutManager);
         mListView.setAdapter(myAdapterFilmList);
         myAdapterFilmList.setList(lists);
     }
