@@ -132,7 +132,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
                 mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
                 //设置定位间隔,单位毫秒,默认为2000ms
-                mLocationOption.setInterval(2000);
+                mLocationOption.setInterval(20000);
                 //设置定位参数
                 mlocationClient.setLocationOption(mLocationOption);
                 //启动定位

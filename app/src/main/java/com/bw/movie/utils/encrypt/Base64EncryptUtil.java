@@ -16,7 +16,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Base64EncryptUtil {
     private static final String KEY = "12baweiyidong345";
-
     private static final String IV = "67baweiyidong899";
 
     /**
@@ -63,9 +62,9 @@ public class Base64EncryptUtil {
         }
     }
 
-/*    public static void main(String [] args)throws Exception
+  /* public static void main(String [] args)throws Exception
     {
-        String a = encrypt("111");
+        String a = encrypt("123456");
         System.err.println("加密后: " + a);
         String b = decrypt(a);
         System.err.println("解密后: " + b);

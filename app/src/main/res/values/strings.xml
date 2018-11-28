@@ -16,4 +16,18 @@
     <string name="my_feedback_text">意见反馈</string>
     <string name="my_version_text">最新版本</string>
 
+
+    <string name="user_info_title">用户信息</string>
+    <string name="user_info_head">用户头像</string>
+    <string name="user_info_name">用户昵称</string>
+    <string name="user_info_sex">用户性别</string>
+    <string name="user_info_birthday">出生日期</string>
+    <string name="user_info_phone">手机号</string>
+    <string name="user_info_emil">邮箱</string>
+    <string name="user_info_reset">重置密码</string>
+    <string name="user_info_reset_pwd">重置密码</string>
+    <string name="user_attention_title">我的关注</string>
+    <string name="user_attention_film">电影</string>
+    <string name="user_attention_cinema">影院</string>
+
 </resources>
