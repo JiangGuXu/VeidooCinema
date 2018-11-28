@@ -71,6 +71,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         main_img_01.setOnClickListener(this);
         main_img_02.setOnClickListener(this);
         main_img_03.setOnClickListener(this);
+        main_img_01.callOnClick();
     }
 
     private void addList() {
