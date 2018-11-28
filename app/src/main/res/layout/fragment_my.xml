@@ -5,8 +5,10 @@
 
 
     <ImageView
+        android:id="@+id/head_background_imageview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_220"
+        android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:src="@drawable/my_background" />
 
@@ -15,9 +17,9 @@
         android:id="@+id/my_remind"
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
-        android:src="@drawable/my_icon_remind_default"
+        android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginLeft="@dimen/dp_24"/>
+        android:src="@drawable/my_icon_remind_default" />
 
 
     <ImageView
@@ -39,7 +41,162 @@
         android:textSize="@dimen/sp_14" />
 
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/dp_86"></RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/my_item_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_86"
+        android:layout_below="@+id/head_background_imageview"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@drawable/my_item_layout_shape">
+
+        <RelativeLayout
+            android:layout_marginRight="@dimen/dp_54"
+            android:id="@+id/my_messiage_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_24">
+
+            <ImageView
+                android:id="@+id/my_messiage_imageview"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
+
+                android:src="@drawable/my_icon_messiage_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_messiage_imageview"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/my_messiage_text"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_item_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_86"
+        android:layout_below="@+id/my_item_layout1"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@drawable/my_item_layout_shape">
+
+        <RelativeLayout
+            android:id="@+id/my_attention_layout"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_24">
+
+            <ImageView
+                android:id="@+id/my_attention_imageview"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/my_icon_attention_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_attention_imageview"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/my_attention_text"
+                android:textSize="@dimen/sp_14"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/my_rccord_layout"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/my_attention_layout"
+            android:layout_marginTop="@dimen/dp_24">
+
+            <ImageView
+                android:id="@+id/my_rccord_imageview"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/my_icon_rccord_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_rccord_imageview"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/my_rccord_text"
+                android:textSize="@dimen/sp_14"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_86"
+        android:layout_below="@+id/my_item_layout2"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@drawable/my_item_layout_shape">
+
+        <RelativeLayout
+            android:layout_marginLeft="@dimen/dp_30"
+            android:id="@+id/my_feedback_layout"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24">
+
+            <ImageView
+                android:id="@+id/my_feedback_imageview"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/my_icon_feedback_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_feedback_imageview"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/my_feedback_text"
+                android:textSize="@dimen/sp_14"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_toRightOf="@id/my_feedback_layout"
+            android:id="@+id/my_version_layout"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24">
+
+            <ImageView
+                android:id="@+id/my_version_imageview"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/my_icon_version_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_version_imageview"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/my_version_text"
+                android:textSize="@dimen/sp_14"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </RelativeLayout>

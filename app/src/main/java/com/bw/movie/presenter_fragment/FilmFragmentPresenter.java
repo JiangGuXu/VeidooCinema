@@ -15,25 +15,21 @@ import com.bw.movie.mvp.view.AppDelage;
  * */
 public class FilmFragmentPresenter extends AppDelage {
 
+    private Context context;
 
     @Override
     public int getLayoutId() {
         return R.layout.fragment_film;
     }
 
+    @Override
+    public void getContext(Context context) {
+        this.context =context;
+    }
 
     @Override
     public void initData() {
         super.initData();
 
     }
-
-    private Context context;
-
-    @Override
-    public void getContext(Context context) {
-        this.context =context;
-    }
-
-
 }
