@@ -69,7 +69,7 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                         radioButton1.setTextColor(Color.parseColor("#FFFFFF"));
                         radioButton2.setTextColor(Color.parseColor("#333333"));
 
-                        Map<String, String> map = new HashMap<>();
+                      /*  Map<String, String> map = new HashMap<>();
                         map.put("page", 1 + "");
                         map.put("count", 10 + "");
                         new HttpUtil().get("/movieApi/movie/v1/verify/findMoviePageList", map).result(new HttpUtil.HttpListener() {
@@ -82,7 +82,7 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                             public void fail(String data) {
                                 Log.i("jhktest", "fail: " + data);
                             }
-                        });
+                        });*/
 
 
                         Log.i("jhktest", "onCheckedChanged: " + 111);
