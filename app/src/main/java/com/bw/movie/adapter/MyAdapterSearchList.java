@@ -69,10 +69,11 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
 
     private void doHttpCancel(int i, int userId, String sessionId) {
         Map<String,String> map = new HashMap<>();
-        map.put("userId",userId+"");
-        map.put("sessionId",sessionId);
         map.put("movieId",list.get(i).getId()+"");
-        new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map).result(new HttpUtil.HttpListener() {
+        Map<String,String> mapHead = new HashMap<>();
+        mapHead.put("userId",userId+"");
+        mapHead.put("sessionId",sessionId);
+        new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
 
@@ -87,13 +88,14 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
 
     private void doHpptFocus(int i, int userId, String sessionId) {
         Map<String,String> map = new HashMap<>();
-        map.put("userId",userId+"");
-        map.put("sessionId",sessionId);
         map.put("movieId",list.get(i).getId()+"");
-        new HttpUtil().get("/movieApi/movie/v1/verify/followMovie",map).result(new HttpUtil.HttpListener() {
+        Map<String,String> mapHead = new HashMap<>();
+        mapHead.put("userId",userId+"");
+        mapHead.put("sessionId",sessionId);
+        new HttpUtil().get( "/movieApi/movie/v1/verify/followMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-
+                Toast.makeText(context, data+"", Toast.LENGTH_SHORT).show();
             }
 
             @Override
