@@ -3,6 +3,7 @@ package com.bw.movie.presenter_fragment;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
@@ -32,7 +33,9 @@ public class FilmFragmentPresenter extends AppDelage {
     private Context context;
     private RecyclerView mListView;
     private MyAdapterFilmList myAdapterFilmList;
-    private List<FilmList> lists = new ArrayList<>();
+    private List<String> titles =new ArrayList<>();
+    private List<FilmListData> list =new ArrayList<>();
+    private List<String> urls =new ArrayList<>();
     private RecyclerCoverFlow mRecyclerCoverFlow;
     private MyAdapterFilmBanner myAdapterFilmBanner;
 
@@ -43,7 +46,7 @@ public class FilmFragmentPresenter extends AppDelage {
 
     @Override
     public void getContext(Context context) {
-        this.context = context;
+        this.context =context;
     }
 
     @Override
@@ -64,28 +67,51 @@ public class FilmFragmentPresenter extends AppDelage {
         //请求轮播数据
         doHttpBanner();
         //电影展示
-        mListView = (RecyclerView) get(R.id.film_list_view);
+        mListView =(RecyclerView) get(R.id.film_list_view);
         myAdapterFilmList = new MyAdapterFilmList(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mListView.setLayoutManager(linearLayoutManager);
         mListView.setAdapter(myAdapterFilmList);
-        myAdapterFilmList.setList(lists);
+        //请求影片数据
+        for (int i = 0; i <urls.size() ; i++) {
+            doHttp(urls.get(i));
+        }
+        myAdapterFilmList.setList(list,titles);
     }
+    //请求数据并放入list集合中
+    private void doHttp( String url) {
+            Map<String,String> map = new HashMap<>();
+            map.put("page","1");
+            map.put("count","10");
+            new HttpUtil().get(url,map).result(new HttpUtil.HttpListener() {
+                @Override
+                public void success(String data) {
+                    Gson gson = new Gson();
+                    FilmListData filmListData = gson.fromJson(data, FilmListData.class);
+                    list.add(filmListData);
+                }
+
+                @Override
+                public void fail(String data) {
+
+                }
+            });
+        }
 
     //请求轮播数据
     private void doHttpBanner() {
         String url = "/movieApi/movie/v1/findHotMovieList";
-        Map<String, String> map = new HashMap<>();
-        map.put("page", "1");
-        map.put("count", "10");
-        new HttpUtil().get(url, map).result(new HttpUtil.HttpListener() {
+        Map<String,String> map = new HashMap<>();
+        map.put("page","1");
+        map.put("count","10");
+        new HttpUtil().get(url,map).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
                 FilmListData filmListData = gson.fromJson(data, FilmListData.class);
                 List<FilmListData.ResultBean> result = filmListData.getResult();
-                if (result.size() == 0) {
+                if(result.size()==0){
                     doHttpBanner();
                 }
                 myAdapterFilmBanner.setList(result);
@@ -100,17 +126,13 @@ public class FilmFragmentPresenter extends AppDelage {
     }
 
     private void addlist() {
-        FilmList filmList = new FilmList();
-        filmList.setTitle("热门电影");
-        filmList.setUrl("/movieApi/movie/v1/findHotMovieList");
-        FilmList filmList1 = new FilmList();
-        filmList1.setTitle("正在热映");
-        filmList1.setUrl("/movieApi/movie/v1/findReleaseMovieList");
-        FilmList filmList2 = new FilmList();
-        filmList2.setTitle("即将上映");
-        filmList2.setUrl("/movieApi/movie/v1/findComingSoonMovieList");
-        lists.add(filmList);
-        lists.add(filmList1);
-        lists.add(filmList2);
+        titles.add("热门电影");
+        titles.add("正在热映");
+        titles.add("即将上映");
+        urls.add("/movieApi/movie/v1/findHotMovieList");
+        urls.add("/movieApi/movie/v1/findReleaseMovieList");
+        urls.add("/movieApi/movie/v1/findComingSoonMovieList");
+
+
     }
 }
