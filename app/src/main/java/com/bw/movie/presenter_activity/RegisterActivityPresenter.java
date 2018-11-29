@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.RegisterActivity;
 import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
@@ -94,6 +95,7 @@ public class RegisterActivityPresenter extends AppDelage implements View.OnClick
                             String status = registerBean.getStatus();
                             if (status.equals("0000")){
                                 Toast.makeText(context,"注册成功",Toast.LENGTH_SHORT).show();
+                                ((RegisterActivity)context).finish();
                             }
                             Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
                         }

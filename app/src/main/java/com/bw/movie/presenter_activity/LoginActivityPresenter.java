@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.RegisterActivity;
 import com.bw.movie.bean.LoginBean;
 import com.bw.movie.mvp.view.AppDelage;
@@ -111,7 +112,7 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                                 //SharedPreferencesUtils.putString(context,"birthday",userInfo.getBirthday());
                                 //储存手机号
                                 SharedPreferencesUtils.putString(context,"phone",userInfo.getPhone());
-                                Toast.makeText(context,"成功",Toast.LENGTH_SHORT).show();
+                                ((LoginActivity)context).finish();
                             }
                             Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
                         }
