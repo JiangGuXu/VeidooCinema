@@ -1,11 +1,11 @@
 package com.bw.movie.activity;
 
+import com.bw.movie.adapter.DetailsActivityPresenter;
 import com.bw.movie.mvp.presenter.BaseActivityPresenter;
-import com.bw.movie.presenter_activity.DetailsActivitypersenter;
 
-public class DetailsActivity extends BaseActivityPresenter<DetailsActivitypersenter>{
+public class DetailsActivity extends BaseActivityPresenter<DetailsActivityPresenter> {
     @Override
-    public Class<DetailsActivitypersenter> getClassPresenter() {
-        return DetailsActivitypersenter.class;
+    public Class<DetailsActivityPresenter> getClassPresenter() {
+        return DetailsActivityPresenter.class;
     }
 }

@@ -82,7 +82,6 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
             address = (TextView) itemView.findViewById(R.id.activity_address);
             distance = (TextView) itemView.findViewById(R.id.activity_distance);
 
-
         }
     }
 }

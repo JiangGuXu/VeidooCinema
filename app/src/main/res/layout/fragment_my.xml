@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--2018年11月27日 15:09:01 焦浩康 基本的创建-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,15 +23,18 @@
         android:src="@drawable/my_icon_remind_default" />
 
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/my_head_icon"
         android:layout_width="@dimen/dp_72"
         android:layout_height="@dimen/dp_72"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_70"
-        android:src="@drawable/my_head_icon" />
+        app:actualImageScaleType="fitCenter"
+        app:placeholderImage="@drawable/my_head_icon"
+        app:roundAsCircle="true" />
 
     <TextView
+        android:id="@+id/my_nickname_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_head_icon"
@@ -52,12 +56,12 @@
         android:background="@drawable/my_item_layout_shape">
 
         <RelativeLayout
-            android:layout_marginRight="@dimen/dp_54"
             android:id="@+id/my_messiage_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_24">
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_54">
 
             <ImageView
                 android:id="@+id/my_messiage_imageview"
@@ -91,11 +95,11 @@
 
         <RelativeLayout
             android:id="@+id/my_attention_layout"
-            android:layout_marginRight="@dimen/dp_54"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_24">
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_54">
 
             <ImageView
                 android:id="@+id/my_attention_imageview"
@@ -110,17 +114,17 @@
                 android:layout_below="@id/my_attention_imageview"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/my_attention_text"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:id="@+id/my_rccord_layout"
-            android:layout_marginRight="@dimen/dp_54"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/my_attention_layout"
-            android:layout_marginTop="@dimen/dp_24">
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_toRightOf="@id/my_attention_layout">
 
             <ImageView
                 android:id="@+id/my_rccord_imageview"
@@ -135,7 +139,7 @@
                 android:layout_below="@id/my_rccord_imageview"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/my_rccord_text"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -150,12 +154,12 @@
         android:background="@drawable/my_item_layout_shape">
 
         <RelativeLayout
-            android:layout_marginLeft="@dimen/dp_30"
             android:id="@+id/my_feedback_layout"
-            android:layout_marginRight="@dimen/dp_54"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_24">
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_54">
 
             <ImageView
                 android:id="@+id/my_feedback_imageview"
@@ -170,16 +174,16 @@
                 android:layout_below="@id/my_feedback_imageview"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/my_feedback_text"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_toRightOf="@id/my_feedback_layout"
             android:id="@+id/my_version_layout"
-            android:layout_marginRight="@dimen/dp_54"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_24">
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_54"
+            android:layout_toRightOf="@id/my_feedback_layout">
 
             <ImageView
                 android:id="@+id/my_version_imageview"
@@ -194,7 +198,7 @@
                 android:layout_below="@id/my_version_imageview"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/my_version_text"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14" />
         </RelativeLayout>
 
 

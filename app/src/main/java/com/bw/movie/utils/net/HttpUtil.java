@@ -47,7 +47,7 @@ public class HttpUtil {
             }
         }).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.17.8.100/")
+                .baseUrl("http://mobile.bwstudent.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
@@ -55,11 +55,14 @@ public class HttpUtil {
     }
 
     //get请求
-    public HttpUtil get(String url, Map<String, String> map) {
+    public HttpUtil get(String url, Map<String, String> map,Map<String, String> mapHead) {
         if (map == null) {
             map = new HashMap<>();
         }
-        observable = baseService.get(url, map);
+        if(mapHead==null){
+            mapHead = new HashMap<>();
+        }
+        observable = baseService.get(url, map,mapHead);
         setObservable();
         return this;
     }
@@ -73,7 +76,18 @@ public class HttpUtil {
         setObservable();
         return this;
     }
-
+    //postHead请求
+    public HttpUtil postHead(String url, Map<String, String> map,Map<String, String> mapHead) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        if(mapHead==null){
+            mapHead = new HashMap<>();
+        }
+        observable = baseService.postHead(url, map,mapHead);
+        setObservable();
+        return this;
+    }
     //上传文件
     public HttpUtil part(String url, Map<String, String> map, MultipartBody.Part part) {
         if (map == null) {

@@ -3,8 +3,11 @@
 
     <stroke
         android:width="@dimen/dp_1"
-        android:color="@color/color333333"></stroke>
-    <solid android:color="@color/colorffffff"></solid>
+        android:color="@color/color333333"
+        android:textColor="@color/colorffffff"></stroke>
+    <solid
+        android:color="@color/colorffffff"
+        android:textColor="@color/colorffffff"></solid>
     <corners android:radius="@dimen/dp_4"></corners>
 
 </shape>
