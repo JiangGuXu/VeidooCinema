@@ -79,6 +79,11 @@ public class FilmFragmentPresenter extends AppDelage {
             public void onClick(int position)  {
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
+
+            @Override
+            public void getmovieId(int movieId) {
+
+            }
         });
         //请求轮播数据
         doHttpBanner();

@@ -35,7 +35,6 @@
             android:text="@string/user_attention_cinema"
             android:textColor="@color/color333333"
             android:textSize="@dimen/sp_14" />
-
     </RadioGroup>
 
 

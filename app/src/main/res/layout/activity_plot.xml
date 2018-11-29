@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/activity_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_186"
+            android:background="@drawable/film_background">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/activity_detailss"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_30" />
+
+            <TextView
+                android:id="@+id/activity_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_toRightOf="@+id/activity_detailss"
+                android:text="哈哈哈哈哈哈"
+                android:textColor="@color/colorffffff" />
+
+            <TextView
+                android:id="@+id/activity_detailsname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_name"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_toRightOf="@+id/activity_detailss"
+                android:text="哈哈"
+                android:textColor="@color/colorffffff" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="@dimen/dp_24"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_30"
+                android:src="@mipmap/com_icon_navigation_default" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/film_vp_relative"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_223"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_85">
+
+            <recycler.coverflow.RecyclerCoverFlow
+                android:id="@+id/film_list_recyler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </recycler.coverflow.RecyclerCoverFlow>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_scheduling"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_id"></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

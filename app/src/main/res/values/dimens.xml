@@ -74,5 +74,6 @@
     <dimen name="dp_148">148dp</dimen>
     <dimen name="dp_103">103dp</dimen>
     <dimen name="dp_138">138dp</dimen>
+    <dimen name="sp_24">24sp</dimen>
 
 </resources>

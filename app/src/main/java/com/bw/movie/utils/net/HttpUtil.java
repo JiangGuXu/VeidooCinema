@@ -47,7 +47,7 @@ public class HttpUtil {
             }
         }).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.17.8.100/")
+                .baseUrl("http://mobile.bwstudent.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
