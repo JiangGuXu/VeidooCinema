@@ -1,11 +1,17 @@
 package com.bw.movie.presenter_fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.SearchActivity;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.model.FilmList;
@@ -38,6 +44,7 @@ public class FilmFragmentPresenter extends AppDelage {
     private List<String> urls = new ArrayList<>();
     private RecyclerCoverFlow mRecyclerCoverFlow;
     private MyAdapterFilmBanner myAdapterFilmBanner;
+    private RelativeLayout mRelativeLayout;
 
     @Override
     public int getLayoutId() {
@@ -55,6 +62,13 @@ public class FilmFragmentPresenter extends AppDelage {
         //添加数据
         addlist();
         //轮播图
+        mRelativeLayout = get(R.id.film_search_relative);
+        mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)context).startActivity(new Intent(context, SearchActivity.class));
+            }
+        });
         mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
         myAdapterFilmBanner = new MyAdapterFilmBanner(context);
         mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
