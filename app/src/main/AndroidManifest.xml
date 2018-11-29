@@ -47,6 +47,7 @@
         <activity android:name=".activity.WelcomeActivity"></activity>
         <activity android:name=".activity.LoginActivity"></activity>
         <activity android:name=".activity.UserAttentionActivity"></activity>
+        <activity android:name=".activity.UserInfoActivity"></activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
