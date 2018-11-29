@@ -2,8 +2,10 @@ package com.bw.movie.presenter_activity;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.UserInfoActivity;
@@ -23,6 +25,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private TextView user_info_emil;
     private TextView user_info_name;
     private Boolean isLogin;
+    private Button user_info_logout;
 
 
     @Override
@@ -40,7 +43,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         super.initData();
 
 
-        //返回图片
+        //页面返回图片
         user_info_back = get(R.id.user_info_back);
 
         user_info_head = get(R.id.user_info_head);
@@ -50,8 +53,12 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         user_info_phone = get(R.id.user_info_phone);
         user_info_emil = get(R.id.user_info_emil);
 
-        user_info_back.setOnClickListener(this);
+        //退出登录
+        user_info_logout = get(R.id.user_info_logout);
 
+
+        user_info_back.setOnClickListener(this);
+        user_info_logout.setOnClickListener(this);
 
         isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
         if (isLogin) {
@@ -74,11 +81,21 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             //点击返回按钮的时退出该activity返回到主activity
             case R.id.user_info_back:
                 ((UserInfoActivity) context).finish();
                 break;
+            case R.id.user_info_logout:
+                SharedPreferencesUtils.putBoolean(context, "isLogin", false);
+                Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
+                if (!isLogin) {
+                    Toast.makeText(context, "退出登录成功", Toast.LENGTH_SHORT).show();
+                    ((UserInfoActivity) context).finish();
+                } else {
+                    Toast.makeText(context, "退出成功失败", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
         }
     }
 }
