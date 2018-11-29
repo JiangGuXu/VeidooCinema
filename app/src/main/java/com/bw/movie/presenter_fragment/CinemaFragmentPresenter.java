@@ -72,8 +72,6 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
 
        //推荐影院
         dohttp();
-        //附近影院
-        doHttp();
         recommendimg.callOnClick();
     }
 
