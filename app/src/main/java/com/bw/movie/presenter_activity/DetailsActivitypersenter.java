@@ -106,7 +106,7 @@ public class DetailsActivitypersenter extends AppDelage {
         Map<String,String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1,map).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1,map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -132,7 +132,7 @@ public class DetailsActivitypersenter extends AppDelage {
         Map<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "10");
-        new HttpUtil().get(url, map).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
