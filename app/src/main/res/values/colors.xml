@@ -6,11 +6,13 @@
 
     <color name="color440a33">#440a33</color>
     <color name="colore8174e">#e8174e</color>
-
+    <color name="colorffffffff">#ffffffff</color>
     <color name="colorffffff">#ffffff</color>
     <color name="FFFFFF99">#99FFFFFF</color>
     <color name="colore8e8e8">#e8e8e8</color>
     <color name="color999">#999999</color>
+
+    <color name="colorFA487A">#FA487A</color>
     <color name="color999tou">#99999999</color>
     <color name="colordfdfdf">#dfdfdf</color>
     <color name="colorFCDD45">#FCDD45</color>

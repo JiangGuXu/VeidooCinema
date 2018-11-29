@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.bw.movie.model.FilmList;
 import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -98,7 +100,14 @@ public class FilmFragmentPresenter extends AppDelage {
             Map<String,String> map = new HashMap<>();
             map.put("page","1");
             map.put("count","10");
-            new HttpUtil().get(url,map,null).result(new HttpUtil.HttpListener() {
+        Map<String,String> mapHead = new HashMap<>();
+        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            int userId = SharedPreferencesUtils.getInt(context, "userId");
+            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+            mapHead.put("userId",userId+"");
+            mapHead.put("sessionId",sessionId);
+        }
+            new HttpUtil().get(url,map,mapHead).result(new HttpUtil.HttpListener() {
                 @Override
                 public void success(String data) {
                     Gson gson = new Gson();
@@ -119,7 +128,14 @@ public class FilmFragmentPresenter extends AppDelage {
         Map<String,String> map = new HashMap<>();
         map.put("page","1");
         map.put("count","10");
-        new HttpUtil().get(url,map,null).result(new HttpUtil.HttpListener() {
+        Map<String,String> mapHead = new HashMap<>();
+        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            int userId = SharedPreferencesUtils.getInt(context, "userId");
+            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+            mapHead.put("userId",userId+"");
+            mapHead.put("sessionId",sessionId);
+        }
+        new HttpUtil().get(url,map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
