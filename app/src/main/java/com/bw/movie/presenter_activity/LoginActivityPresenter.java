@@ -127,6 +127,10 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                             if (status.equals("0000")){
                                 //获取到返回结果的集合
                                 LoginBean.ResultBean resultBean = loginBean.getResult();
+                                //储存userid
+                                SharedPreferencesUtils.putInt(context,"userId",resultBean.getUserId());
+                                //储存sessionId
+                                SharedPreferencesUtils.putString(context,"sessionId",resultBean.getSessionId());
                                 //获取到用户信息的集合
                                 LoginBean.ResultBean.UserInfoBean userInfo = resultBean.getUserInfo();
                                 //登录状态改为true
