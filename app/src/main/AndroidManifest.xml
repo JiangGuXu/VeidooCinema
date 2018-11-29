@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bw.movie">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
@@ -21,7 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
     <application
         android:name=".utils.net.App"
         android:allowBackup="true"
@@ -30,19 +25,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name="com.amap.api.location.APSService">
+
+        </service>
+
         <meta-data
             android:name="design_width_in_dp"
             android:value="411" />
         <meta-data
             android:name="design_height_in_dp"
             android:value="731" />
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
-            //开发者申请的key
-        </meta-data>
-        <activity android:name=".activity.MainActivity">
 
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,9 +45,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WelcomeActivity"></activity>
-        <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.LoginActivity"></activity>
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.UserAttentionActivity"></activity>
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
+
+        </meta-data>
     </application>
 
 </manifest>
