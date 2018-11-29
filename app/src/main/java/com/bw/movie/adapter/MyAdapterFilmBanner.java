@@ -44,6 +44,7 @@ public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanne
             @Override
             public void onClick(View view) {
                 listener.onClick(i);
+                listener.getmovieId(list.get(i%list.size()).getId());
             }
         });
     }
@@ -69,6 +70,7 @@ public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanne
 
     public interface RecyclerItemListener {
         void onClick(int position);
+        void getmovieId(int movieId);
     }
 
     public void setListener(RecyclerItemListener listener) {

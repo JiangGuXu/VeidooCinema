@@ -6,16 +6,14 @@ import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
+import com.bw.movie.activity.NearActivity;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
-import com.bw.movie.adapter.NearAdepter;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
@@ -30,15 +28,13 @@ import java.util.Map;
 
 import recycler.coverflow.RecyclerCoverFlow;
 
-public class DetailsActivitypersenter extends AppDelage {
-
+public class NearActivitypersenter extends AppDelage {
     private SimpleDraweeView imageView;
     private TextView name;
     private TextView detailsname;
     private String name1;
     private String address;
     private String logo;
-
     private RecyclerView mListView;
     private MyAdapterFilmList myAdapterFilmList;
     private List<String> titles = new ArrayList<>();
@@ -54,7 +50,7 @@ public class DetailsActivitypersenter extends AppDelage {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_details;
+        return R.layout.activity_plot;
     }
 
     @Override
@@ -64,7 +60,7 @@ public class DetailsActivitypersenter extends AppDelage {
         recyclerView = (RecyclerView) get(R.id.activity_scheduling);
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
-        Intent intent = ((DetailsActivity) context).getIntent();
+        Intent intent = ((NearActivity) context).getIntent();
         //获取值
         name1 = intent.getStringExtra("name");
         address = intent.getStringExtra("address");
@@ -87,26 +83,26 @@ public class DetailsActivitypersenter extends AppDelage {
             @Override
             public void getmovieId(int movieId) {
                 mid = movieId;
-                Log.i("aaaaaaaaa",mid+"------");
-                doHttp(String.valueOf(cinemasId),String.valueOf(mid));
+                Log.i("aaaaaaaaa", mid + "------");
+                doHttp(String.valueOf(cinemasId), String.valueOf(mid));
 
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
         //请求轮播数据
         doHttpBanner();
-        Log.i("ccccccccc",cinemasId+"-------");
+        Log.i("ccccccccc", cinemasId + "-------");
         //排期数据
-        doHttp(String.valueOf(cinemasId),"16");
+        doHttp(String.valueOf(cinemasId), "6");
 
     }
 
-    private void doHttp(String cinemasId,String mid) {
+    private void doHttp(String cinemasId, String mid) {
         String url1 = "/movieApi/movie/v1/findMovieScheduleList";
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1,map).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1, map).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -116,6 +112,7 @@ public class DetailsActivitypersenter extends AppDelage {
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(s);
                 recyclerView.setAdapter(myAdapterDetails);
+                myAdapterDetails.notifyDataSetChanged();
             }
 
             @Override
@@ -123,7 +120,7 @@ public class DetailsActivitypersenter extends AppDelage {
 
             }
         });
-        myAdapterDetails.notifyDataSetChanged();
+
     }
 
     //请求轮播数据

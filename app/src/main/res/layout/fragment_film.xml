@@ -70,7 +70,9 @@
             <recycler.coverflow.RecyclerCoverFlow
                 android:id="@+id/film_list_recyler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></recycler.coverflow.RecyclerCoverFlow>
+                android:layout_height="match_parent">
+
+            </recycler.coverflow.RecyclerCoverFlow>
         </RelativeLayout>
 
         <View

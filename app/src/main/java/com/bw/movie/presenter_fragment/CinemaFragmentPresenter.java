@@ -183,11 +183,14 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
 
             case R.id.activity_recommended:
                 Log.i("test1", "onClick: ");
-
+                 near.setBackgroundResource(R.drawable.my_attention_title_shape_false);
+                 recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 dohttp();
                 break;
             case R.id.activity_near:
                 Log.i("test2", "onClick: ");
+                recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_false);
+                near.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttp();
                 break;
         }

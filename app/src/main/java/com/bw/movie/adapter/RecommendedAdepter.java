@@ -28,10 +28,7 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
     public RecommendedAdepter(Context context, List<Recommendedbean.Resultbean> list) {
         this.context = context;
         this.list = list;
-
     }
-
-
     @NonNull
     @Override
     public sRecommendedAdepter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -41,7 +38,7 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull sRecommendedAdepter sRecommendedAdepter, int i) {
+    public void onBindViewHolder(@NonNull sRecommendedAdepter sRecommendedAdepter, final int i) {
         sRecommendedAdepter.text.setText(list.get(i).getName());
         sRecommendedAdepter.address.setText(list.get(i).getAddress());
     // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
@@ -49,9 +46,25 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
         String[] split = images.split("\\|");
         sRecommendedAdepter.recommendimg.setImageURI(split[0]);
         sRecommendedAdepter.itemView.setOnClickListener(new View.OnClickListener() {
+
+            private String logo;
+            private String address;
+            private String name;
+
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context,DetailsActivity.class ));
+                //传值
+                name = list.get(i).getName();
+                address = list.get(i).getAddress();
+                String images = list.get(i).getLogo();
+                String[] split = images.split("\\|");
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("address",address);
+                intent.putExtra("logo",split[0]);
+                intent.putExtra("cinemasId",list.get(i).getId());
+                context.startActivity(intent);
+
             }
         });
     }
