@@ -75,7 +75,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
                 if (!isLogin) {
                     Intent intent = new Intent(context, LoginActivity.class);
-                    ((MainActivity)context).startActivity(intent);
+                    ((MainActivity) context).startActivity(intent);
                 }
                 break;
 
@@ -86,15 +86,22 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(context, UserInfoActivity.class);
-                    ((MainActivity)context).startActivity(intent);
+                    ((MainActivity) context).startActivity(intent);
                 }
                 break;
 
 
             //点击我的关注跳转到关注页面
             case R.id.my_attention_layout:
-                Intent intent = new Intent(context, UserAttentionActivity.class);
-                ((MainActivity)context).startActivity(intent);
+                Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
+
+                if (isLogin) {
+                    Intent intent = new Intent(context, UserAttentionActivity.class);
+                    ((MainActivity) context).startActivity(intent);
+                } else {
+                    Toast.makeText(context, "您还没有登录哦~快去登录吧~", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }
