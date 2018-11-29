@@ -50,6 +50,8 @@
         <activity android:name=".activity.SearchActivity"></activity>
         <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.DetailsActivity"></activity>
+        <activity android:name=".activity.NearActivity"></activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
