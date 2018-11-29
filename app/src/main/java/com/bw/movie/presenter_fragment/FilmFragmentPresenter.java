@@ -57,7 +57,7 @@ public class FilmFragmentPresenter extends AppDelage {
         mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
             @Override
-            public void onClick(int position) {
+            public void onClick(int position)  {
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
         });
