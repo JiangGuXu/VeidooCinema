@@ -79,7 +79,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url1, map).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success111: " + data);
@@ -104,7 +104,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "21");
-        new HttpUtil().get(url, map).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success222: " + data);

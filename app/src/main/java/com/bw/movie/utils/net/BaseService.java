@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -25,7 +26,9 @@ public interface BaseService {
 
 
     @GET
-    Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> map);
+    Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
+    @POST
+    Observable<ResponseBody> postHead(@Url String url, @QueryMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
     @FormUrlEncoded
     @POST
     @Headers({
