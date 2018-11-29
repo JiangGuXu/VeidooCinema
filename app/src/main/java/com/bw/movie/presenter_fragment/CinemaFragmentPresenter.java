@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.bw.movie.adapter.NearAdepter;
+import com.bw.movie.bean.Nearbean;
 import com.bw.movie.adapter.RecommendedAdepter;
 import com.bw.movie.R;
 import com.bw.movie.bean.Recommendedbean;
@@ -40,6 +43,8 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     public AMapLocationClient mlocationClient;
     private String city;
     private RecyclerView recyclerView;
+    private Button recommendimg;
+    private Button near;
 
     @Override
     public int getLayoutId() {
@@ -54,23 +59,55 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     @Override
     public void initData() {
         super.initData();
+        get(R.id.activity_loca);
         imageView = (ImageView) get(R.id.activity_loca);
+        recommendimg = (Button) get(R.id.activity_recommended);
+        near = (Button) get(R.id.activity_near);
         recyclerView = (RecyclerView) get(R.id.activity_recyclerView);
         imageView.setOnClickListener(this);
         mlocationClient = new AMapLocationClient(context);
 
-        dohttp();
+        near.setOnClickListener(this);
+        recommendimg.setOnClickListener(this);
 
+        dohttp();
+        doHttp();
+    }
+
+    private void doHttp() {
+        String url1 = "/movieApi/cinema/v1/findRecommendCinemas";
+        HashMap<String, String> map = new HashMap<>();
+        map.put("page", "1");
+        map.put("count", "6");
+        new HttpUtil().get(url1, map).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Log.i("chengtest", "success111: " + data);
+                Nearbean json = new Gson().fromJson(data, Nearbean.class);
+                List<Nearbean.Resultbean.NearbyCinemaListbean> list = json.getResult().getNearbyCinemaList();
+                NearAdepter shangweiAdapter = new NearAdepter(context, list);
+                LinearLayoutManager s = new LinearLayoutManager(context);
+                s.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(s);
+                recyclerView.setAdapter(shangweiAdapter);
+            }
+
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
 
     private void dohttp() {
         String url = "/movieApi/cinema/v1/findAllCinemas";
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
-        map.put("count", "2");
+        map.put("count", "21");
         new HttpUtil().get(url, map).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
+                Log.i("chengtest", "success222: " + data);
                 Recommendedbean json = new Gson().fromJson(data, Recommendedbean.class);
                 List<Recommendedbean.Resultbean> bean = json.getResult();
                 RecommendedAdepter shangweiAdapter = new RecommendedAdepter(context, bean);
@@ -140,8 +177,16 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 imageView.setOnClickListener(this);
                 Toast.makeText(context, city + "", Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.activity_recommended:
+                Log.i("test1", "onClick: ");
+                dohttp();
+                break;
+            case R.id.activity_near:
+                Log.i("test2", "onClick: ");
+                doHttp();
+                break;
         }
     }
-
 
 }
