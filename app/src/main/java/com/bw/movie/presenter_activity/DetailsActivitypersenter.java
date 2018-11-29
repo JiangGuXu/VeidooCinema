@@ -12,10 +12,12 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
+import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.adapter.NearAdepter;
+import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
@@ -45,7 +47,7 @@ public class DetailsActivitypersenter extends AppDelage {
     private List<FilmListData> list = new ArrayList<>();
     private List<String> urls = new ArrayList<>();
     private RecyclerCoverFlow mRecyclerCoverFlow;
-    private MyAdapterFilmBanner myAdapterFilmBanner;
+    private FilmDetailsAdapterBanner myAdapterFilmBanner;
     private RecyclerView recyclerView;
     private int cinemasId;
     private int mid;
@@ -76,9 +78,9 @@ public class DetailsActivitypersenter extends AppDelage {
 
         //轮播图
         mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
-        myAdapterFilmBanner = new MyAdapterFilmBanner(context);
+        myAdapterFilmBanner = new FilmDetailsAdapterBanner(context);
         mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
-        myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
+        myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
                 mRecyclerCoverFlow.scrollToPosition(position);
@@ -128,21 +130,19 @@ public class DetailsActivitypersenter extends AppDelage {
 
     //请求轮播数据
     private void doHttpBanner() {
-        String url = "/movieApi/movie/v1/findHotMovieList";
+        String url = "/movieApi/movie/v1/findMovieListByCinemaId";
         Map<String, String> map = new HashMap<>();
-        map.put("page", "1");
-        map.put("count", "10");
+        map.put("cinemaId", String.valueOf(cinemasId));
         new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
-                FilmListData filmListData = gson.fromJson(data, FilmListData.class);
-                List<FilmListData.ResultBean> result = filmListData.getResult();
+                DetailsBannerBean detailsBannerBean = gson.fromJson(data, DetailsBannerBean.class);
+                List<DetailsBannerBean.ResultBean> result = detailsBannerBean.getResult();
                 if (result.size() == 0) {
                     doHttpBanner();
                 }
                 myAdapterFilmBanner.setList(result);
-                mRecyclerCoverFlow.scrollToPosition(2);
             }
 
             @Override
