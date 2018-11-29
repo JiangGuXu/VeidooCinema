@@ -66,14 +66,16 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         recyclerView = (RecyclerView) get(R.id.activity_recyclerView);
         imageView.setOnClickListener(this);
         mlocationClient = new AMapLocationClient(context);
-
+         //两个点击事件
         near.setOnClickListener(this);
         recommendimg.setOnClickListener(this);
-
+       //推荐影院
         dohttp();
+        //附近影院
         doHttp();
     }
 
+    //附近影院解析
     private void doHttp() {
         String url1 = "/movieApi/cinema/v1/findRecommendCinemas";
         HashMap<String, String> map = new HashMap<>();
@@ -99,6 +101,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         });
     }
 
+    //推荐影院解析
     private void dohttp() {
         String url = "/movieApi/cinema/v1/findAllCinemas";
         HashMap<String, String> map = new HashMap<>();
@@ -180,6 +183,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
 
             case R.id.activity_recommended:
                 Log.i("test1", "onClick: ");
+
                 dohttp();
                 break;
             case R.id.activity_near:

@@ -14,28 +14,32 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanner.MyViewHodlerFilmBanner>{
+public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanner.MyViewHodlerFilmBanner> {
     private Context context;
-    public MyAdapterFilmBanner(Context context){
-        this.context=context;
+
+    public MyAdapterFilmBanner(Context context) {
+        this.context = context;
     }
+
     private List<FilmListData.ResultBean> list = new ArrayList();
-    public void setList( List<FilmListData.ResultBean> list ){
-        this.list=list;
+
+    public void setList(List<FilmListData.ResultBean> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public MyViewHodlerFilmBanner onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = View.inflate(context,R.layout.film_recyler_banner,null);
+        View view = View.inflate(context, R.layout.film_recyler_banner, null);
         MyViewHodlerFilmBanner myViewHodlerFilmBanner = new MyViewHodlerFilmBanner(view);
         return myViewHodlerFilmBanner;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHodlerFilmBanner myViewHodlerFilmBanner, final int i) {
-        myViewHodlerFilmBanner.img.setImageURI(list.get(i%list.size()).getImageUrl());
-        myViewHodlerFilmBanner.textView.setText(list.get(i%list.size()).getName());
+        myViewHodlerFilmBanner.img.setImageURI(list.get(i % list.size()).getImageUrl());
+        myViewHodlerFilmBanner.textView.setText(list.get(i % list.size()).getName());
         myViewHodlerFilmBanner.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +53,7 @@ public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanne
         return list.size();
     }
 
-    public class MyViewHodlerFilmBanner extends RecyclerView.ViewHolder{
+    public class MyViewHodlerFilmBanner extends RecyclerView.ViewHolder {
 
         private SimpleDraweeView img;
         private TextView textView;
@@ -60,15 +64,14 @@ public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanne
             textView = itemView.findViewById(R.id.film_banner_name);
         }
     }
+
     private RecyclerItemListener listener;
 
-    public interface RecyclerItemListener
-    {
+    public interface RecyclerItemListener {
         void onClick(int position);
     }
 
-    public void setListener(RecyclerItemListener listener)
-    {
+    public void setListener(RecyclerItemListener listener) {
         this.listener = listener;
     }
 
