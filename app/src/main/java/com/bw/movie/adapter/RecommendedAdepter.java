@@ -13,7 +13,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ * 推荐影院的适配器
+ * 2018年11月27日 15:18:30
+ * 程丹妮
+ * 创建了基本的这个presenter
+ * */
 public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.sRecommendedAdepter> {
     private List<Recommendedbean.Resultbean> list = new ArrayList<>();
     private Context context;
@@ -21,7 +26,10 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
     public RecommendedAdepter(Context context, List<Recommendedbean.Resultbean> list) {
         this.context = context;
         this.list = list;
+
     }
+
+
 
     @NonNull
     @Override
