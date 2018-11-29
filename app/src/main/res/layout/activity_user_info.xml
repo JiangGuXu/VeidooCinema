@@ -40,7 +40,7 @@
                 android:textSize="@dimen/sp_14" />
 
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_info_head"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"

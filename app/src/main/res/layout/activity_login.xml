@@ -21,8 +21,10 @@
             android:layout_height="@dimen/dp_50"
             android:background="@null"
             android:hint="手机号"
+            android:textColor="@color/colorffffff"
             android:layout_marginRight="@dimen/dp_30"
             android:id="@+id/login_phone"
+            android:inputType="phone"
             android:paddingLeft="@dimen/dp_10"
             android:textColorHint="@color/colorffffff"/>
 
@@ -53,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:background="@null"
+            android:textColor="@color/colorffffff"
             android:hint="密  码"
             android:inputType="textPassword"
             android:id="@+id/login_pass"
@@ -106,6 +109,7 @@
         android:layout_marginTop="@dimen/dp_330"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
+        android:id="@+id/login_btn"
         android:background="@drawable/login_btn_background"
         android:textColor="@color/colorffffff"
         android:textSize="@dimen/sp_20"

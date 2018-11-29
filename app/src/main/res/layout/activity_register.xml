@@ -23,6 +23,7 @@
                 android:layout_height="@dimen/dp_50"
                 android:id="@+id/register_name"
                 android:hint="昵称"
+                android:textColor="@color/colorffffff"
                 android:background="@null"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
@@ -47,6 +48,7 @@
                 android:layout_height="@dimen/dp_50"
                 android:id="@+id/register_sex"
                 android:hint="性别"
+                android:textColor="@color/colorffffff"
                 android:background="@null"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
@@ -71,6 +73,7 @@
                 android:layout_height="@dimen/dp_50"
                 android:id="@+id/register_data"
                 android:hint="出生日期"
+                android:textColor="@color/colorffffff"
                 android:background="@null"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
@@ -96,6 +99,7 @@
                 android:id="@+id/register_phone"
                 android:background="@null"
                 android:hint="手机号"
+                android:textColor="@color/colorffffff"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
         </LinearLayout>
@@ -120,6 +124,7 @@
                 android:id="@+id/register_email"
                 android:background="@null"
                 android:hint="邮箱"
+                android:textColor="@color/colorffffff"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
         </LinearLayout>
@@ -143,7 +148,9 @@
                 android:layout_height="@dimen/dp_50"
                 android:id="@+id/register_pwd"
                 android:background="@null"
+                android:inputType="textPassword"
                 android:hint="登录密码"
+                android:textColor="@color/colorffffff"
                 android:textColorHint="@color/colorffffff"
                 android:paddingLeft="@dimen/dp_5"/>
         </LinearLayout>
