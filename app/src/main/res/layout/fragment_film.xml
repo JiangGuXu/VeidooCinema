@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--2018年11月27日 15:07:18 焦浩康 基本的创建-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -9,88 +7,95 @@
    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_186"
             android:background="@drawable/film_background">
 
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/film_map_relative"
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
-            android:layout_marginTop="@dimen/dp_15"
             android:layout_marginLeft="@dimen/dp_5"
-            android:id="@+id/film_map_relative">
+            android:layout_marginTop="@dimen/dp_15">
+
             <ImageView
+                android:id="@+id/film_map_img"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
                 android:layout_centerInParent="true"
-                android:src="@drawable/com_icon_loc_white_default"
-                android:id="@+id/film_map_img"/>
+                android:src="@drawable/com_icon_loc_white_default" />
         </RelativeLayout>
+
         <TextView
+            android:id="@+id/film_map_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/film_map_text"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="@dimen/dp_30"
+            android:layout_toRightOf="@id/film_map_relative"
             android:text="北京"
             android:textColor="@color/colorffffff"
-            android:textSize="@dimen/sp_14"
-            android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/film_map_relative"/>
+            android:textSize="@dimen/sp_14" />
+
         <RelativeLayout
+            android:id="@+id/film_search_relative"
             android:layout_width="@dimen/dp_220"
             android:layout_height="@dimen/dp_24"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/dp_30"
             android:layout_marginRight="@dimen/dp_f170"
-            android:id="@+id/film_search_relative"
+            android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/film_search_shape">
+
             <ImageView
+                android:id="@+id/film_search_img"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
                 android:layout_marginLeft="@dimen/dp_6"
-                android:id="@+id/film_search_img"
-                android:src="@drawable/com_icon_search_default"/>
+                android:src="@drawable/com_icon_search_default" />
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/film_vp_relative"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_223"
-            android:layout_marginTop="@dimen/dp_85"
+            android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_24"
             android:layout_marginRight="@dimen/dp_24"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:id="@+id/film_vp_relative">
+            android:layout_marginTop="@dimen/dp_85">
+
             <recycler.coverflow.RecyclerCoverFlow
                 android:id="@+id/film_list_recyler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
             </recycler.coverflow.RecyclerCoverFlow>
         </RelativeLayout>
 
         <View
+            android:id="@+id/film_divider_view"
             android:layout_width="@dimen/dp_312"
             android:layout_height="@dimen/dp_3"
-            android:id="@+id/film_divider_view"
             android:layout_below="@+id/film_vp_relative"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/film_gradient3"
-            ></View>
+            android:background="@drawable/film_gradient3"></View>
+
         <View
             android:layout_width="@dimen/dp_30"
             android:layout_height="3dp"
-            android:background="@drawable/film_gradient1"
             android:layout_below="@id/film_vp_relative"
-            android:layout_centerHorizontal="true">
-        </View>
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/film_gradient1"></View>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/film_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/film_divider_view"
-            android:layout_marginLeft="@dimen/dp_24"
-            android:id="@+id/film_list_view">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_marginLeft="@dimen/dp_24"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
 </ScrollView>

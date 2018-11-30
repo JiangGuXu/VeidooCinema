@@ -8,22 +8,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.model.FilmListData;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanner.MyViewHodlerFilmBanner> {
+/*
+* 姜谷蓄
+* 影片详情页面的轮播
+*
+* */
+public class FilmDetailsAdapterBanner extends RecyclerView.Adapter<FilmDetailsAdapterBanner.MyViewHodlerFilmBanner> {
     private Context context;
 
-    public MyAdapterFilmBanner(Context context) {
+    public FilmDetailsAdapterBanner(Context context) {
         this.context = context;
     }
 
-    private List<FilmListData.ResultBean> list = new ArrayList();
+    private List<DetailsBannerBean.ResultBean> list = new ArrayList();
 
-    public void setList(List<FilmListData.ResultBean> list) {
+    public void setList(List<DetailsBannerBean.ResultBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }

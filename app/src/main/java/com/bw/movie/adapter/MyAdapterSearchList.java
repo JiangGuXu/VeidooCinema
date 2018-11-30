@@ -1,5 +1,6 @@
 package com.bw.movie.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.DetailsFilmActivity;
 import com.bw.movie.model.FilmListData;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -22,11 +24,13 @@ import java.util.Map;
 public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchList.MyViewHodlerSearchList> {
     private Context context;
     private List<FilmListData.ResultBean> list = new ArrayList();
+    private String title;
     public MyAdapterSearchList(Context context){
         this.context=context;
     }
-    public void setList( List<FilmListData.ResultBean> list ){
+    public void setList( List<FilmListData.ResultBean> list ,String title){
         this.list=list;
+        this.title=title;
         notifyDataSetChanged();
     }
     @NonNull
@@ -42,22 +46,29 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         myViewHodlerFilmList_recyler.img.setImageURI(list.get(i).getImageUrl());
         myViewHodlerFilmList_recyler.name.setText(list.get(i).getName());
         myViewHodlerFilmList_recyler.introduction.setText(list.get(i).getSummary());
+        myViewHodlerFilmList_recyler.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailsFilmActivity.class);
+                intent.putExtra("id",list.get(i).getId()+"");
+                context.startActivity(intent);
+            }
+        });
         if(list.get(i).isFollowMovie()){
-            myViewHodlerFilmList_recyler.focus.setImageResource(R.drawable.com_icon_collection_selected);
-        }else{
             myViewHodlerFilmList_recyler.focus.setImageResource(R.drawable.com_icon_collection_default);
+        }else{
+            myViewHodlerFilmList_recyler.focus.setImageResource(R.drawable.com_icon_collection_selected);
         }
         myViewHodlerFilmList_recyler.focus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean islogin = SharedPreferencesUtils.getBoolean(context, "islogin");
-                if(islogin){
+                if( SharedPreferencesUtils.getBoolean(context, "isLogin")){
                     int userId = SharedPreferencesUtils.getInt(context, "userId");
                     String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
                     if(list.get(i).isFollowMovie()){
-                        doHttpCancel(i,userId,sessionId);
-                    }else{
                         doHpptFocus (i,userId,sessionId);
+                    }else{
+                        doHttpCancel(i,userId,sessionId);
                     }
 
                 }else{
@@ -65,6 +76,7 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
                 }
             }
         });
+
     }
 
     private void doHttpCancel(int i, int userId, String sessionId) {
@@ -76,7 +88,7 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-
+                listener.fouceChange(title);
             }
 
             @Override
@@ -95,7 +107,7 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         new HttpUtil().get( "/movieApi/movie/v1/verify/followMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-                Toast.makeText(context, data+"", Toast.LENGTH_SHORT).show();
+                listener.fouceChange(title);
             }
 
             @Override
@@ -123,5 +135,12 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
             introduction = itemView.findViewById(R.id.search_recyler_Introduction);
             focus = itemView.findViewById(R.id.search_recyler_focus);
         }
+    }
+    private SearchFouceListener listener;
+    public void result(SearchFouceListener listener){
+        this.listener=listener;
+    }
+    public interface SearchFouceListener{
+        void fouceChange(String data);
     }
 }

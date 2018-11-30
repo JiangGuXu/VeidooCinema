@@ -1,6 +1,7 @@
 package com.bw.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.DetailsActivity;
+import com.bw.movie.activity.NearActivity;
 import com.bw.movie.bean.Nearbean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -33,13 +36,33 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull snearAdepter snearAdepter, int i) {
+    public void onBindViewHolder(@NonNull snearAdepter snearAdepter, final int i) {
         snearAdepter.text.setText(list.get(i).getName());
         snearAdepter.address.setText(list.get(i).getAddress());
         // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
         String images = list.get(i).getLogo();
         String[] split = images.split("\\|");
        snearAdepter.recommendimg.setImageURI(split[0]);
+        snearAdepter.itemView.setOnClickListener(new View.OnClickListener() {
+
+            private String address;
+            private String name;
+
+            @Override
+            public void onClick(View view) {
+                name = list.get(i).getName();
+                address = list.get(i).getAddress();
+                String images = list.get(i).getLogo();
+                String[] split = images.split("\\|");
+                Intent intent = new Intent(context, NearActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("address", address);
+                intent.putExtra("logo",split[0]);
+                intent.putExtra("cinemasId",list.get(i).getId());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override

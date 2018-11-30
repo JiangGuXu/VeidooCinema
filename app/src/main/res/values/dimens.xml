@@ -11,6 +11,7 @@
     <dimen name="dp_12">12dp</dimen>
     <dimen name="dp_15">15dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_33">33dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="dp_24">24dp</dimen>
     <dimen name="dp_f15">-15dp</dimen>
@@ -73,5 +74,6 @@
     <dimen name="dp_148">148dp</dimen>
     <dimen name="dp_103">103dp</dimen>
     <dimen name="dp_138">138dp</dimen>
+    <dimen name="sp_24">24sp</dimen>
 
 </resources>

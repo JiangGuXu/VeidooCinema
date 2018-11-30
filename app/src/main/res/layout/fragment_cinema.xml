@@ -30,16 +30,16 @@
 
     <Button
         android:id="@+id/activity_recommended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_83"
+        android:layout_height="@dimen/dp_36"
         android:layout_marginLeft="@dimen/dp_125"
         android:layout_marginTop="@dimen/dp_60"
         android:text="推荐影院" />
 
     <Button
         android:id="@+id/activity_near"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_83"
+        android:layout_height="@dimen/dp_36"
         android:layout_marginLeft="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_60"
         android:layout_toRightOf="@+id/activity_recommended"
