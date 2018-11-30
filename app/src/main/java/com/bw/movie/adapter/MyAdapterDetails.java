@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
@@ -35,14 +36,19 @@ public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyA
     }
 
     @Override
-    public void onBindViewHolder(@NonNull sMyAdapterDetails sMyAdapterDetails, int i) {
+    public void onBindViewHolder(@NonNull sMyAdapterDetails sMyAdapterDetails, final int i) {
         sMyAdapterDetails.name1.setText(list.get(i).getScreeningHall());
         sMyAdapterDetails.time.setText(list.get(i).getBeginTime());
         sMyAdapterDetails.te.setText(list.get(i).getDuration());
 
         sMyAdapterDetails.time1.setText(list.get(i).getEndTime() + "end");
         sMyAdapterDetails.price.setText("￥" + list.get(i).getSeatsTotal());
-
+        sMyAdapterDetails.lin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(i);
+            }
+        });
     }
 
     @Override
@@ -56,7 +62,7 @@ public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyA
         private final TextView price;
         private final TextView time1;
         private final TextView te;
-
+        private final LinearLayout lin;
         public sMyAdapterDetails(@NonNull View itemView) {
             super(itemView);
             te = (TextView) itemView.findViewById(R.id.activity_qian);
@@ -64,7 +70,18 @@ public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyA
             name1 = (TextView) itemView.findViewById(R.id.activity_name1);
             time = (TextView) itemView.findViewById(R.id.activity_time);
             price = (TextView) itemView.findViewById(R.id.activity_price);
-
+            lin = itemView.findViewById(R.id.details_lin);
         }
     }
+    //声明接口
+    private ItemClickListener listener;
+    //set方法
+    public void setListener(ItemClickListener listener) {
+        this.listener = listener;
+    }
+    //定义接口
+    public interface ItemClickListener{
+        void onItemClick(int position);
+    }
+
 }

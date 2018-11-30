@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
+import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
@@ -91,11 +92,25 @@ public class NearActivitypersenter extends AppDelage {
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
+        myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //获取到当前位置的bean对象
+                Detailsbean.Resultbean resultbean = result.get(position);
+                //跳转
+                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                //传递对象
+                intent1.putExtra("result",resultbean);
+                intent1.putExtra("name",name1);//影院名
+                intent1.putExtra("address",address);//影院的地址
+                ((NearActivity)context).startActivity(intent1);
+            }
+        });
         //请求轮播数据
         doHttpBanner();
         Log.i("ccccccccc", cinemasId + "-------");
         //排期数据
-        doHttp(String.valueOf(cinemasId), "6");
+        doHttp(String.valueOf(cinemasId), "4");
 
     }
 
