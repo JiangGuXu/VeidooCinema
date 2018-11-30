@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
+import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterDetailsinside;
@@ -70,7 +71,9 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private List<Detailsbean.Resultbean> result = new ArrayList<>();
     private MyAdapterDetails myAdapterDetails;
     private RelativeLayout layout;
-
+    private List<DetailsBannerBean.ResultBean> bannerBeanResult;
+    private String movie_name;
+    private int i;
     private RecyclerView view;
 
     private int cinemasId1;
@@ -132,6 +135,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
+                i = position;
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
 
@@ -140,7 +144,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 mid = movieId;
                 Log.i("aaaaaaaaa", mid + "------");
                 doHttp(String.valueOf(cinemasId), String.valueOf(mid));
-
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
@@ -150,7 +153,25 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         //排期数据
         doHttp(String.valueOf(cinemasId), "16");
         doHttpetails();
+        //点击事件
+        myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
 
+            @Override
+            public void onItemClick(int position) {
+                //获取到当前位置的bean对象
+                Detailsbean.Resultbean resultbean = result.get(position);
+                //获取banner中的电影名
+                //跳转
+                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                //传递对象
+                movie_name = bannerBeanResult.get(i).getName();
+                intent1.putExtra("result",resultbean);
+                intent1.putExtra("name",name1);//影院名
+                intent1.putExtra("address",address);//影院的地址
+                intent1.putExtra("movie_name",movie_name);//电影的名称
+                ((DetailsActivity)context).startActivity(intent1);
+            }
+        });
     }
     //打开
     private void showShopCar() {
@@ -184,13 +205,11 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-//                Toast.makeText(context,data,Toast.LENGTH_SHORT).show();
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
                 Detailsinsidebean.Resultbean result = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
                 resultbeans.add(result);
                 Intent intent = ((DetailsActivity) context).getIntent();
-                //name11 = intent.getStringExtra("name");
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
                 String vehicleRoute = intent.getStringExtra("vehicleRoute");
@@ -211,10 +230,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             }
         });
     }
-
-
-
-
 
     private void doHttp(String cinemasId, String mid) {
         String url1 = "/movieApi/movie/v1/findMovieScheduleList";
@@ -251,11 +266,11 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void success(String data) {
                 Gson gson = new Gson();
                 DetailsBannerBean detailsBannerBean = gson.fromJson(data, DetailsBannerBean.class);
-                List<DetailsBannerBean.ResultBean> result = detailsBannerBean.getResult();
+                bannerBeanResult = detailsBannerBean.getResult();
                 if (result.size() == 0) {
                     doHttpBanner();
                 }
-                myAdapterFilmBanner.setList(result);
+                myAdapterFilmBanner.setList(bannerBeanResult);
             }
 
             @Override

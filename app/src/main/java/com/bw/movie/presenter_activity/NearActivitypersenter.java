@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
+import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterDetailsinside;
@@ -69,6 +70,9 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     private TextView start_register1;
     private TextView start_login1;
     private ImageView img;
+    private List<DetailsBannerBean.ResultBean> bannerBeanResult;
+    private String movie_name;
+    private int i;
 
     @Override
     public int getLayoutId() {
@@ -123,6 +127,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
+                i=position;
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
 
@@ -135,6 +140,25 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
+        //点击事件
+        myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
+
+            @Override
+            public void onItemClick(int position) {
+                //获取到当前位置的bean对象
+                Detailsbean.Resultbean resultbean = result.get(position);
+                //获取banner中的电影名
+                //跳转
+                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                //传递对象
+                movie_name = bannerBeanResult.get(i).getName();
+                intent1.putExtra("result",resultbean);
+                intent1.putExtra("name",name1);//影院名
+                intent1.putExtra("address",address);//影院的地址
+                intent1.putExtra("movie_name",movie_name);//电影的名称
+                ((NearActivity)context).startActivity(intent1);
+            }
+        });
         //请求轮播数据
         doHttpBanner();
         Log.i("ccccccccc", cinemasId + "-------");
@@ -176,13 +200,11 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-//                Toast.makeText(context,data,Toast.LENGTH_SHORT).show();
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
                 Detailsinsidebean.Resultbean result = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
                 resultbeans.add(result);
                 Intent intent = ((NearActivity) context).getIntent();
-                //name11 = intent.getStringExtra("name");
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
                 String vehicleRoute = intent.getStringExtra("vehicleRoute");
@@ -240,11 +262,11 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             public void success(String data) {
                 Gson gson = new Gson();
                 DetailsBannerBean detailsBannerBean = gson.fromJson(data, DetailsBannerBean.class);
-                List<DetailsBannerBean.ResultBean> result = detailsBannerBean.getResult();
+                bannerBeanResult = detailsBannerBean.getResult();
                 if (result.size() == 0) {
                     doHttpBanner();
                 }
-                myAdapterFilmBanner.setList(result);
+                myAdapterFilmBanner.setList(bannerBeanResult);
             }
 
             @Override
