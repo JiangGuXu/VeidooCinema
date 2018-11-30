@@ -1,6 +1,7 @@
 package com.bw.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.DetailsFilmActivity;
 import com.bw.movie.model.FilmListData;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -33,9 +35,17 @@ public class MyAdapterFilmList_recyler extends RecyclerView.Adapter<MyAdapterFil
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHodlerFilmList_recyler myViewHodlerFilmList_recyler, int i) {
+    public void onBindViewHolder(@NonNull MyViewHodlerFilmList_recyler myViewHodlerFilmList_recyler, final int i) {
         myViewHodlerFilmList_recyler.img.setImageURI(list.get(i).getImageUrl());
         myViewHodlerFilmList_recyler.name.setText(list.get(i).getName());
+        myViewHodlerFilmList_recyler.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailsFilmActivity.class);
+                intent.putExtra("id",list.get(i).getId()+"");
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

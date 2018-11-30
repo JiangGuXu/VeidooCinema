@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.SearchActivity;
@@ -14,6 +15,7 @@ import com.bw.movie.adapter.MyAdapterSearchList;
 import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -57,7 +59,20 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(myAdapterSearchList);
-        doHttp("/movieApi/movie/v1/findHotMovieList");
+        doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
+        myAdapterSearchList.result(new MyAdapterSearchList.SearchFouceListener() {
+            @Override
+            public void fouceChange(String data) {
+                if("热门电影".equals(data)){
+                    doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
+                }else if("正在上映".equals(data)){
+                    doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
+                }else if("即将上映".equals(data)){
+                    doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
+                }
+            }
+
+        });
     }
 
     @Override
@@ -70,7 +85,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
                 mRelease.setTextColor(Color.BLACK);
                 mComingsoon.setBackgroundResource(R.drawable.corners_search);
                 mComingsoon.setTextColor(Color.BLACK);
-                doHttp("/movieApi/movie/v1/findHotMovieList");
+                doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
                 break;
             case R.id.search_release:
                 mHot.setBackgroundResource(R.drawable.corners_search);
@@ -79,7 +94,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
                 mRelease.setTextColor(Color.WHITE);
                 mComingsoon.setBackgroundResource(R.drawable.corners_search);
                 mComingsoon.setTextColor(Color.BLACK);
-                doHttp("/movieApi/movie/v1/findReleaseMovieList");
+                doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
                 break;
             case R.id.search_comingsoon:
                 mHot.setBackgroundResource(R.drawable.corners_search);
@@ -88,23 +103,30 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
                 mRelease.setTextColor(Color.BLACK);
                 mComingsoon.setBackgroundResource(R.drawable.corners_selected_search);
                 mComingsoon.setTextColor(Color.WHITE);
-                doHttp("/movieApi/movie/v1/findComingSoonMovieList");
+                doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
                 break;
         }
     }
 
 
-    private void doHttp(String url) {
+    private void doHttp(String url, final String title) {
         Map<String,String> map = new HashMap<>();
         map.put("page","1");
         map.put("count","10");
-        new HttpUtil().get(url,map,null).result(new HttpUtil.HttpListener() {
+        Map<String,String> mapHead = new HashMap<>();
+        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            int userId = SharedPreferencesUtils.getInt(context, "userId");
+            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+            mapHead.put("userId",userId+"");
+            mapHead.put("sessionId",sessionId);
+        }
+        new HttpUtil().get(url,map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
                 FilmListData filmListData = gson.fromJson(data, FilmListData.class);
                 List<FilmListData.ResultBean> result = filmListData.getResult();
-                myAdapterSearchList.setList(result);
+                myAdapterSearchList.setList(result,title);
             }
 
             @Override
