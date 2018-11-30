@@ -17,6 +17,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * 附近影院
+ * 程丹妮
+ * 创建了基本的这个NearAdepter
+ * */
 public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> {
     private List<Nearbean.Resultbean.NearbyCinemaListbean> list = new ArrayList<>();
     private Context context;
@@ -42,7 +47,7 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
         // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
         String images = list.get(i).getLogo();
         String[] split = images.split("\\|");
-       snearAdepter.recommendimg.setImageURI(split[0]);
+        snearAdepter.recommendimg.setImageURI(split[0]);
         snearAdepter.itemView.setOnClickListener(new View.OnClickListener() {
 
             private String address;
@@ -54,11 +59,12 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
                 address = list.get(i).getAddress();
                 String images = list.get(i).getLogo();
                 String[] split = images.split("\\|");
+                // 跳转附近影院的排期
                 Intent intent = new Intent(context, NearActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("address", address);
-                intent.putExtra("logo",split[0]);
-                intent.putExtra("cinemasId",list.get(i).getId());
+                intent.putExtra("logo", split[0]);
+                intent.putExtra("cinemasId", list.get(i).getId());
                 context.startActivity(intent);
 
             }
@@ -75,6 +81,7 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
         private TextView text;
         private TextView address;
         TextView distance;
+
         public snearAdepter(@NonNull View itemView) {
             super(itemView);
             recommendimg = (SimpleDraweeView) itemView.findViewById(R.id.activity_recommendimg);

@@ -65,6 +65,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_toRightOf="@+id/activity_qian"
             android:text="44.4"
+           android:textColor="#b11450"
             android:textSize="@dimen/sp_25" />
 
         <ImageView

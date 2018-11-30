@@ -12,7 +12,12 @@ import com.bw.movie.bean.Detailsbean;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ * 推荐影院详情Adapter
+ * 2018年11月27日 15:18:30
+ * 程丹妮
+ * 创建了基本的这个presenter
+ * */
 public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyAdapterDetails> {
     private List<Detailsbean.Resultbean> list = new ArrayList<>();
     private Context context;
@@ -39,7 +44,6 @@ public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyA
         sMyAdapterDetails.name1.setText(list.get(i).getScreeningHall());
         sMyAdapterDetails.time.setText(list.get(i).getBeginTime());
         sMyAdapterDetails.te.setText(list.get(i).getDuration());
-
         sMyAdapterDetails.time1.setText(list.get(i).getEndTime() + "end");
         sMyAdapterDetails.price.setText("￥" + list.get(i).getSeatsTotal());
 

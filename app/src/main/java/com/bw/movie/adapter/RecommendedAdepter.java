@@ -42,32 +42,33 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
         sRecommendedAdepter.text.setText(list.get(i).getName());
         sRecommendedAdepter.address.setText(list.get(i).getAddress());
     // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
-        String images = list.get(i).getLogo();
-        String[] split = images.split("\\|");
+    String images = list.get(i).getLogo();
+    String[] split = images.split("\\|");
         sRecommendedAdepter.recommendimg.setImageURI(split[0]);
         sRecommendedAdepter.itemView.setOnClickListener(new View.OnClickListener() {
 
-            private String logo;
-            private String address;
-            private String name;
+        private String logo;
+        private String address;
+        private String name;
 
-            @Override
-            public void onClick(View view) {
-                //传值
-                name = list.get(i).getName();
-                address = list.get(i).getAddress();
-                String images = list.get(i).getLogo();
-                String[] split = images.split("\\|");
-                Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("address",address);
-                intent.putExtra("logo",split[0]);
-                intent.putExtra("cinemasId",list.get(i).getId());
-                context.startActivity(intent);
+        @Override
+        public void onClick(View view) {
+            //传值
+            name = list.get(i).getName();
+            address = list.get(i).getAddress();
+            String images = list.get(i).getLogo();
+            String[] split = images.split("\\|");
+            //跳转到推荐影院的排期
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("name",name);
+            intent.putExtra("address",address);
+            intent.putExtra("logo",split[0]);
+            intent.putExtra("cinemasId",list.get(i).getId());
+            context.startActivity(intent);
 
-            }
-        });
-    }
+        }
+    });
+}
 
     @Override
     public int getItemCount() {
