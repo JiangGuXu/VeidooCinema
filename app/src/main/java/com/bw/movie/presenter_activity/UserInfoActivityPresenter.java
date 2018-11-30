@@ -1,6 +1,7 @@
 package com.bw.movie.presenter_activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.ReSetpasswordActivity;
 import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -26,6 +28,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private TextView user_info_name;
     private Boolean isLogin;
     private Button user_info_logout;
+    private ImageView user_info_reset_pwd;
 
 
     @Override
@@ -52,6 +55,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         user_info_birthday = get(R.id.user_info_birthday);
         user_info_phone = get(R.id.user_info_phone);
         user_info_emil = get(R.id.user_info_emil);
+        user_info_reset_pwd = get(R.id.user_info_reset_pwd);
 
         //退出登录
         user_info_logout = get(R.id.user_info_logout);
@@ -59,6 +63,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
         user_info_back.setOnClickListener(this);
         user_info_logout.setOnClickListener(this);
+        user_info_reset_pwd.setOnClickListener(this);
+
 
         isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
         if (isLogin) {
@@ -95,7 +101,11 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                     Toast.makeText(context, "退出成功失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
+            case R.id.user_info_reset_pwd:
+                Intent intent = new Intent(context, ReSetpasswordActivity.class);
+                ((UserInfoActivity) context).startActivity(intent);
+                ((UserInfoActivity) context).finish();
+                break;
         }
     }
 }

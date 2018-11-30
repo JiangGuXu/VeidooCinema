@@ -81,10 +81,12 @@ public class UserAttentionCinemaAdapter extends RecyclerView.Adapter<UserAttenti
                         new HttpUtil().get("/movieApi/cinema/v1/verify/cancelFollowCinema", parameterMap, headMap).result(new HttpUtil.HttpListener() {
                             @Override
                             public void success(String data) {
-                                Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                                 if (data.contains("取消关注成功")) {
                                     list.remove(i);
                                     notifyDataSetChanged();
+                                    Toast.makeText(context, "取消关注成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "取消失败", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
