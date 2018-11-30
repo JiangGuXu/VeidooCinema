@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
+import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
@@ -53,6 +55,9 @@ public class DetailsActivitypersenter extends AppDelage {
     private int mid;
     private List<Detailsbean.Resultbean> result = new ArrayList<>();
     private MyAdapterDetails myAdapterDetails;
+    private List<DetailsBannerBean.ResultBean> bannerBeanResult;
+    private String movie_name;
+    private int i;
 
     @Override
     public int getLayoutId() {
@@ -66,7 +71,7 @@ public class DetailsActivitypersenter extends AppDelage {
         recyclerView = (RecyclerView) get(R.id.activity_scheduling);
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
-        Intent intent = ((DetailsActivity) context).getIntent();
+        final Intent intent = ((DetailsActivity) context).getIntent();
         //获取值
         name1 = intent.getStringExtra("name");
         address = intent.getStringExtra("address");
@@ -83,6 +88,7 @@ public class DetailsActivitypersenter extends AppDelage {
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
+                i = position;
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
 
@@ -100,6 +106,26 @@ public class DetailsActivitypersenter extends AppDelage {
         Log.i("ccccccccc",cinemasId+"-------");
         //排期数据
         doHttp(String.valueOf(cinemasId),"16");
+        //点击事件
+        myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
+
+            @Override
+            public void onItemClick(int position) {
+                //获取到当前位置的bean对象
+                Detailsbean.Resultbean resultbean = result.get(position);
+                //获取banner中的电影名
+                //跳转
+                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                //传递对象
+                movie_name = bannerBeanResult.get(i).getName();
+                intent1.putExtra("result",resultbean);
+                intent1.putExtra("name",name1);//影院名
+                intent1.putExtra("address",address);//影院的地址
+                intent1.putExtra("movie_name",movie_name);//电影的名称
+                ((DetailsActivity)context).startActivity(intent1);
+            }
+        });
+
 
     }
 
@@ -138,11 +164,11 @@ public class DetailsActivitypersenter extends AppDelage {
             public void success(String data) {
                 Gson gson = new Gson();
                 DetailsBannerBean detailsBannerBean = gson.fromJson(data, DetailsBannerBean.class);
-                List<DetailsBannerBean.ResultBean> result = detailsBannerBean.getResult();
-                if (result.size() == 0) {
+                bannerBeanResult = detailsBannerBean.getResult();
+                if (bannerBeanResult.size() == 0) {
                     doHttpBanner();
                 }
-                myAdapterFilmBanner.setList(result);
+                myAdapterFilmBanner.setList(bannerBeanResult);
             }
 
             @Override

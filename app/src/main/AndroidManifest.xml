@@ -53,7 +53,6 @@
         <activity android:name=".activity.DetailsActivity"></activity>
         <activity android:name=".activity.NearActivity"></activity>
         <activity android:name=".activity.DetailsFilmActivity"></activity>
-        <activity android:name=".activity.ReSetpasswordActivity"></activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

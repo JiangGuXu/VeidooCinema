@@ -1,6 +1,7 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -182,13 +183,15 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 break;
 
             case R.id.activity_recommended:
-                Log.i("test1", "onClick: ");
+                near.setTextColor(Color.BLACK);
+                recommendimg.setTextColor(Color.WHITE);
                  near.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                  recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 dohttp();
                 break;
             case R.id.activity_near:
-                Log.i("test2", "onClick: ");
+                near.setTextColor(Color.WHITE);
+                recommendimg.setTextColor(Color.BLACK);
                 recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 near.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttp();
