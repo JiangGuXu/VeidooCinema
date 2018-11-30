@@ -54,12 +54,13 @@
         <ImageView
             android:layout_width="@dimen/dp_15"
             android:layout_height="@dimen/dp_15"
+            android:id="@+id/image_like"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/activity_address"
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_20"
-            android:src="@mipmap/com_icon_collection_selected" />
+            android:src="@drawable/cinema_like_defult" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.bw.movie.R;
 import com.bw.movie.bean.Recommendedbean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +39,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
 
     private Context context;
     private ImageView imageView;
+    private ImageView image_like;
     //声明mLocationOption对象
     public AMapLocationClientOption mLocationOption = null;
     //声明mlocationClient对象
@@ -63,6 +66,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         imageView = (ImageView) get(R.id.activity_loca);
         recommendimg = (Button) get(R.id.activity_recommended);
         near = (Button) get(R.id.activity_near);
+        image_like = get(R.id.image_like);
         recyclerView = (RecyclerView) get(R.id.activity_recyclerView);
         imageView.setOnClickListener(this);
         mlocationClient = new AMapLocationClient(context);
@@ -78,10 +82,13 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     //附近影院解析
     private void doHttp() {
         String url1 = "/movieApi/cinema/v1/findRecommendCinemas";
+        HashMap<String, String> headMap = new HashMap<>();
+        headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
+        headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1, map,headMap).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success111: " + data);
@@ -104,10 +111,13 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     //推荐影院解析
     private void dohttp() {
         String url = "/movieApi/cinema/v1/findAllCinemas";
+        HashMap<String, String> headMap = new HashMap<>();
+        headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
+        headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "21");
-        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url, map,headMap).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success222: " + data);
@@ -182,13 +192,15 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 break;
 
             case R.id.activity_recommended:
-                Log.i("test1", "onClick: ");
+                near.setTextColor(Color.BLACK);
+                recommendimg.setTextColor(Color.WHITE);
                  near.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                  recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 dohttp();
                 break;
             case R.id.activity_near:
-                Log.i("test2", "onClick: ");
+                near.setTextColor(Color.WHITE);
+                recommendimg.setTextColor(Color.BLACK);
                 recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 near.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttp();

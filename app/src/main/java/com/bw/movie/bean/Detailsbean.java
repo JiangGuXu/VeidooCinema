@@ -1,8 +1,9 @@
 package com.bw.movie.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Detailsbean {
+public class Detailsbean implements Serializable{
 
     /**
      * result : [{"beginTime":"17:05","duration":"118分钟","endTime":"19:03","id":3,"price":0.13,"screeningHall":"3厅","seatsTotal":180,"seatsUseCount":10,"status":1},{"beginTime":"19:20","duration":"118分钟","endTime":"21:18","id":136,"price":0.13,"screeningHall":"2号厅","seatsTotal":150,"seatsUseCount":50,"status":1},{"beginTime":"20:30","duration":"118分钟","endTime":"22:28","id":137,"price":0.13,"screeningHall":"1号厅","seatsTotal":66,"seatsUseCount":15,"status":1},{"beginTime":"11:50","duration":"118分钟","endTime":"14:02","id":138,"price":0.13,"screeningHall":"4厅","seatsTotal":21,"seatsUseCount":19,"status":1}]
@@ -38,7 +39,7 @@ public class Detailsbean {
         this.result = result;
     }
 
-    public static class Resultbean {
+    public static class Resultbean implements Serializable{
         /**
          * beginTime : 17:05
          * duration : 118分钟
