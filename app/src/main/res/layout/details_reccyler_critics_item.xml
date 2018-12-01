@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_20">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dp_24"
+            app:roundAsCircle="true"
+            android:id="@+id/details_critics_img"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/details_critics_name"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/color333333"
+            android:layout_toRightOf="@id/details_critics_img"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="24dp"
+            android:layout_below="@id/details_critics_img"
+            android:layout_marginTop="@dimen/dp_12"
+            android:id="@+id/details_critics_comments"/>
+    </RelativeLayout>
+
+</RelativeLayout>

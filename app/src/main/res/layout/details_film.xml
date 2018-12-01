@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color00000000"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/details_bg"
+        android:id="@+id/details_details_relative1"
+        android:layout_marginTop="@dimen/dp_120"
+        >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_90">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/details_details_img"
+            android:layout_width="@dimen/dp_111"
+            android:layout_height="@dimen/dp_149"
+            android:layout_marginLeft="@dimen/dp_24" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_toRightOf="@+id/details_details_img"
+            android:layout_marginTop="@dimen/dp_30"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="类型："
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/details_details_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="导演："
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/details_details_director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时长："
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/details_details_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="产地："
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/details_details_origin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/details_details_under"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_40"
+            android:src="@drawable/com_icon_down_default" />
+
+        <TextView
+            android:id="@+id/details_details_plot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_details_img"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="剧情简介"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/details_details_gradient1"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_3"
+            android:layout_below="@+id/details_details_plot"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_6"
+            android:src="@drawable/film_gradient1" />
+
+        <RelativeLayout
+            android:id="@+id/details_details_plotIntroduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/details_details_gradient1"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/details_details_Introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textSize="@dimen/dp_12" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/details_details_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/details_details_plotIntroduction"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/details_details_personnel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:text="演员人员"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/sp_16" />
+
+            <ImageView
+                android:id="@+id/details_details_gradient2"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_3"
+                android:layout_below="@+id/details_details_personnel"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_6"
+                android:src="@drawable/film_gradient1" />
+
+            <Button
+                android:id="@+id/details_details_name"
+                android:layout_width="@dimen/dp_75"
+                android:layout_height="@dimen/dp_32"
+                android:layout_below="@+id/details_details_gradient2"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_6"
+                android:background="@drawable/details_name"
+                android:text="演员名字"
+                android:textColor="@color/colorffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/details_details_role"
+                android:layout_width="@dimen/dp_75"
+                android:layout_height="@dimen/dp_32"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/details_details_gradient2"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_6"
+                android:background="@drawable/details_role"
+                android:text="饰演角色"
+                android:textColor="@color/colorffffff"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/details_details_relative"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/details_details_recyler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center"
+                android:text="下滑查看更多"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

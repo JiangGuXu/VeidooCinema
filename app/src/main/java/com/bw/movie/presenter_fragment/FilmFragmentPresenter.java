@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 
@@ -74,6 +75,12 @@ public class FilmFragmentPresenter extends AppDelage {
         mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
         myAdapterFilmBanner = new MyAdapterFilmBanner(context);
         mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
+        mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+            @Override
+            public void onItemSelected(int position) {
+                Toast.makeText(context, position+"=", Toast.LENGTH_SHORT).show();
+            }
+        });
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position)  {

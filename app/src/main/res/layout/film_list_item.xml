@@ -19,6 +19,7 @@
             android:layout_height="@dimen/dp_24"
             android:layout_alignParentRight="true"
             android:padding="@dimen/dp_5"
+            android:id="@+id/film_list_img"
             android:src="@drawable/com_icon_next_default"
             android:layout_marginRight="@dimen/dp_24"/>
     </RelativeLayout>
