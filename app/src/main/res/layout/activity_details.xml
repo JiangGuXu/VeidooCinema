@@ -77,7 +77,18 @@
         android:id="@+id/activity_scheduling"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/activity_id"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/activity_id">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/activity_img1"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/com_icon_my_default1" />
 
     <RelativeLayout
         android:id="@+id/start_ctrl"

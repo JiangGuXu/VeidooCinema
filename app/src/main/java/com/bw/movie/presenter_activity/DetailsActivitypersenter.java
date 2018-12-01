@@ -81,6 +81,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private TextView start_register;
     private TextView start_login;
     private ImageView img;
+    private ImageView img1;
 
 
     @Override
@@ -93,6 +94,13 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         super.initData();
         //persenter页面控件
         imageView = (SimpleDraweeView) get(R.id.activity_detailss);
+        img1 = (ImageView)get(R.id.activity_img1);
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((DetailsActivity)context).finish();
+            }
+        });
         //影院的控件
         img = (ImageView)  get(R.id.activity_img);
         textView = (TextView) get(R.id.line_details);
