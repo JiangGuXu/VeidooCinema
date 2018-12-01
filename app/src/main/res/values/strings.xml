@@ -29,5 +29,9 @@
     <string name="user_attention_title">我的关注</string>
     <string name="user_attention_film">电影</string>
     <string name="user_attention_cinema">影院</string>
+    <string name="user_feedback_title">意见反馈</string>
+    <string name="user_feedback_hint">写下您对产品的感受吧!工作人员将会在第一时间评估处理.</string>
+    <string name="user_feedback_winhint">感谢您对维度影院的关注与支持,我们会认真处理您的反馈,尽快修复和完善相关功能.</string>
+    <string name="user_feedback_wintitle">反馈成功</string>
 
 </resources>

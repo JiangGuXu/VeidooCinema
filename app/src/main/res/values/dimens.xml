@@ -81,5 +81,7 @@
     <dimen name="sp_13">13sp</dimen>
     <dimen name="dp_320">320dp</dimen>
     <dimen name="dp_325">325dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
 
 </resources>
