@@ -79,4 +79,50 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/activity_id"></android.support.v7.widget.RecyclerView>
 
+    <RelativeLayout
+        android:id="@+id/start_ctrl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_400"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:visibility="gone"
+      >
+
+        <TextView
+            android:id="@+id/start_login1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="详情"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/start_register1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_120"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_toRightOf="@+id/start_login1"
+            android:text="评论"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/activity_img"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/start_login1"
+            android:layout_marginRight="@dimen/dp_12"
+            android:src="@mipmap/com_icon_down_default" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_recyclertails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/activity_img">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </RelativeLayout>
