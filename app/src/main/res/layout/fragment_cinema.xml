@@ -28,28 +28,38 @@
             android:src="@drawable/com_icon_search_default" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/activity_recommended"
-        android:layout_width="@dimen/dp_83"
-        android:layout_height="@dimen/dp_36"
-        android:layout_marginLeft="@dimen/dp_125"
+    <LinearLayout
+        android:id="@+id/activity_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_60"
-        android:text="推荐影院" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/activity_near"
-        android:layout_width="@dimen/dp_83"
-        android:layout_height="@dimen/dp_36"
-        android:layout_marginLeft="@dimen/dp_32"
-        android:layout_marginTop="@dimen/dp_60"
-        android:layout_toRightOf="@+id/activity_recommended"
-        android:text="附近影院" />
+        <Button
+            android:id="@+id/activity_recommended"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_36"
+
+
+            android:text="推荐影院" />
+
+        <Button
+            android:id="@+id/activity_near"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_36"
+            android:layout_marginLeft="@dimen/dp_32"
+            android:layout_toRightOf="@+id/activity_recommended"
+            android:text="附近影院" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/activity_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/activity_near">
+        android:layout_below="@+id/activity_layout">
 
     </android.support.v7.widget.RecyclerView>
 

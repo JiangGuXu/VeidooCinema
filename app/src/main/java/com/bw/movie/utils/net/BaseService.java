@@ -27,8 +27,10 @@ public interface BaseService {
 
     @GET
     Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
+
+    @FormUrlEncoded
     @POST
-    Observable<ResponseBody> postHead(@Url String url, @QueryMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
+    Observable<ResponseBody> postHead(@Url String url, @FieldMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
     @FormUrlEncoded
     @POST
     Observable<ResponseBody> postForm(@Url String url, @QueryMap Map<String, String> map,@HeaderMap Map<String,String> mapHead,  @FieldMap Map<String, String> mapfrom);

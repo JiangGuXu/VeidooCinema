@@ -12,6 +12,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.UserAttentionActivity;
+import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
@@ -39,6 +40,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private Boolean isLogin;
     private RelativeLayout my_attention_layout;
     private TextView my_nickname_text;
+    private RelativeLayout my_feedback_layout;
 
     @Override
     public int getLayoutId() {
@@ -73,6 +75,9 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
         my_attention_layout.setOnClickListener(this);
 
 
+        //意见反馈布局 图片加文字
+        my_feedback_layout = get(R.id.my_feedback_layout);
+        my_feedback_layout.setOnClickListener(this);
     }
 
     @Override
@@ -118,6 +123,18 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
 
                 break;
+
+            //点击意见反馈跳转到意见反馈页面
+            case R.id.my_feedback_layout:
+                if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
+                    Intent intent = new Intent(context, UserFeedBackActivity.class);
+                    ((MainActivity) context).startActivity(intent);
+                } else {
+                    Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+
         }
     }
 
