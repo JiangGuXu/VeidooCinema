@@ -224,6 +224,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapterDetailsCritics);
         doHttpCritics();
+        myAdapterDetailsCritics.result(new MyAdapterDetailsCritics.CriticsFouceListener() {
+            @Override
+            public void criticsChange() {
+                doHttpCritics();
+            }
+        });
 
     }
 
@@ -244,10 +250,10 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
-                new HttpUtil().get("/movieApi/movie/v1/verify/movieComment",map,mapHead).result(new HttpUtil.HttpListener() {
+                mapHead.put("Content-Type","application/x-www-form-urlencoded");
+                new HttpUtil().postHead("/movieApi/movie/v1/verify/movieComment",map,mapHead).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
-                        Toast.makeText(context, data+"", Toast.LENGTH_SHORT).show();
                         Gson gson = new Gson();
                         Focus focus = gson.fromJson(data, Focus.class);
                         if("0000".equals(focus.getStatus())){
