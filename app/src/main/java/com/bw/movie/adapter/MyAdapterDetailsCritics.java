@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.model.Critics;
 import com.bw.movie.model.Focus;
+import com.bw.movie.utils.DateFormat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +47,13 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
         myViewHodler.img.setImageURI(list.get(i).getCommentHeadPic());
         myViewHodler.comments.setText(list.get(i).getCommentContent());
         myViewHodler.name.setText(list.get(i).getCommentUserName());
-        myViewHodler.time.setText(list.get(i).getCommentTime()+"");
+        DateFormatForYou dateFormatForYou = new DateFormatForYou();
+        try {
+            String s = dateFormatForYou.longToString(list.get(i).getCommentTime(), "yyyy-MM-dd HH:mm:ss");
+            myViewHodler.time.setText(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         myViewHodler.likeNum.setText(list.get(i).getGreatNum()+"");
         myViewHodler.comNum.setText(list.get(i).getReplyNum()+"");
         myViewHodler.like.setOnClickListener(new View.OnClickListener() {
