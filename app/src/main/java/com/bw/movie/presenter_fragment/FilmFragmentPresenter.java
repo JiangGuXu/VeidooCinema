@@ -48,6 +48,10 @@ public class FilmFragmentPresenter extends AppDelage {
     private RecyclerCoverFlow mRecyclerCoverFlow;
     private MyAdapterFilmBanner myAdapterFilmBanner;
     private RelativeLayout mRelativeLayout;
+    private int width;
+    private int widths;
+    private View view1;
+    private RelativeLayout relativeLayout;
 
     @Override
     public int getLayoutId() {
@@ -66,6 +70,10 @@ public class FilmFragmentPresenter extends AppDelage {
         addlist();
         //轮播图
         mRelativeLayout = get(R.id.film_search_relative);
+        View view = get(R.id.film_divider_view);
+        view1 = get(R.id.film_divider_view1);
+        width = view.getWidth();
+        relativeLayout = get(R.id.film_divider_relative);
         mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +86,10 @@ public class FilmFragmentPresenter extends AppDelage {
         mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
-                Toast.makeText(context, position+"=", Toast.LENGTH_SHORT).show();
+
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(view1.getWidth(),view1.getHeight());
+                layoutParams.leftMargin=widths*(position+1);
+                view1.setLayoutParams(layoutParams);
             }
         });
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
@@ -156,8 +167,9 @@ public class FilmFragmentPresenter extends AppDelage {
                 if(result.size()==0){
                     doHttpBanner();
                 }
+                widths = width/result.size();
                 myAdapterFilmBanner.setList(result);
-                mRecyclerCoverFlow.scrollToPosition(2);
+                mRecyclerCoverFlow.scrollToPosition(result.size()/2);
             }
 
             @Override
