@@ -46,6 +46,8 @@
     <dimen name="dp_149">149dp</dimen>
     <dimen name="dp_120">120dp</dimen>
     <dimen name="dp_124">124dp</dimen>
+    <dimen name="dp_110">110dp</dimen>
+    <dimen name="dp_500">500dp</dimen>
     <dimen name="dp_125">125dp</dimen>
     <dimen name="dp_126">126dp</dimen>
     <dimen name="dp_f170">-170dp</dimen>
