@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsFilmActivity;
 import com.bw.movie.activity.DialogUtils;
+import com.bw.movie.activity.FindCinemaActivity;
 import com.bw.movie.adapter.MyAdapterDetailsCritics;
 import com.bw.movie.adapter.MyAdapterDetailsCriticsComment;
 import com.bw.movie.adapter.MyAdapterDetailsDe;
@@ -130,6 +131,17 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 ((DetailsFilmActivity)context).finish();
             }
         },R.id.details_film_return);
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //购买
+                Intent intent = new Intent(context, FindCinemaActivity.class);
+                Toast.makeText(context, details.getResult().getName()+"=="+details.getResult().getId(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("movie_name",details.getResult().getName());
+                intent.putExtra("movieId",details.getResult().getId());
+                context.startActivity(intent);
+            }
+        },R.id.details_film_buy);
     }
     //点赞
     private void focus() {

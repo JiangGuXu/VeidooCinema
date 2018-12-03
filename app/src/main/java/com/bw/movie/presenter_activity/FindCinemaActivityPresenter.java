@@ -44,7 +44,7 @@ public class FindCinemaActivityPresenter extends AppDelage{
     @Override
     public void initData() {
         super.initData();
-        movie_name = get(R.id.movie_name);
+        movie_name = get(R.id.film_name);
         recyclerView = get(R.id.activity_recyclerView);
         adapter = new FindCinemaAdapter(context);
         //获取传值
