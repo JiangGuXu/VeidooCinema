@@ -78,7 +78,6 @@ public class FilmFragmentPresenter extends AppDelage {
         mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
-                Toast.makeText(context, position+"=", Toast.LENGTH_SHORT).show();
             }
         });
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {

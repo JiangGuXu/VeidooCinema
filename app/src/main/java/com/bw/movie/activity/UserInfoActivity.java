@@ -16,4 +16,5 @@ public class UserInfoActivity extends BaseActivityPresenter<UserInfoActivityPres
     public Class<UserInfoActivityPresenter> getClassPresenter() {
         return UserInfoActivityPresenter.class;
     }
+
 }

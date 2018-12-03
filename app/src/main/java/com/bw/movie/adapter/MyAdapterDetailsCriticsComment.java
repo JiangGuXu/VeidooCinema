@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.bean.DetailsComment;
 import com.bw.movie.model.Critics;
 import com.bw.movie.model.Focus;
 import com.bw.movie.utils.DateFormat.DateFormatForYou;
@@ -24,58 +25,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetailsCritics.MyViewHodlerDetailsCritics> {
+public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
     private Context context;
-    private List<Critics.ResultBean> list = new ArrayList<>();
-    public MyAdapterDetailsCritics(Context context){
+    private List<DetailsComment.ResultBean> list = new ArrayList<>();
+    private int isgreat;
+    private int greatnum;
+    private int id;
+    public MyAdapterDetailsCriticsComment(Context context){
         this.context=context;
     }
-    public  void setList(List<Critics.ResultBean > list ){
+    public  void setList(List<DetailsComment.ResultBean> list, int id, int isgreat, int greatnum ){
         this.list=list;
+        this.isgreat=isgreat;
+        this.greatnum=greatnum;
+        this.id=id;
         notifyDataSetChanged();
     }
     @NonNull
     @Override
-    public MyViewHodlerDetailsCritics onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = View.inflate(context, R.layout.details_reccyler_critics_item,null);
-        MyViewHodlerDetailsCritics myViewHodlerDetailsDe = new MyViewHodlerDetailsCritics(view);
+    public MyViewHodlerDetailsCriticsComment onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = View.inflate(context, R.layout.details_reccyler_comment_item,null);
+        MyViewHodlerDetailsCriticsComment myViewHodlerDetailsDe = new MyViewHodlerDetailsCriticsComment(view);
         return myViewHodlerDetailsDe;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHodlerDetailsCritics myViewHodler, int i) {
-        myViewHodler.img.setImageURI(list.get(i).getCommentHeadPic());
-        myViewHodler.comments.setText(list.get(i).getCommentContent());
-        myViewHodler.name.setText(list.get(i).getCommentUserName());
-        if(list.get(i).getIsGreat()==0){
+    public void onBindViewHolder(@NonNull MyViewHodlerDetailsCriticsComment myViewHodler, int i) {
+        myViewHodler.img.setImageURI(list.get(i).getReplyHeadPic());
+        myViewHodler.comments.setText(list.get(i).getReplyContent());
+        myViewHodler.name.setText(list.get(i).getReplyUserName());
+        if(isgreat==0){
             myViewHodler.like.setImageResource(R.drawable.com_icon_praise_default);
         }else{
             myViewHodler.like.setImageResource(R.drawable.com_icon_praise_selected);
         }
         DateFormatForYou dateFormatForYou = new DateFormatForYou();
         try {
-            String s = dateFormatForYou.longToString(list.get(i).getCommentTime(), "yyyy-MM-dd HH:mm:ss");
+            String s = dateFormatForYou.longToString(list.get(i).getReplyTime(), "yyyy-MM-dd HH:mm:ss");
             myViewHodler.time.setText(s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        myViewHodler.likeNum.setText(list.get(i).getGreatNum()+"");
-        myViewHodler.comNum.setText(list.get(i).getReplyNum()+"");
+        myViewHodler.likeNum.setText(greatnum+"");
         myViewHodler.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(list.get(i).getIsGreat()==0){
-                    like(list.get(i).getCommentId());
+                if(isgreat==0){
+                    like(id);
                 }else{
                     Toast.makeText(context, "不能重复点赞", Toast.LENGTH_SHORT).show();
                 }
 
-            }
-        });
-        myViewHodler.commentsImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.criticsComments(list.get(i).getIsGreat(),list.get(i).getGreatNum(),list.get(i).getCommentId());
             }
         });
     }
@@ -122,21 +122,19 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
         return list.size();
     }
 
-    public class MyViewHodlerDetailsCritics extends RecyclerView.ViewHolder{
+    public class MyViewHodlerDetailsCriticsComment extends RecyclerView.ViewHolder{
 
         private SimpleDraweeView img;
-        private TextView name,comments,time,comNum,likeNum;
-        private ImageView like,commentsImg;
-        public MyViewHodlerDetailsCritics(@NonNull View itemView) {
+        private TextView name,comments,time,likeNum;
+        private ImageView like;
+        public MyViewHodlerDetailsCriticsComment(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.details_critics_img);
-            name = itemView.findViewById(R.id.details_critics_name);
-            comments = itemView.findViewById(R.id.details_critics_comments);
-            time = itemView.findViewById(R.id.details_critics_time);
-            comNum = itemView.findViewById(R.id.details_critics_commentsnum);
-            likeNum = itemView.findViewById(R.id.details_critics_likenum);
-            like = itemView.findViewById(R.id.details_critics_like);
-            commentsImg = itemView.findViewById(R.id.details_critics_commentsimg);
+            img = itemView.findViewById(R.id.details_comment_img);
+            name = itemView.findViewById(R.id.details_comment_name);
+            comments = itemView.findViewById(R.id.details_comment_comments);
+            time = itemView.findViewById(R.id.details_comment_time);
+            likeNum = itemView.findViewById(R.id.details_comment_likenum);
+            like = itemView.findViewById(R.id.details_comment_like);
         }
     }
     private CriticsFouceListener listener;
@@ -145,6 +143,6 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
     }
     public interface CriticsFouceListener{
         void criticsChange();
-        void criticsComments(int isgreat,int greatnum,int commentId);
+        void criticsComments();
     }
 }
