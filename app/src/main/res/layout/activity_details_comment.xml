@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color00000000"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_120"
+        android:background="@drawable/details_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="影评"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color333333"
+            android:id="@+id/details_comment_plot"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_24"/>
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_3"
+            android:id="@+id/details_comment_gradient1"
+            android:src="@drawable/film_gradient1"
+            android:layout_below="@+id/details_comment_plot"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_6"/>
+        <ImageView
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginTop="@dimen/dp_10"
+            android:src="@drawable/com_icon_down_default"
+            android:layout_alignParentRight="true"
+            android:id="@+id/details_comment_under"
+            android:layout_marginRight="@dimen/dp_24"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/details_comment_gradient1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_10"
+                android:background="@color/colorf2f2f2"
+                android:id="@+id/details_comment_linear"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_weight="1"
+                    android:hint="写评论"
+                    android:padding="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:background="@drawable/critics_comments_bg"
+                    android:textColorHint="@color/color666666"
+                    android:id="@+id/details_comment_text"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发送"
+                    android:textSize="@dimen/sp_16"
+                    android:id="@+id/details_comment_send"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:textColor="@color/color333333"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/details_comment_recyler"
+
+                android:layout_above="@+id/details_comment_linear"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+            <ImageView
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:src="@drawable/com_icon_my_default1"
+                android:id="@+id/details_comment_return"
+                android:layout_margin="@dimen/dp_10"
+                android:layout_above="@+id/details_comment_linear"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

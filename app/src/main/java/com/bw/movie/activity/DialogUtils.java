@@ -41,6 +41,7 @@ public class DialogUtils extends AlertDialog{
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
+
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.dialogAnimation);
     }
