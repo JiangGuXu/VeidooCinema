@@ -137,7 +137,6 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         });
     }
 
-
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation != null) {

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_time"
             android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_toRightOf="@+id/activity_time"
             android:text="哈哈哈" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_20"
             android:layout_toRightOf="@+id/activity_time"
             android:text="国语3D" />
 
