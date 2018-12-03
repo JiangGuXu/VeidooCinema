@@ -204,7 +204,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 layout.setVisibility(View.GONE);
             }
         }, 1000);
-
     }
 
     //影院的详情

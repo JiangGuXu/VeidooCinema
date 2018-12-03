@@ -41,13 +41,14 @@ import java.util.List;
 import java.util.Map;
 
 import recycler.coverflow.RecyclerCoverFlow;
+
 /*
  * 附近影院排期页面presenter
  * 2018年11月29日 15:18:30
  * 程丹妮
  * 创建了基本的这个presenter
  * */
-public class NearActivitypersenter extends AppDelage implements View.OnClickListener{
+public class NearActivitypersenter extends AppDelage implements View.OnClickListener {
     private SimpleDraweeView imageView;
     private TextView name;
     private TextView detailsname;
@@ -90,12 +91,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         recyclerView = (RecyclerView) get(R.id.activity_scheduling);
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
-        img = (ImageView)  get(R.id.activity_img);
-        img1 = (ImageView)get(R.id.activity_img1);
+        img = (ImageView) get(R.id.activity_img);
+        img1 = (ImageView) get(R.id.activity_img1);
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((NearActivity)context).finish();
+                ((NearActivity) context).finish();
             }
         });
         img.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +138,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
-                i=position;
+                i = position;
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
 
@@ -159,14 +160,14 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 Detailsbean.Resultbean resultbean = result.get(position);
                 //获取banner中的电影名
                 //跳转
-                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                Intent intent1 = new Intent(context, SelectedSetActivity.class);
                 //传递对象
                 movie_name = bannerBeanResult.get(i).getName();
-                intent1.putExtra("result",resultbean);
-                intent1.putExtra("name",name1);//影院名
-                intent1.putExtra("address",address);//影院的地址
-                intent1.putExtra("movie_name",movie_name);//电影的名称
-                ((NearActivity)context).startActivity(intent1);
+                intent1.putExtra("result", resultbean);
+                intent1.putExtra("name", name1);//影院名
+                intent1.putExtra("address", address);//影院的地址
+                intent1.putExtra("movie_name", movie_name);//电影的名称
+                ((NearActivity) context).startActivity(intent1);
             }
         });
         //请求轮播数据
@@ -241,7 +242,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -267,7 +268,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         String url = "/movieApi/movie/v1/findMovieListByCinemaId";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", String.valueOf(cinemasId));
-        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -298,17 +299,18 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login1:
-                start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_register1.setBackgroundResource(R.drawable.almy_details_false);
+                start_login1.setBackgroundResource(R.drawable.my_details_true);
                 doHttnear();
                 break;
             case R.id.start_register1:
-                start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_login1.setBackgroundResource(R.drawable.almy_details_false);
+                start_register1.setBackgroundResource(R.drawable.my_details_true);
                 doHttpcomments();
                 break;
         }
     }
+
     //评论
     private void doHttpcomments() {
         String url3 = "/movieApi/cinema/v1/findAllCinemaComment";
@@ -316,12 +318,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         map.put("cinemaId", String.valueOf(cinemasId));
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url3, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Commentsben bean = new Gson().fromJson(data, Commentsben.class);
                 List<Commentsben.Resultbean> result = bean.getResult();
-                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context, result);
                 LinearLayoutManager s = new LinearLayoutManager(context);
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 view.setLayoutManager(s);
