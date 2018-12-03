@@ -23,11 +23,13 @@ import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
 import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
+import com.bw.movie.adapter.MyAdapterComments;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterDetailsinside;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.adapter.NearAdepter;
+import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
@@ -314,12 +316,28 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
 
     //评论
     private void doHttpcomments() {
-        LinearLayoutManager s = new LinearLayoutManager(context);
-        s.setOrientation(LinearLayoutManager.VERTICAL);
-        view.setLayoutManager(s);
+        String url3 = "/movieApi/cinema/v1/findAllCinemaComment";
+        Map<String, String> map = new HashMap<>();
+        map.put("cinemaId", String.valueOf(cinemasId));
+        map.put("page", "1");
+        map.put("count", "6");
+        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Commentsben bean = new Gson().fromJson(data, Commentsben.class);
+                List<Commentsben.Resultbean> result = bean.getResult();
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
+                LinearLayoutManager s = new LinearLayoutManager(context);
+                s.setOrientation(LinearLayoutManager.VERTICAL);
+                view.setLayoutManager(s);
+                view.setAdapter(myAdapterComments);
+            }
 
-        MyAdapterDetailsinside myAdapterDetailsinside = new MyAdapterDetailsinside(context, new ArrayList<Detailsinsidebean.Resultbean>());
-        view.setAdapter(myAdapterDetailsinside);
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
 
 

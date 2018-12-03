@@ -38,6 +38,7 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
         this.context = context;
         this.list = list;
     }
+
     @NonNull
     @Override
     public sRecommendedAdepter onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -50,56 +51,56 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
     public void onBindViewHolder(@NonNull sRecommendedAdepter sRecommendedAdepter, final int i) {
         sRecommendedAdepter.text.setText(list.get(i).getName());
         sRecommendedAdepter.address.setText(list.get(i).getAddress());
-    // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
-    String images = list.get(i).getLogo();
-    String[] split = images.split("\\|");
+        // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
+        String images = list.get(i).getLogo();
+        String[] split = images.split("\\|");
         sRecommendedAdepter.recommendimg.setImageURI(split[0]);
         sRecommendedAdepter.itemView.setOnClickListener(new View.OnClickListener() {
 
-        private String logo;
-        private String address;
-        private String name;
+            private String logo;
+            private String address;
+            private String name;
 
-        @Override
-        public void onClick(View view) {
-            //传值
-            name = list.get(i).getName();
-            address = list.get(i).getAddress();
-            String images = list.get(i).getLogo();
-            String[] split = images.split("\\|");
-            //跳转到推荐影院的排期
-            Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("address",address);
-            intent.putExtra("logo",split[0]);
-            intent.putExtra("cinemasId",list.get(i).getId());
-            context.startActivity(intent);
+            @Override
+            public void onClick(View view) {
+                //传值
+                name = list.get(i).getName();
+                address = list.get(i).getAddress();
+                String images = list.get(i).getLogo();
+                String[] split = images.split("\\|");
+                //跳转到推荐影院的排期
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("address", address);
+                intent.putExtra("logo", split[0]);
+                intent.putExtra("cinemasId", list.get(i).getId());
+                context.startActivity(intent);
 
-        }
+            }
 
-    });
+        });
         sRecommendedAdepter.image_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //判断是否登录
-                if (SharedPreferencesUtils.getBoolean(context,"isLogin")){
+                if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
                     //如果登录的话请求关注的接口关注该影院
-                    Map<String,String> map = new HashMap();//添加参数
-                    map.put("cinemaId",String.valueOf(list.get(i).getId()));//传入影院id
+                    Map<String, String> map = new HashMap();//添加参数
+                    map.put("cinemaId", String.valueOf(list.get(i).getId()));//传入影院id
                     //添加头部信息
-                    Map<String,String> headMap = new HashMap<>();
-                    headMap.put("userId",String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
-                    headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
-                    headMap.put("Content-Type","application/x-www-form-urlencoded");
+                    Map<String, String> headMap = new HashMap<>();
+                    headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context, "userId")));
+                    headMap.put("sessionId", SharedPreferencesUtils.getString(context, "sessionId"));
+                    headMap.put("Content-Type", "application/x-www-form-urlencoded");
                     //请求接口
-                    new HttpUtil().get("/movieApi/cinema/v1/verify/followCinema",map,headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil().get("/movieApi/cinema/v1/verify/followCinema", map, headMap).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             RegisterBean followBean = new Gson().fromJson(data, RegisterBean.class);
-                            if (followBean.getStatus().equals("0000")){
-                                Toast.makeText(context,followBean.getMessage(),Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(context,followBean.getMessage(),Toast.LENGTH_SHORT).show();
+                            if (followBean.getStatus().equals("0000")) {
+                                Toast.makeText(context, followBean.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, followBean.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -108,12 +109,12 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
 
                         }
                     });
-                }else {
-                    Toast.makeText(context,"您还未登陆",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "您还未登陆", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-}
+    }
 
     @Override
     public int getItemCount() {
@@ -126,7 +127,7 @@ public class RecommendedAdepter extends RecyclerView.Adapter<RecommendedAdepter.
         private TextView text;
         private TextView address;
         private ImageView image_like;
-         TextView distance;
+        TextView distance;
 
         public sRecommendedAdepter(@NonNull View itemView) {
             super(itemView);
