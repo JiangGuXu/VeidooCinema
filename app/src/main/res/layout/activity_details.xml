@@ -77,16 +77,28 @@
         android:id="@+id/activity_scheduling"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/activity_id"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/activity_id">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/activity_img1"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/com_icon_my_default1" />
 
     <RelativeLayout
         android:id="@+id/start_ctrl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_400"
+        android:layout_height="@dimen/dp_600"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/start_login"
@@ -108,11 +120,11 @@
             android:textSize="18sp" />
 
         <ImageView
+            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/activity_img"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_50"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/start_login"
             android:layout_marginRight="@dimen/dp_12"
             android:src="@mipmap/com_icon_down_default" />
 
