@@ -72,8 +72,8 @@ public class PlayCinemaActivityPresenter extends AppDelage{
         String time = ((PlayCinemaActivity) context).getIntent().getStringExtra("time");
         String country = ((PlayCinemaActivity) context).getIntent().getStringExtra("country");
         String logo = ((PlayCinemaActivity) context).getIntent().getStringExtra("logo");
-        String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
-        String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
+        String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
+        String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
         int movieId = ((PlayCinemaActivity) context).getIntent().getIntExtra("movieId", 22);
         int cinemaId = ((PlayCinemaActivity) context).getIntent().getIntExtra("cinemaId", 22);
 
