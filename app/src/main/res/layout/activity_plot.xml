@@ -120,7 +120,6 @@
             android:id="@+id/activity_img"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/start_login1"
             android:layout_marginRight="@dimen/dp_12"
             android:src="@mipmap/com_icon_down_default" />

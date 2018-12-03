@@ -83,6 +83,16 @@
     <dimen name="dp_320">320dp</dimen>
     <dimen name="dp_325">325dp</dimen>
     <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_110">110dp</dimen>
+    <dimen name="dp_111">111dp</dimen>
+    <dimen name="dp_149">149dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_600">600dp</dimen>
+    <dimen name="dp_500">500dp</dimen>
+    <dimen name="dp_73">73dp</dimen>
+    <dimen name="dp_34">34dp</dimen>
+    <dimen name="dp_38">38dp</dimen>
+    <dimen name="sp_36">36dp</dimen>
 
 
 </resources>
