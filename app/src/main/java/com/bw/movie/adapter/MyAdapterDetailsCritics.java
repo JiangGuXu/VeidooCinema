@@ -86,7 +86,6 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
                 int userId = SharedPreferencesUtils.getInt(context, "userId");
                 String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
                 Map<String,String> map = new HashMap<>();
-                Toast.makeText(context, commentId+"", Toast.LENGTH_SHORT).show();
                 map.put("commentId",commentId+"");
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
@@ -94,7 +93,6 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
                 new HttpUtil().postHead("/movieApi/movie/v1/verify/movieCommentGreat",map,mapHead).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
-                        Toast.makeText(context, data+"", Toast.LENGTH_SHORT).show();
                         Gson gson = new Gson();
                         Focus focus = gson.fromJson(data, Focus.class);
                         if("0000".equals(focus.getStatus())){

@@ -136,9 +136,13 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             public void onClick(View view) {
                 //购买
                 Intent intent = new Intent(context, FindCinemaActivity.class);
-                Toast.makeText(context, details.getResult().getName()+"=="+details.getResult().getId(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("movie_name",details.getResult().getName());
                 intent.putExtra("movieId",details.getResult().getId());
+                intent.putExtra("Director",details.getResult().getDirector());
+                intent.putExtra("type",details.getResult().getMovieTypes());
+                intent.putExtra("time",details.getResult().getDuration());
+                intent.putExtra("country",details.getResult().getPlaceOrigin());
+                intent.putExtra("logo",details.getResult().getImageUrl());
                 context.startActivity(intent);
             }
         },R.id.details_film_buy);
@@ -319,7 +323,6 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 String trim = text1.getText().toString().trim();
-                Toast.makeText(context, trim+"", Toast.LENGTH_SHORT).show();
                 if(TextUtils.isEmpty(trim)){
                     Toast.makeText(context, "请输入内容", Toast.LENGTH_SHORT).show();
                     return;
@@ -341,6 +344,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                         if("0000".equals(focus.getStatus())){
                             Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
                             doHttpCriticsComments(isgreat,greatnum,commentId);
+                            text1.setText("");
                         }else{
                             Toast.makeText(context, "评论失败", Toast.LENGTH_SHORT).show();
                         }
@@ -359,7 +363,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         }
     }
         //查看影评评论回复
-    private void doHttpCriticsComments(int CommentId, int isgreat, int greatnum) {
+    private void doHttpCriticsComments( int isgreat, int greatnum,int CommentId) {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 int userId = SharedPreferencesUtils.getInt(context, "userId");
@@ -377,7 +381,13 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                         Gson gson = new Gson();
                         DetailsComment detailsComment = gson.fromJson(data, DetailsComment.class);
                         List<DetailsComment.ResultBean> result = detailsComment.getResult();
-                        myAdapterDetailsCriticsComment.setList(result,isgreat,greatnum,CommentId);
+                        if("0000".equals(detailsComment.getStatus())){
+                            if(!detailsComment.getMessage().equals("无数据")){
+                                myAdapterDetailsCriticsComment.setList(result,isgreat,greatnum,CommentId);
+                            }
+
+                        }
+
                     }
 
                     @Override
