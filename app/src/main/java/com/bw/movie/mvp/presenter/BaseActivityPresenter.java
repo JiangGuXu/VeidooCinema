@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.UltimateBar;
+
 /**
  *
  * author:赵瑜峰
@@ -30,6 +32,7 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
         setContentView(daleagt.view());
         daleagt.getContext(this);
         daleagt.initData();
+        UltimateBar.newImmersionBuilder().applyNav(false).build(this).apply();
     }
     @Override
     public void onResume() {
