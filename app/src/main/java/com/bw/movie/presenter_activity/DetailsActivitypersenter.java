@@ -224,7 +224,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 String phone1 = intent.getStringExtra("phone");
                 String vehicleRoute = intent.getStringExtra("vehicleRoute");
                 String content = intent.getStringExtra("content");
-
                 cinemasId1 = intent.getIntExtra("cinemasId", 2);
                 LinearLayoutManager s = new LinearLayoutManager(context);
                 s.setOrientation(LinearLayoutManager.VERTICAL);
@@ -302,13 +301,13 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login:
-                start_register.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_login.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_register.setBackgroundResource(R.drawable.almy_details_false);
+                start_login.setBackgroundResource(R.drawable.my_details_true);
                 doHttpetails();
                 break;
             case R.id.start_register:
-                start_login.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_register.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_login.setBackgroundResource(R.drawable.almy_details_false);
+                start_register.setBackgroundResource(R.drawable.my_details_true);
                 doHttpcomments();
                 break;
         }
