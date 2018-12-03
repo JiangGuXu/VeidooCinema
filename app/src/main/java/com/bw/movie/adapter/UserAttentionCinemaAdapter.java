@@ -93,7 +93,7 @@ public class UserAttentionCinemaAdapter extends RecyclerView.Adapter<UserAttenti
 
                             @Override
                             public void fail(String data) {
-                                Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "取消请求失败", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

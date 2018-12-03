@@ -22,7 +22,7 @@
     <string name="user_info_name">用户昵称</string>
     <string name="user_info_sex">用户性别</string>
     <string name="user_info_birthday">出生日期</string>
-    <string name="user_info_phone">手机号</string>
+    <string name="user_info_phone">手机号码</string>
     <string name="user_info_emil">邮箱</string>
     <string name="user_info_reset">重置密码</string>
     <string name="user_info_reset_pwd">重置密码</string>
@@ -33,5 +33,10 @@
     <string name="user_feedback_hint">写下您对产品的感受吧!工作人员将会在第一时间评估处理.</string>
     <string name="user_feedback_winhint">感谢您对维度影院的关注与支持,我们会认真处理您的反馈,尽快修复和完善相关功能.</string>
     <string name="user_feedback_wintitle">反馈成功</string>
+    <string name="user_info_reset_info">修改个人信息</string>
+    <string name="user_reset_info_title">修改个人信息</string>
+    <string name="user_reset_info_name">请输入新昵称</string>
+    <string name="user_reset_info_sex">性别</string>
+    <string name="user_reset_info_birthday">请输入出生日期</string>
 
 </resources>

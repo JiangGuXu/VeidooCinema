@@ -56,6 +56,7 @@
         <activity android:name=".activity.SelectedSetActivity"></activity>
         <activity android:name=".activity.ReSetpasswordActivity"></activity>
         <activity android:name=".activity.UserFeedBackActivity"></activity>
+        <activity android:name=".activity.UserReSertInfoActivity"></activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
