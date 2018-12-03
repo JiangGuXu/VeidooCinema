@@ -88,6 +88,21 @@ public class HttpUtil {
         setObservable();
         return this;
     }
+    //postHead请求
+    public HttpUtil postForm(String url, Map<String, String> map,Map<String, String> mapForm, Map<String, String> mapHead) {
+        if(map==null){
+            mapHead = new HashMap<>();
+        }
+        if (map == null) {
+            mapForm = new HashMap<>();
+        }
+        if(mapHead==null){
+            mapHead = new HashMap<>();
+        }
+        observable = baseService.postForm(url,map, mapForm,mapHead);
+        setObservable();
+        return this;
+    }
     //上传文件
     public HttpUtil part(String url, Map<String, String> map, MultipartBody.Part part) {
         if (map == null) {

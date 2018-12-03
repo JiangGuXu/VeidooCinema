@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <TextView
+        android:id="@+id/user_feedback_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/user_feedback_title"
+        android:textColor="@color/color333333"
+        android:textSize="@dimen/sp_14" />
+
+    <RelativeLayout
+        android:id="@+id/user_feedback_editlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_feedback_title">
+
+        <RelativeLayout
+            android:id="@+id/user_feedback_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="@drawable/my_item_layout_shape">
+
+            <EditText
+                android:id="@+id/user_feedback_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_2"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="@string/user_feedback_hint"
+                android:textColorHint="@color/color999999"
+                android:textSize="@dimen/sp_12" />
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/user_feedback_commit"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_25"
+            android:layout_below="@+id/user_feedback_layout1"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="@drawable/my_attention_title_shape_true"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/colorffffff"
+            android:textSize="@dimen/sp_12" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/user_feedback_back"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:src="@drawable/com_icon_my_default1" />
+
+    <RelativeLayout
+        android:id="@+id/user_feedback_winlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24">
+
+        <ImageView
+            android:id="@+id/user_feedback_win_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/group_2" />
+
+        <TextView
+            android:id="@+id/user_feedback_win_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_feedback_win_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:text="@string/user_feedback_wintitle"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_feedback_win_title"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:text="@string/user_feedback_winhint"
+            android:textColor="@color/color66666"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

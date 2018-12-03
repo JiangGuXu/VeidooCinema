@@ -12,9 +12,11 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsFilmActivity;
 import com.bw.movie.model.FilmListData;
+import com.bw.movie.model.Focus;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +90,14 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
+                Gson gson = new Gson();
+                Focus focus = gson.fromJson(data, Focus.class);
+                if("0000".equals(focus.getStatus())){
+                    Toast.makeText(context, "取消关注成功", Toast.LENGTH_SHORT).show();
+                    listener.fouceChange(title);
+                }else{
+                    Toast.makeText(context, "取消关注失败", Toast.LENGTH_SHORT).show();
+                }
                 listener.fouceChange(title);
             }
 
@@ -107,7 +117,15 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         new HttpUtil().get( "/movieApi/movie/v1/verify/followMovie",map,mapHead).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-                listener.fouceChange(title);
+                Gson gson = new Gson();
+                Focus focus = gson.fromJson(data, Focus.class);
+                if("0000".equals(focus.getStatus())){
+                    Toast.makeText(context, "关注成功", Toast.LENGTH_SHORT).show();
+                    listener.fouceChange(title);
+                }else{
+                    Toast.makeText(context, "关注失败", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override

@@ -9,7 +9,7 @@
                 android:layout_height="@dimen/dp_164"
                 android:layout_marginRight="@dimen/dp_20"
                 android:id="@+id/film_list_recyler_img"
-
+                app:roundedCornerRadius="@dimen/dp_8"
                 />
             <RelativeLayout
                 android:layout_width="@dimen/dp_126"
