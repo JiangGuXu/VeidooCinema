@@ -73,6 +73,7 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:background="#d3d1d1"></View>
+
     </LinearLayout>
 
 </LinearLayout>
