@@ -55,6 +55,13 @@ public class FindCinemaAdapter extends RecyclerView.Adapter<FindCinemaAdapter.My
         String images = list.get(i).getLogo();
         String[] split = images.split("\\|");
         myViewHolder.recommendimg.setImageURI(split[0]);
+        //条目的点击事件
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(i);
+            }
+        });
         //点击关注影院
         myViewHolder.image_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,5 +119,16 @@ public class FindCinemaAdapter extends RecyclerView.Adapter<FindCinemaAdapter.My
             distance = (TextView) itemView.findViewById(R.id.activity_distance);
             image_like = itemView.findViewById(R.id.image_like);
         }
+    }
+    //声明接口
+    private ItemClickListener listener;
+    //set方法
+    public void setListener(ItemClickListener listener) {
+        this.listener = listener;
+    }
+    //定义接口
+    public interface ItemClickListener{
+        //实现点击的方法，传递条目下标
+        void onItemClick(int position);
     }
 }
