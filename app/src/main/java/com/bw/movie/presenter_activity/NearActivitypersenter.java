@@ -19,11 +19,13 @@ import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
 import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
+import com.bw.movie.adapter.MyAdapterComments;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterDetailsinside;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.adapter.MyAdapterNearcinma;
+import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
@@ -73,6 +75,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     private List<DetailsBannerBean.ResultBean> bannerBeanResult;
     private String movie_name;
     private int i;
+    private ImageView img1;
 
     @Override
     public int getLayoutId() {
@@ -88,6 +91,13 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
         img = (ImageView)  get(R.id.activity_img);
+        img1 = (ImageView)get(R.id.activity_img1);
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NearActivity)context).finish();
+            }
+        });
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,13 +311,29 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     }
     //评论
     private void doHttpcomments() {
-        LinearLayoutManager s = new LinearLayoutManager(context);
-        s.setOrientation(LinearLayoutManager.VERTICAL);
-        view.setLayoutManager(s);
+        String url3 = "/movieApi/cinema/v1/findAllCinemaComment";
+        Map<String, String> map = new HashMap<>();
+        map.put("cinemaId", String.valueOf(cinemasId));
+        map.put("page", "1");
+        map.put("count", "6");
+        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Commentsben bean = new Gson().fromJson(data, Commentsben.class);
+                List<Commentsben.Resultbean> result = bean.getResult();
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
+                LinearLayoutManager s = new LinearLayoutManager(context);
+                s.setOrientation(LinearLayoutManager.VERTICAL);
+                view.setLayoutManager(s);
+                view.setAdapter(myAdapterComments);
 
-        MyAdapterDetailsinside myAdapterDetailsinside = new MyAdapterDetailsinside(context, new ArrayList<Detailsinsidebean.Resultbean>());
-        view.setAdapter(myAdapterDetailsinside);
+            }
+
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
-
 
 }

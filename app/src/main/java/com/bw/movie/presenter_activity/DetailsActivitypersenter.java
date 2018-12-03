@@ -23,11 +23,13 @@ import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
 import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
+import com.bw.movie.adapter.MyAdapterComments;
 import com.bw.movie.adapter.MyAdapterDetails;
 import com.bw.movie.adapter.MyAdapterDetailsinside;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.adapter.NearAdepter;
+import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
@@ -81,6 +83,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private TextView start_register;
     private TextView start_login;
     private ImageView img;
+    private ImageView img1;
 
 
     @Override
@@ -93,6 +96,13 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         super.initData();
         //persenter页面控件
         imageView = (SimpleDraweeView) get(R.id.activity_detailss);
+        img1 = (ImageView)get(R.id.activity_img1);
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((DetailsActivity)context).finish();
+            }
+        });
         //影院的控件
         img = (ImageView)  get(R.id.activity_img);
         textView = (TextView) get(R.id.line_details);
@@ -214,7 +224,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 String phone1 = intent.getStringExtra("phone");
                 String vehicleRoute = intent.getStringExtra("vehicleRoute");
                 String content = intent.getStringExtra("content");
-
                 cinemasId1 = intent.getIntExtra("cinemasId", 2);
                 LinearLayoutManager s = new LinearLayoutManager(context);
                 s.setOrientation(LinearLayoutManager.VERTICAL);
@@ -292,13 +301,13 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login:
-                start_register.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_login.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_register.setBackgroundResource(R.drawable.almy_details_false);
+                start_login.setBackgroundResource(R.drawable.my_details_true);
                 doHttpetails();
                 break;
             case R.id.start_register:
-                start_login.setBackgroundResource(R.drawable.my_attention_title_shape_false);
-                start_register.setBackgroundResource(R.drawable.my_attention_title_shape_true);
+                start_login.setBackgroundResource(R.drawable.almy_details_false);
+                start_register.setBackgroundResource(R.drawable.my_details_true);
                 doHttpcomments();
                 break;
         }
@@ -306,12 +315,28 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
 
     //评论
     private void doHttpcomments() {
-        LinearLayoutManager s = new LinearLayoutManager(context);
-        s.setOrientation(LinearLayoutManager.VERTICAL);
-        view.setLayoutManager(s);
+        String url3 = "/movieApi/cinema/v1/findAllCinemaComment";
+        Map<String, String> map = new HashMap<>();
+        map.put("cinemaId", String.valueOf(cinemasId));
+        map.put("page", "1");
+        map.put("count", "6");
+        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Commentsben bean = new Gson().fromJson(data, Commentsben.class);
+                List<Commentsben.Resultbean> result = bean.getResult();
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
+                LinearLayoutManager s = new LinearLayoutManager(context);
+                s.setOrientation(LinearLayoutManager.VERTICAL);
+                view.setLayoutManager(s);
+                view.setAdapter(myAdapterComments);
+            }
 
-        MyAdapterDetailsinside myAdapterDetailsinside = new MyAdapterDetailsinside(context, new ArrayList<Detailsinsidebean.Resultbean>());
-        view.setAdapter(myAdapterDetailsinside);
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
 
 

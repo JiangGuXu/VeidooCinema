@@ -1,14 +1,18 @@
 package com.bw.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.SearchActivity;
 import com.bw.movie.model.FilmList;
 import com.bw.movie.model.FilmListData;
 
@@ -46,6 +50,14 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
         myViewHodlerFilmList.recyclerView.setLayoutManager(staggeredGridLayoutManager);
         myViewHodlerFilmList.recyclerView.setAdapter(myAdapterFilmList_recyler);
         myAdapterFilmList_recyler.setList(list.get(i).getResult());
+        myViewHodlerFilmList.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SearchActivity.class);
+                intent.putExtra("position",i);
+                ((MainActivity)context).startActivity(intent);
+            }
+        });
     }
 
 
@@ -58,11 +70,13 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
 
         private TextView title;
         private RecyclerView recyclerView;
+        private ImageView img;
 
         public MyViewHodlerFilmList(@NonNull View itemView) {
             super(itemView);
             title = (TextView)itemView.findViewById(R.id.film_list_title);
             recyclerView = (RecyclerView)itemView.findViewById(R.id.fiml_list_recyler);
+            img = itemView.findViewById(R.id.film_list_img);
         }
     }
 

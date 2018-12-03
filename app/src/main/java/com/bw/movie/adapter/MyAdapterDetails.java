@@ -45,7 +45,7 @@ public class MyAdapterDetails extends RecyclerView.Adapter<MyAdapterDetails.sMyA
         sMyAdapterDetails.name1.setText(list.get(i).getScreeningHall());
         sMyAdapterDetails.time.setText(list.get(i).getBeginTime());
         sMyAdapterDetails.te.setText(list.get(i).getDuration());
-        sMyAdapterDetails.time1.setText(list.get(i).getEndTime() + "end");
+        sMyAdapterDetails.time1.setText(list.get(i).getEndTime() + "散场");
         sMyAdapterDetails.price.setText("￥" + list.get(i).getSeatsTotal());
         sMyAdapterDetails.lin.setOnClickListener(new View.OnClickListener() {
             @Override

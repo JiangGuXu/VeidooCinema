@@ -2,6 +2,7 @@ package com.bw.movie.presenter_activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,22 +54,30 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         mHot.setOnClickListener(this);
         mRelease.setOnClickListener(this);
         mComingsoon.setOnClickListener(this);
+        Intent intent = ((SearchActivity) context).getIntent();
+        int id = intent.getIntExtra("position", 0);
         mRecyclerView = get(R.id.search_recyler);
         myAdapterSearchList = new MyAdapterSearchList(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(myAdapterSearchList);
-        doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
+        if(id==0){
+            hot();
+        }else if(id==1){
+            release();
+        }else if(id==2){
+            comingsoon();
+        }
         myAdapterSearchList.result(new MyAdapterSearchList.SearchFouceListener() {
             @Override
             public void fouceChange(String data) {
                 if("热门电影".equals(data)){
-                    doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
+                    hot();
                 }else if("正在上映".equals(data)){
-                    doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
+                    release();
                 }else if("即将上映".equals(data)){
-                    doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
+                    comingsoon();
                 }
             }
 
@@ -79,33 +88,45 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.search_hot:
-                mHot.setBackgroundResource(R.drawable.corners_selected_search);
-                mHot.setTextColor(Color.WHITE);
-                mRelease.setBackgroundResource(R.drawable.corners_search);
-                mRelease.setTextColor(Color.BLACK);
-                mComingsoon.setBackgroundResource(R.drawable.corners_search);
-                mComingsoon.setTextColor(Color.BLACK);
-                doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
+                hot();
                 break;
             case R.id.search_release:
-                mHot.setBackgroundResource(R.drawable.corners_search);
-                mHot.setTextColor(Color.BLACK);
-                mRelease.setBackgroundResource(R.drawable.corners_selected_search);
-                mRelease.setTextColor(Color.WHITE);
-                mComingsoon.setBackgroundResource(R.drawable.corners_search);
-                mComingsoon.setTextColor(Color.BLACK);
-                doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
+               release();
                 break;
             case R.id.search_comingsoon:
-                mHot.setBackgroundResource(R.drawable.corners_search);
-                mHot.setTextColor(Color.BLACK);
-                mRelease.setBackgroundResource(R.drawable.corners_search);
-                mRelease.setTextColor(Color.BLACK);
-                mComingsoon.setBackgroundResource(R.drawable.corners_selected_search);
-                mComingsoon.setTextColor(Color.WHITE);
-                doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
+                comingsoon();
                 break;
         }
+    }
+
+    private void comingsoon() {
+        mHot.setBackgroundResource(R.drawable.corners_search);
+        mHot.setTextColor(Color.BLACK);
+        mRelease.setBackgroundResource(R.drawable.corners_search);
+        mRelease.setTextColor(Color.BLACK);
+        mComingsoon.setBackgroundResource(R.drawable.corners_selected_search);
+        mComingsoon.setTextColor(Color.WHITE);
+        doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
+    }
+
+    private void release() {
+        mHot.setBackgroundResource(R.drawable.corners_search);
+        mHot.setTextColor(Color.BLACK);
+        mRelease.setBackgroundResource(R.drawable.corners_selected_search);
+        mRelease.setTextColor(Color.WHITE);
+        mComingsoon.setBackgroundResource(R.drawable.corners_search);
+        mComingsoon.setTextColor(Color.BLACK);
+        doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
+    }
+
+    private void hot() {
+        mHot.setBackgroundResource(R.drawable.corners_selected_search);
+        mHot.setTextColor(Color.WHITE);
+        mRelease.setBackgroundResource(R.drawable.corners_search);
+        mRelease.setTextColor(Color.BLACK);
+        mComingsoon.setBackgroundResource(R.drawable.corners_search);
+        mComingsoon.setTextColor(Color.BLACK);
+        doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
     }
 
 

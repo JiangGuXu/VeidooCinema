@@ -8,6 +8,7 @@
         android:layout_width="@dimen/dp_158"
         android:layout_height="@dimen/dp_223"
         android:id="@+id/film_banner_img"
+        app:roundedCornerRadius="@dimen/dp_8"
         />
     <RelativeLayout
         android:layout_width="@dimen/dp_158"

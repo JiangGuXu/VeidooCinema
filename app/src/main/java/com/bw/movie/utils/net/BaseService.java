@@ -33,6 +33,9 @@ public interface BaseService {
     Observable<ResponseBody> postHead(@Url String url, @FieldMap Map<String, String> map, @HeaderMap Map<String,String> mapHead);
     @FormUrlEncoded
     @POST
+    Observable<ResponseBody> postForm(@Url String url, @QueryMap Map<String, String> map,@HeaderMap Map<String,String> mapHead,  @FieldMap Map<String, String> mapfrom);
+    @FormUrlEncoded
+    @POST
     @Headers({
             "ak:0110010010000",
             "Content-Type:application/x-www-form-urlencoded"
