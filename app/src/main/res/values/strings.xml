@@ -38,5 +38,6 @@
     <string name="user_reset_info_name">请输入新昵称</string>
     <string name="user_reset_info_sex">性别</string>
     <string name="user_reset_info_birthday">请输入出生日期</string>
+    <string name="user_system_messages_title">系统消息</string>
 
 </resources>
