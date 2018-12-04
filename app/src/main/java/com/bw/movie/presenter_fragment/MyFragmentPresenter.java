@@ -3,6 +3,7 @@ package com.bw.movie.presenter_fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.BuyRecordActivity;
 import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.UserAttentionActivity;
@@ -48,6 +50,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private RelativeLayout my_attention_layout;
     private TextView my_nickname_text;
     private RelativeLayout my_feedback_layout;
+    private RelativeLayout my_rccord_layout;
     private ImageView my_remind;
     private TextView my_icon_remind_message_count;
     private RelativeLayout my_icon_remind_relativelayout;
@@ -96,6 +99,10 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
         //意见反馈布局 图片加文字
         my_feedback_layout = get(R.id.my_feedback_layout);
         my_feedback_layout.setOnClickListener(this);
+
+        //购票记录布局 图片加文字
+        my_rccord_layout = get(R.id.my_rccord_layout);
+        my_rccord_layout.setOnClickListener(this);
     }
 
     @Override
@@ -189,7 +196,15 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
+            //点击购票记录转到购票记录页面
+            case R.id.my_rccord_layout:
+                if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
+                    Intent intent = new Intent(context, BuyRecordActivity.class);
+                    ((MainActivity) context).startActivity(intent);
+                } else {
+                    Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
+                }
+                break;
 
             //点击消息图片 跳转到我的消息页面
             case R.id.my_remind:

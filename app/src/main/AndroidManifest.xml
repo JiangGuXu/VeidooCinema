@@ -32,8 +32,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:windowSoftInputMode="adjustPan|stateHidden">
+        android:windowSoftInputMode="adjustPan|stateHidden"
+        android:theme="@style/AppTheme">
         <service android:name="com.amap.api.location.APSService">
 
         </service>
@@ -70,6 +70,7 @@
         <activity android:name=".activity.UserReSertInfoActivity"></activity>
         <activity android:name=".activity.FindCinemaActivity"></activity>
         <activity android:name=".activity.PlayCinemaActivity"></activity>
+        <activity android:name=".activity.BuyRecordActivity"></activity>
         <activity android:name=".activity.UserSystemMessagesActivity"></activity>
 
         <meta-data
