@@ -6,9 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,9 +24,9 @@ import com.bw.movie.adapter.MyAdapterDetailsDe;
 import com.bw.movie.adapter.MyAdapterDetailsStill;
 import com.bw.movie.adapter.MyAdapterDetailsTrailer;
 import com.bw.movie.bean.DetailsComment;
-import com.bw.movie.model.Critics;
-import com.bw.movie.model.Details;
-import com.bw.movie.model.Focus;
+import com.bw.movie.bean.Critics;
+import com.bw.movie.bean.Details;
+import com.bw.movie.bean.Focus;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -38,7 +36,12 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/*
+ * 影院详情
+ * 2018年11月29日 10:18:30
+ * 赵瑜峰
+ * 创建了基本的这个presenter
+ * */
 public class DetailsFilmActivityPresenter extends AppDelage {
 
     private TextView mTitle,mBuy;

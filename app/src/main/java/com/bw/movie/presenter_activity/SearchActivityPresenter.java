@@ -8,12 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.SearchActivity;
 import com.bw.movie.adapter.MyAdapterSearchList;
-import com.bw.movie.model.FilmListData;
+import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -22,7 +21,12 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/*
+ * 推荐影院的排期
+ * 2018年11月28日 15:18:30
+ * 赵瑜峰
+ * 创建了基本的这个presenter
+ * */
 public class SearchActivityPresenter extends AppDelage implements View.OnClickListener{
 
     private Button mHot,mRelease,mComingsoon;

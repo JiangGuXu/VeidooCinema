@@ -2,6 +2,7 @@ package com.bw.movie.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -41,7 +42,6 @@ public class DialogUtils extends AlertDialog{
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
-
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.dialogAnimation);
     }

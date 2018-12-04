@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
-import com.bw.movie.model.Critics;
-import com.bw.movie.model.Focus;
+import com.bw.movie.bean.Critics;
+import com.bw.movie.bean.Focus;
 import com.bw.movie.utils.DateFormat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;

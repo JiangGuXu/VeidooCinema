@@ -1,7 +1,6 @@
 package com.bw.movie.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bw.movie.R;
-import com.bw.movie.model.Details;
+import com.bw.movie.bean.Details;
 
 import java.util.ArrayList;
 import java.util.List;

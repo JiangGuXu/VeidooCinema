@@ -1,7 +1,6 @@
 package com.bw.movie.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
-import com.bw.movie.activity.Recommendeddetails;
 import com.bw.movie.bean.DetailsBannerBean;
-import com.bw.movie.model.FilmListData;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;

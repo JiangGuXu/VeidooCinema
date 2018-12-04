@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bw.movie.R;
@@ -65,6 +66,12 @@ public class FindCinemaActivityPresenter extends AppDelage{
         country = ((FindCinemaActivity) context).getIntent().getStringExtra("country");
         logo = ((FindCinemaActivity) context).getIntent().getStringExtra("logo");
         movieId = ((FindCinemaActivity) context).getIntent().getIntExtra("movieId", 22);
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FindCinemaActivity)context).finish();
+            }
+        },R.id.image_back);
         //赋值电影名
         movie_name.setText(name);
         //请求接口
