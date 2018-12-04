@@ -125,6 +125,8 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                             String status = loginBean.getStatus();
                             //判断是否登录成功
                             if (status.equals("0000")){
+                                //存储密码
+                                SharedPreferencesUtils.putString(context,"pwd",pwd);
                                 //获取到返回结果的集合
                                 LoginBean.ResultBean resultBean = loginBean.getResult();
                                 //储存userid

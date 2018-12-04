@@ -1,12 +1,13 @@
 package com.bw.movie.mvp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 /**
- *
  * author:赵瑜峰
  * date:2018/11/27
  */
@@ -18,25 +19,31 @@ public abstract class AppDelage implements IDelage {
     public void initData() {
 
     }
+
     //寻找控件
     private SparseArray<View> views = new SparseArray<>();
-    public <T extends View> T get(int id){
+
+    public <T extends View> T get(int id) {
         T view = (T) views.get(id);
-        if(view==null){
+        if (view == null) {
             view = rootView.findViewById(id);
-            views.put(id,view);
+            views.put(id, view);
         }
-        return  view;
+        return view;
     }
+
     //点击事件
-    public void setOnclick(View.OnClickListener listener,int...ids){
-        if(ids==null){
+    public void setOnclick(View.OnClickListener listener, int... ids) {
+        if (ids == null) {
             return;
         }
-        for(int id:ids){
+        for (int id : ids) {
             get(id).setOnClickListener(listener);
         }
-    };
+    }
+
+    ;
+
     //创建视图
     @Override
     public void create(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
@@ -50,15 +57,24 @@ public abstract class AppDelage implements IDelage {
 
     public abstract int getLayoutId();
 
-    public void destry(){
-        rootView=null;
+    public void destry() {
+        rootView = null;
     }
 
-    public  void resume(){
-
-    }
-    public  void restart(){
+    public void resume() {
 
     }
 
+    public void restart() {
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
+    ;;
 }

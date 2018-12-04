@@ -1,10 +1,14 @@
 package com.bw.movie.mvp.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.UltimateBar;
+
 /**
  *
  * author:赵瑜峰
@@ -30,6 +34,7 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
         setContentView(daleagt.view());
         daleagt.getContext(this);
         daleagt.initData();
+        UltimateBar.newImmersionBuilder().applyNav(false).build(this).apply();
     }
     @Override
     public void onResume() {
@@ -49,5 +54,17 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
     protected void onRestart() {
         super.onRestart();
         daleagt.restart();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        daleagt.onRequestPermissionsResult(requestCode,permissions,grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        daleagt.onActivityResult(requestCode,resultCode,data);
     }
 }
