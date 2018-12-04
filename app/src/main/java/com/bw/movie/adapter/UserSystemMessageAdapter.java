@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -45,6 +46,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
         return new MyViewHolder(inflate);
     }
 
+    private boolean flag = true;
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
@@ -78,7 +81,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                     }
                 });
                 alertDialog.show();
-                if (list.get(i).getStatus() == 0) {
+                if (list.get(i).getStatus() == 0 && flag) {
+                    Log.i("test1", "onClick: ");
                     doHttpTochangeSysMsgStatus("/movieApi/tool/v1/verify/changeSysMsgStatus");
                 }
 
@@ -93,11 +97,14 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                 headMap.put("userId", userId + "");
                 headMap.put("sessionId", sessionId);
                 new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+
+
                     @Override
                     public void success(String data) {
                         if (data.contains("成功")) {
                             myViewHolder.user_system_messages_item_relativelayout.setVisibility(View.GONE);
                             listener.changed(1);
+                            flag = false;
                         } else {
                             Toast.makeText(context, "网络出了点问题~重新登录或者检查下网络~", Toast.LENGTH_SHORT).show();
                         }
