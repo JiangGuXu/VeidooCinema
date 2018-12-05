@@ -29,7 +29,8 @@ import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
-import com.bw.movie.model.FilmListData;
+
+import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
