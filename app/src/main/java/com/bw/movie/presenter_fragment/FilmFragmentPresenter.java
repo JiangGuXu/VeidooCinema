@@ -1,22 +1,18 @@
 package com.bw.movie.presenter_fragment;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.SearchActivity;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
-import com.bw.movie.model.FilmList;
-import com.bw.movie.model.FilmListData;
+import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -87,9 +83,6 @@ public class FilmFragmentPresenter extends AppDelage {
             @Override
             public void onItemSelected(int position) {
 
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(view1.getWidth(),view1.getHeight());
-                layoutParams.leftMargin=widths*(position+1);
-                view1.setLayoutParams(layoutParams);
             }
         });
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {

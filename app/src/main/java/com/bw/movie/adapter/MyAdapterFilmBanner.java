@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
-import com.bw.movie.model.FilmListData;
+import com.bw.movie.bean.FilmListData;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;

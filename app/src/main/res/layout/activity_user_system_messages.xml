@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/user_system_messages_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/user_system_messages_title"
+        android:textColor="@color/color333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/user_system_messages_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_toRightOf="@+id/user_system_messages_title"
+        android:text="(0条未读)"
+        android:textColor="@color/color333333"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="normal" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_system_messages_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/user_system_messages_title"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_24"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/user_system_messages_back"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:src="@drawable/com_icon_my_default1" />
+
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.bw.movie.utils.net;
 
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,11 +23,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- *
  * author:赵瑜峰
  * date:2018/11/27
  * 封装网络工具类
- *
  */
 
 public class HttpUtil {
@@ -55,14 +54,14 @@ public class HttpUtil {
     }
 
     //get请求
-    public HttpUtil get(String url, Map<String, String> map,Map<String, String> mapHead) {
+    public HttpUtil get(String url, Map<String, String> map, Map<String, String> mapHead) {
         if (map == null) {
             map = new HashMap<>();
         }
-        if(mapHead==null){
+        if (mapHead == null) {
             mapHead = new HashMap<>();
         }
-        observable = baseService.get(url, map,mapHead);
+        observable = baseService.get(url, map, mapHead);
         setObservable();
         return this;
     }
@@ -76,33 +75,49 @@ public class HttpUtil {
         setObservable();
         return this;
     }
+
     //postHead请求
-    public HttpUtil postHead(String url, Map<String, String> map,Map<String, String> mapHead) {
+    public HttpUtil postHead(String url, Map<String, String> map, Map<String, String> mapHead) {
         if (map == null) {
             map = new HashMap<>();
         }
-        if(mapHead==null){
+        if (mapHead == null) {
             mapHead = new HashMap<>();
         }
-        observable = baseService.postHead(url, map,mapHead);
+        observable = baseService.postHead(url, map, mapHead);
         setObservable();
         return this;
     }
+
     //postHead请求
-    public HttpUtil postForm(String url, Map<String, String> map,Map<String, String> mapForm, Map<String, String> mapHead) {
-        if(map==null){
+    public HttpUtil postUploadImage(String url, Map<String, File> map, Map<String, String> mapHead) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        if (mapHead == null) {
+            mapHead = new HashMap<>();
+        }
+        observable = baseService.postUploadImage(url, map, mapHead);
+        setObservable();
+        return this;
+    }
+
+    //postHead请求
+    public HttpUtil postForm(String url, Map<String, String> map, Map<String, String> mapForm, Map<String, String> mapHead) {
+        if (map == null) {
             mapHead = new HashMap<>();
         }
         if (map == null) {
             mapForm = new HashMap<>();
         }
-        if(mapHead==null){
+        if (mapHead == null) {
             mapHead = new HashMap<>();
         }
-        observable = baseService.postForm(url,map, mapForm,mapHead);
+        observable = baseService.postForm(url, map, mapForm, mapHead);
         setObservable();
         return this;
     }
+
     //上传文件
     public HttpUtil part(String url, Map<String, String> map, MultipartBody.Part part) {
         if (map == null) {

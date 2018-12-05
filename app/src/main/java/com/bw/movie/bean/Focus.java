@@ -1,4 +1,4 @@
-package com.bw.movie.model;
+package com.bw.movie.bean;
 
 public class Focus {
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:id="@+id/buyrecord_text"
+        android:text="购票记录"
+        android:textColor="@color/color333333"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_54"
+        android:id="@+id/buyrecord_recyler"></android.support.v7.widget.RecyclerView>
+    <ImageView
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:src="@drawable/com_icon_my_default1"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp_24"
+        android:id="@+id/buyrecord_return"/>
+</RelativeLayout>

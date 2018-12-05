@@ -13,8 +13,7 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.SearchActivity;
-import com.bw.movie.model.FilmList;
-import com.bw.movie.model.FilmListData;
+import com.bw.movie.bean.FilmListData;
 
 import java.util.ArrayList;
 import java.util.List;

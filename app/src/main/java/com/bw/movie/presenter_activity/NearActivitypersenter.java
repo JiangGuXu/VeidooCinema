@@ -7,16 +7,12 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
@@ -34,10 +30,8 @@ import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
 import com.bw.movie.model.FilmListData;
-import com.bw.movie.model.Focus;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
-import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
@@ -47,14 +41,13 @@ import java.util.List;
 import java.util.Map;
 
 import recycler.coverflow.RecyclerCoverFlow;
-
 /*
  * 附近影院排期页面presenter
  * 2018年11月29日 15:18:30
  * 程丹妮
  * 创建了基本的这个presenter
  * */
-public class NearActivitypersenter extends AppDelage implements View.OnClickListener {
+public class NearActivitypersenter extends AppDelage implements View.OnClickListener{
     private SimpleDraweeView imageView;
     private TextView name;
     private TextView detailsname;
@@ -83,9 +76,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     private String movie_name;
     private int i;
     private ImageView img1;
-    private EditText text;
-    private Detailsinsidebean.Resultbean result6;
-    private LinearLayout linear;
 
     @Override
     public int getLayoutId() {
@@ -100,13 +90,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         recyclerView = (RecyclerView) get(R.id.activity_scheduling);
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
-        img = (ImageView) get(R.id.activity_img);
-        img1 = (ImageView) get(R.id.activity_img1);
-
+        img = (ImageView)  get(R.id.activity_img);
+        img1 = (ImageView)get(R.id.activity_img1);
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((NearActivity) context).finish();
+                ((NearActivity)context).finish();
             }
         });
         img.setOnClickListener(new View.OnClickListener() {
@@ -121,13 +110,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 showShopCar();
             }
         });
-        text = get(R.id.details_text1);
-        setOnclick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                send();
-            }
-        },R.id.details_send1);
         //详情 评论 控件
         start_register1 = (TextView) get(R.id.start_register1);
         start_login1 = (TextView) get(R.id.start_login1);
@@ -136,7 +118,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         //属性动画控件
         view = (RecyclerView) get(R.id.activity_recyclertails);
         layout = (RelativeLayout) get(R.id.start_ctrl);
-        linear = get(R.id.details_linear1);
+
 
         Intent intent = ((NearActivity) context).getIntent();
         //获取值
@@ -155,7 +137,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
-                i = position;
+                i=position;
                 mRecyclerCoverFlow.scrollToPosition(position);
             }
 
@@ -177,14 +159,14 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 Detailsbean.Resultbean resultbean = result.get(position);
                 //获取banner中的电影名
                 //跳转
-                Intent intent1 = new Intent(context, SelectedSetActivity.class);
+                Intent intent1 = new Intent(context,SelectedSetActivity.class);
                 //传递对象
                 movie_name = bannerBeanResult.get(i).getName();
-                intent1.putExtra("result", resultbean);
-                intent1.putExtra("name", name1);//影院名
-                intent1.putExtra("address", address);//影院的地址
-                intent1.putExtra("movie_name", movie_name);//电影的名称
-                ((NearActivity) context).startActivity(intent1);
+                intent1.putExtra("result",resultbean);
+                intent1.putExtra("name",name1);//影院名
+                intent1.putExtra("address",address);//影院的地址
+                intent1.putExtra("movie_name",movie_name);//电影的名称
+                ((NearActivity)context).startActivity(intent1);
             }
         });
         //请求轮播数据
@@ -196,46 +178,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         doHttnear();
     }
 
-    private void send() {
-        String s = text.getText().toString();
-        if(TextUtils.isEmpty(s)){
-            Toast.makeText(context, "请输入内容", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
-            int userId = SharedPreferencesUtils.getInt(context, "userId");
-            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
-            Map<String,String> mapform = new HashMap<>();
-            mapform.put("cinemaId",result6.getId()+"");
-            mapform.put("commentContent",s);
-            Map<String,String> maphead = new HashMap<>();
-            maphead.put("userId",userId+"");
-            maphead.put("sessionId",sessionId);
-            new HttpUtil().postHead("/movieApi/cinema/v1/verify/cinemaComment",mapform,maphead).result(new HttpUtil.HttpListener() {
-                @Override
-                public void success(String data) {
-                    Gson gson = new Gson();
-                    Focus focus = gson.fromJson(data, Focus.class);
-                    if(focus.getStatus().equals("0000")){
-                        Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
-                        doHttpcomments();
-                    }else{
-                        Toast.makeText(context, "评论失败", Toast.LENGTH_SHORT).show();
-                    }
-                    text.setText("");
-                }
-
-                @Override
-                public void fail(String data) {
-
-                }
-            });
-        }else{
-            Toast.makeText(context, "请登录", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
     //打开
     private void showShopCar() {
         int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
@@ -266,15 +208,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", cinemasId + "");
         new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
-
-
-
             @Override
             public void success(String data) {
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
-                result6 = detailsBean.getResult();
+                Detailsinsidebean.Resultbean result = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
-                resultbeans.add(result6);
+                resultbeans.add(result);
                 Intent intent = ((NearActivity) context).getIntent();
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
@@ -302,7 +241,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -328,7 +267,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         String url = "/movieApi/movie/v1/findMovieListByCinemaId";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", String.valueOf(cinemasId));
-        new HttpUtil().get(url, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -359,20 +298,17 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login1:
-                linear.setVisibility(View.GONE);
-                start_register1.setBackgroundResource(R.drawable.almy_details_false);
-                start_login1.setBackgroundResource(R.drawable.my_details_true);
+                start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
+                start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttnear();
                 break;
             case R.id.start_register1:
-                linear.setVisibility(View.VISIBLE);
-                start_login1.setBackgroundResource(R.drawable.almy_details_false);
-                start_register1.setBackgroundResource(R.drawable.my_details_true);
+                start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
+                start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttpcomments();
                 break;
         }
     }
-
     //评论
     private void doHttpcomments() {
         String url3 = "/movieApi/cinema/v1/findAllCinemaComment";
@@ -380,12 +316,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         map.put("cinemaId", String.valueOf(cinemasId));
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url3, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Commentsben bean = new Gson().fromJson(data, Commentsben.class);
                 List<Commentsben.Resultbean> result = bean.getResult();
-                MyAdapterComments myAdapterComments = new MyAdapterComments(context, result);
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
                 LinearLayoutManager s = new LinearLayoutManager(context);
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 view.setLayoutManager(s);

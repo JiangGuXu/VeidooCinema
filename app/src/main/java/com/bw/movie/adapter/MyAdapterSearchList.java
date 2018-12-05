@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsFilmActivity;
-import com.bw.movie.model.FilmListData;
-import com.bw.movie.model.Focus;
+import com.bw.movie.bean.FilmListData;
+import com.bw.movie.bean.Focus;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

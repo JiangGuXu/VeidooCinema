@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bw.movie">
 
+    <!--读取sd卡-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--写入sd卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--开启相机的权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
@@ -61,6 +69,9 @@
         <activity android:name=".activity.UserReSertInfoActivity"></activity>
         <activity android:name=".activity.FindCinemaActivity"></activity>
         <activity android:name=".activity.PlayCinemaActivity"></activity>
+        <activity android:name=".activity.BuyRecordActivity"></activity>
+        <activity android:name=".activity.UserSystemMessagesActivity"></activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
