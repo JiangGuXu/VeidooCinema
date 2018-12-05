@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,8 +36,10 @@ import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
 import com.bw.movie.model.FilmListData;
+import com.bw.movie.model.Focus;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
@@ -77,13 +81,15 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private String movie_name;
     private int i;
     private RecyclerView view;
-
     private int cinemasId1;
     private TextView textView;
     private TextView start_register;
     private TextView start_login;
     private ImageView img;
     private ImageView img1;
+    private LinearLayout linear;
+    private EditText text;
+    private Detailsinsidebean.Resultbean result4;
 
 
     @Override
@@ -97,6 +103,8 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         //persenter页面控件
         imageView = (SimpleDraweeView) get(R.id.activity_detailss);
         img1 = (ImageView)get(R.id.activity_img1);
+        linear = get(R.id.details_linear);
+        text = get(R.id.details_text);
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +121,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         //属性动画控件
         view = (RecyclerView) get(R.id.activity_recyclertails);
         layout = (RelativeLayout) get(R.id.start_ctrl);
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send();
+            }
+        },R.id.details_send);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,6 +197,48 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             }
         });
     }
+
+    private void send() {
+        String s = text.getText().toString();
+        if(TextUtils.isEmpty(s)){
+            Toast.makeText(context, "请输入内容", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            int userId = SharedPreferencesUtils.getInt(context, "userId");
+            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+            Map<String,String> mapform = new HashMap<>();
+            mapform.put("cinemaId",result4.getId()+"");
+            mapform.put("commentContent",s);
+            Map<String,String> maphead = new HashMap<>();
+            maphead.put("userId",userId+"");
+            maphead.put("sessionId",sessionId);
+            new HttpUtil().postHead("/movieApi/cinema/v1/verify/cinemaComment",mapform,maphead).result(new HttpUtil.HttpListener() {
+                @Override
+                public void success(String data) {
+                    Gson gson = new Gson();
+                    Focus focus = gson.fromJson(data, Focus.class);
+                    if(focus.getStatus().equals("0000")){
+                        Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
+                        doHttpcomments();
+                    }else{
+                        Toast.makeText(context, "评论失败", Toast.LENGTH_SHORT).show();
+                    }
+                    text.setText("");
+                }
+
+                @Override
+                public void fail(String data) {
+
+                }
+            });
+        }else{
+            Toast.makeText(context, "请登录", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
     //打开
     private void showShopCar() {
         int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
@@ -215,9 +271,9 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             @Override
             public void success(String data) {
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
-                Detailsinsidebean.Resultbean result = detailsBean.getResult();
+                result4 = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
-                resultbeans.add(result);
+                resultbeans.add(result4);
                 Intent intent = ((DetailsActivity) context).getIntent();
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
@@ -255,7 +311,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 recyclerView.setLayoutManager(s);
                 recyclerView.setAdapter(myAdapterDetails);
             }
-
             @Override
             public void fail(String data) {
 
@@ -300,11 +355,14 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login:
+                linear.setVisibility(View.GONE);
                 start_register.setBackgroundResource(R.drawable.almy_details_false);
                 start_login.setBackgroundResource(R.drawable.my_details_true);
                 doHttpetails();
+
                 break;
             case R.id.start_register:
+                linear.setVisibility(View.VISIBLE);
                 start_login.setBackgroundResource(R.drawable.almy_details_false);
                 start_register.setBackgroundResource(R.drawable.my_details_true);
                 doHttpcomments();

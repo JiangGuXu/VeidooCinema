@@ -118,10 +118,11 @@
 
         <ImageView
             android:id="@+id/activity_img"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_alignTop="@+id/start_login1"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_5"
             android:src="@mipmap/com_icon_down_default" />
 
         <android.support.v7.widget.RecyclerView
@@ -131,5 +132,40 @@
             android:layout_below="@+id/activity_img">
 
         </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/details_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorf2f2f2"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_10"
+            android:visibility="gone"
+          >
+
+            <EditText
+                android:id="@+id/details_text1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_weight="1"
+                android:background="@drawable/critics_comments_bg"
+                android:hint="写评论"
+                android:padding="@dimen/dp_10"
+                android:textColorHint="@color/color666666"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/details_send1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_24"
+                android:text="发送"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
     </RelativeLayout>
 </RelativeLayout>
