@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.OrderBean;
+import com.bw.movie.bean.PayBean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.MD5EncryptUtil;
 import com.bw.movie.utils.net.HttpUtil;
@@ -41,8 +44,13 @@ public class SelectedSetActivityPresenter extends AppDelage {
     private ImageView pay_yes;
     private RelativeLayout layout;
     private ImageView img;
-    private RadioButton avtivity_treasure;
-    private RadioButton avtivity_micro;
+    private RadioButton radio_wechat;
+    private RadioButton radio_alipay;
+    private Button btn_pay;
+    private double price;
+    private int userId;
+    private String sessionId;
+    private OrderBean orderBean;
 
     @Override
     public int getLayoutId() {
@@ -67,6 +75,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
         total_price = get(R.id.total_price);
         play_data = get(R.id.play_data);
         pay_yes = get(R.id.pay_yes);
+        btn_pay = get(R.id.btn_pay);
 
         //接收传值
         final Detailsbean.Resultbean result = (Detailsbean.Resultbean) ((SelectedSetActivity) context).getIntent().getSerializableExtra("result");
@@ -81,8 +90,8 @@ public class SelectedSetActivityPresenter extends AppDelage {
         movie_text.setText(movie_name);
         seatTableView.setMaxSelected(4);//设置最多选中
         //微信 支付宝控件
-        avtivity_treasure = (RadioButton) get(R.id.avtivity_treasure);
-        avtivity_micro = (RadioButton) get(R.id.avtivity_micro);
+        radio_wechat = (RadioButton) get(R.id.radio_wechat);
+        radio_alipay = (RadioButton) get(R.id.radio_alipay);
         img = (ImageView) get(R.id.activity_img);
         layout = (RelativeLayout) get(R.id.start_ctr);
         img.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +107,8 @@ public class SelectedSetActivityPresenter extends AppDelage {
                 //先判断用户是否登录
                 if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
                     //如果登录的话获取用户的信息
-                    int userId = SharedPreferencesUtils.getInt(context, "userId");
-                    String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+                    userId = SharedPreferencesUtils.getInt(context, "userId");
+                    sessionId = SharedPreferencesUtils.getString(context, "sessionId");
                     //拼接头部接口
                     Map<String, String> headMap = new HashMap();
                     headMap.put("Content-Type", "application/x-www-form-urlencoded");
@@ -120,7 +129,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
                     new HttpUtil().postHead("/movieApi/movie/v1/verify/buyMovieTicket", map, headMap).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
-                            OrderBean orderBean = new Gson().fromJson(data, OrderBean.class);
+                            orderBean = new Gson().fromJson(data, OrderBean.class);
                             Toast.makeText(context, orderBean.getMessage(), Toast.LENGTH_SHORT).show();
                             showShopCar();
                         }
@@ -132,6 +141,57 @@ public class SelectedSetActivityPresenter extends AppDelage {
                     });
                 } else {
                     Toast.makeText(context, "登录后才能购票哦~", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        //连个RadioButton的点击事件
+        //监听微信支付的状态
+        radio_wechat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){//如果为true
+                    radio_alipay.setChecked(false);
+                    btn_pay.setText("微信支付"+price+"元");
+                }
+            }
+        });
+        //监听微信支付的状态
+        radio_alipay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){//如果为true
+                    radio_wechat.setChecked(false);
+                    btn_pay.setText("支付宝支付"+price+"元");
+                }
+            }
+        });
+        //点击支付按钮的事件
+        btn_pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//点击是判断选中的是哪种支付方式
+                if (radio_wechat.isChecked()){//微信选中
+                    //请求微信支付的接口
+                    Map<String,String> map = new HashMap<>();//拼接参数
+                    map.put("payType","1");
+                    map.put("orderId",orderBean.getOrderId());
+                    //拼接头参
+                    Map<String,String> headMap = new HashMap<>();
+                    headMap.put("userId",String.valueOf(userId));
+                    headMap.put("sessionId",sessionId);
+                    new HttpUtil().postHead("/movieApi/movie/v1/verify/pay",map,headMap).result(new HttpUtil.HttpListener() {
+                        @Override
+                        public void success(String data) {
+                            //解析成功之后的数据
+                            PayBean payBean = new Gson().fromJson(data, PayBean.class);
+                            Toast.makeText(context,payBean.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void fail(String data) {
+
+                        }
+                    });
                 }
 
             }
@@ -156,7 +216,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
 
             @Override
             public void checked(int row, int column) {
-                double price = result.getPrice();
+                price = result.getPrice();
                 total_price.setText(price * column + "");
             }
 

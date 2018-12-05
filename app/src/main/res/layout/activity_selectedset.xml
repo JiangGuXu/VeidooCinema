@@ -196,7 +196,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
-                android:id="@+id/avtivity_micro"
+                android:id="@+id/radio_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -229,7 +229,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
-                android:id="@+id/avtivity_treasure"
+                android:id="@+id/radio_alipay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -238,10 +238,12 @@
                 android:layout_marginTop="@dimen/dp_20" />
 
             <Button
-                android:id="@+id/activity_button"
+                android:id="@+id/btn_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/avtivity_treasure"
+                android:layout_below="@+id/radio_alipay"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/colorffffff"
                 android:background="@drawable/login_btn_background" />
         </RelativeLayout>
 
