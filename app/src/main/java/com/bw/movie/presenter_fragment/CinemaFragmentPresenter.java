@@ -104,6 +104,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(s);
                 recyclerView.setAdapter(shangweiAdapter);
+
             }
 
             @Override
@@ -219,7 +220,6 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                     translationX.setDuration(1000);
                     translationX.start();
                 }
-
                 isclick=!isclick;
                 break;
         }
