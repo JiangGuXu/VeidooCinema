@@ -1,15 +1,20 @@
 package com.bw.movie.presenter_activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +62,9 @@ public class DetailsFilmActivityPresenter extends AppDelage {
     private MyAdapterDetailsCriticsComment myAdapterDetailsCriticsComment;
     private RecyclerView recyclerView;
     private EditText text1;
+    private PopupWindow popupWindow;
+    private RelativeLayout relativeLayout;
+    private View view1;
 
     @Override
     public int getLayoutId() {
@@ -78,6 +86,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         img_bg = get(R.id.details_film_bg);
         mTitle = get(R.id.details_film_title);
         mImg = get(R.id.details_film_img1);
+        relativeLayout = get(R.id.details_film_topBg);
         mBuy = get(R.id.details_film_buy);
         mFocus = get(R.id.details_film_focus);
         //点击事件
@@ -124,7 +133,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             @Override
             public void onClick(View view) {
                 //影片
-                critics();
+                critics(1000);
             }
         },R.id.details_film_critics);
         setOnclick(new View.OnClickListener() {
@@ -170,10 +179,21 @@ public class DetailsFilmActivityPresenter extends AppDelage {
     }
 
     private void details() {
+        mRelativeLayout.removeAllViews();
         //穿件一个view并传给alert
         View view = View.inflate(context,R.layout.details_film,null);
-        final DialogUtils dialogUtils = new DialogUtils(context,view);
-        dialogUtils.show();
+        mRelativeLayout.addView(view);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY", mRelativeLayout.getMeasuredHeight(), 0);
+        translationY.setDuration(1000);
+        translationY.start();
+        view.findViewById(R.id.details_details_under).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
+                translationY.setDuration(1000);
+                translationY.start();
+            }
+        });
         //寻找控件
         SimpleDraweeView img = view.findViewById(R.id.details_details_img);
         TextView type = view.findViewById(R.id.details_details_type);
@@ -182,13 +202,6 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         TextView origin = view.findViewById(R.id.details_details_origin);
         TextView Introduction = view.findViewById(R.id.details_details_Introduction);
         RecyclerView recyclerView = view.findViewById(R.id.details_details_recyler);
-        view.findViewById(R.id.details_details_under).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //吧alert取消
-                dialogUtils.dismiss();
-            }
-        });
 //        设置属性
         img.setImageURI(details.getResult().getImageUrl());
         type.setText(details.getResult().getMovieTypes());
@@ -208,14 +221,19 @@ public class DetailsFilmActivityPresenter extends AppDelage {
     }
     //预告片
     private void trailer() {
+        mRelativeLayout.removeAllViews();
         View view = View.inflate(context,R.layout.details_trailer,null);
-        final DialogUtils dialogUtils = new DialogUtils(context,view);
-        dialogUtils.show();
+        mRelativeLayout.addView(view);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY", mRelativeLayout.getMeasuredHeight(), 0);
+        translationY.setDuration(1000);
+        translationY.start();
         view.findViewById(R.id.details_trailer_under).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                dialogUtils.dismiss();
-            }
+             public void onClick(View view) {
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
+                translationY.setDuration(1000);
+                translationY.start();
+             }
         });
         RecyclerView recyclerView = view.findViewById(R.id.details_trailer_recyler);
         MyAdapterDetailsTrailer myAdapterDetailsTrailer = new MyAdapterDetailsTrailer(context);
@@ -228,13 +246,18 @@ public class DetailsFilmActivityPresenter extends AppDelage {
     }
     //剧照
     private void still() {
+        mRelativeLayout.removeAllViews();
         View view = View.inflate(context,R.layout.details_still,null);
-        final DialogUtils dialogUtils = new DialogUtils(context,view);
-        dialogUtils.show();
+        mRelativeLayout.addView(view);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY", mRelativeLayout.getMeasuredHeight(), 0);
+        translationY.setDuration(1000);
+        translationY.start();
         view.findViewById(R.id.details_still_under).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogUtils.dismiss();
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
+                translationY.setDuration(1000);
+                translationY.start();
             }
         });
         RecyclerView recyclerView = view.findViewById(R.id.details_still_recyler);
@@ -248,26 +271,31 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         myAdapterDetailsStill.setList(posterList);
     }
     //影评
-    private void critics() {
-        View view = View.inflate(context,R.layout.details_critics,null);
-        final DialogUtils dialogUtils = new DialogUtils(context,view);
-        dialogUtils.show();
-        view.findViewById(R.id.details_critics_under).setOnClickListener(new View.OnClickListener() {
+    private void critics(int time) {
+        mRelativeLayout.removeAllViews();
+        view1 = View.inflate(context, R.layout.details_critics,null);
+        mRelativeLayout.addView(view1);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY", mRelativeLayout.getMeasuredHeight(), 0);
+        translationY.setDuration(time);
+        translationY.start();
+        view1.findViewById(R.id.details_critics_under).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogUtils.dismiss();
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
+                translationY.setDuration(1000);
+                translationY.start();
             }
         });
-        dialogUtils.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        text = view.findViewById(R.id.details_critics_text);
-        view.findViewById(R.id.details_critics_send).setOnClickListener(new View.OnClickListener() {
+//        dialogUtils.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        text = view1.findViewById(R.id.details_critics_text);
+        view1.findViewById(R.id.details_critics_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //点击发送 提交评论
                 doHttpcomments();
             }
         });
-        recyclerView = view.findViewById(R.id.details_critics_recyler);
+        recyclerView = view1.findViewById(R.id.details_critics_recyler);
         myAdapterDetailsCritics = new MyAdapterDetailsCritics(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -283,18 +311,20 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             }
 
             @Override
-            public void criticsComments(final int isgreat, final int greatnum, final int CommentId) {
+            public void criticsComments(int isgreat, int greatnum,int CommentId) {
+                mRelativeLayout.removeAllViews();
                 recyclerView.setAdapter(myAdapterDetailsCriticsComment);
                 View view = View.inflate(context,R.layout.activity_details_comment,null);
-                dialogUtils.setContentView(view);
-                dialogUtils.show();
+                mRelativeLayout.addView(view);
                 view.findViewById(R.id.details_comment_under).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogUtils.dismiss();
+                        ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
+                        translationY.setDuration(1000);
+                        translationY.start();
                     }
                 });
-                dialogUtils.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+//                dialogUtils.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 text1 = view.findViewById(R.id.details_comment_text);
                 view.findViewById(R.id.details_comment_send).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -305,7 +335,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 view.findViewById(R.id.details_comment_return).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogUtils.hide();
+                        critics(0);
                     }
                 });
                 RecyclerView recyclerView1 = view.findViewById(R.id.details_comment_recyler);
@@ -322,7 +352,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
 
     }
     //添加用户对评论的回复
-    private void doHttpcomment(final int isgreat, final int greatnum, final int commentId) {
+    private void doHttpcomment(int isgreat, int greatnum, int commentId) {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 String trim = text1.getText().toString().trim();
@@ -366,7 +396,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         }
     }
         //查看影评评论回复
-    private void doHttpCriticsComments(final int isgreat, final int greatnum, final int CommentId) {
+    private void doHttpCriticsComments( int isgreat, int greatnum,int CommentId) {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 int userId = SharedPreferencesUtils.getInt(context, "userId");

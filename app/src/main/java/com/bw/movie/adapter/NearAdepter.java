@@ -52,7 +52,7 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
     public void onBindViewHolder(@NonNull snearAdepter snearAdepter, final int i) {
         snearAdepter.text.setText(list.get(i).getName());
         snearAdepter.address.setText(list.get(i).getAddress());
-        // sRecommendedAdepter.distance.setText(list.get(i).getDistance());
+       // snearAdepter.distance.setText(list.get(i).getDistance());
         String images = list.get(i).getLogo();
         String[] split = images.split("\\|");
         snearAdepter.recommendimg.setImageURI(split[0]);

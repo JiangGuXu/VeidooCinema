@@ -1,5 +1,6 @@
 package com.bw.movie.presenter_fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -36,7 +38,7 @@ import java.util.List;
  * 创建了基本的这个presenter
  * */
 public class CinemaFragmentPresenter extends AppDelage implements AMapLocationListener, View.OnClickListener {
-
+    private boolean isclick=false;
     private Context context;
     private ImageView imageView;
     private ImageView image_like;
@@ -48,6 +50,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     private RecyclerView recyclerView;
     private Button recommendimg;
     private Button near;
+    private RelativeLayout relativeLayout;
 
     @Override
     public int getLayoutId() {
@@ -63,12 +66,14 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     public void initData() {
         super.initData();
         get(R.id.activity_loca);
+        relativeLayout = get(R.id.film_search_relative);
         imageView = (ImageView) get(R.id.activity_loca);
         recommendimg = (Button) get(R.id.activity_recommended);
         near = (Button) get(R.id.activity_near);
         image_like = get(R.id.image_like);
         recyclerView = (RecyclerView) get(R.id.activity_recyclerView);
         imageView.setOnClickListener(this);
+        relativeLayout.setOnClickListener(this);
         mlocationClient = new AMapLocationClient(context);
          //两个点击事件
         near.setOnClickListener(this);
@@ -99,6 +104,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(s);
                 recyclerView.setAdapter(shangweiAdapter);
+
             }
 
             @Override
@@ -203,6 +209,18 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 near.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttp();
+                break;
+            case R.id.film_search_relative:
+                if(isclick){
+                    ObjectAnimator translationX = ObjectAnimator.ofFloat(relativeLayout, "translationX", -180,0);
+                    translationX.setDuration(1000);
+                    translationX.start();
+                }else{
+                    ObjectAnimator translationX = ObjectAnimator.ofFloat(relativeLayout, "translationX", 0,-180);
+                    translationX.setDuration(1000);
+                    translationX.start();
+                }
+                isclick=!isclick;
                 break;
         }
     }
