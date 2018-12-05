@@ -49,7 +49,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
     private boolean flag = true;
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
 
         myViewHolder.user_system_messages_item_title.setText(list.get(i).getTitle());
         myViewHolder.user_system_messages_item_content.setText(list.get(i).getContent());
@@ -67,7 +67,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
             myViewHolder.user_system_messages_item_relativelayout.setVisibility(View.GONE);
         }
 
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         myViewHolder.user_system_messages_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

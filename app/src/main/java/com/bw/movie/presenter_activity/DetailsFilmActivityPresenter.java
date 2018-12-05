@@ -283,7 +283,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             }
 
             @Override
-            public void criticsComments(int isgreat, int greatnum,int CommentId) {
+            public void criticsComments(final int isgreat, final int greatnum, final int CommentId) {
                 recyclerView.setAdapter(myAdapterDetailsCriticsComment);
                 View view = View.inflate(context,R.layout.activity_details_comment,null);
                 dialogUtils.setContentView(view);
@@ -322,7 +322,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
 
     }
     //添加用户对评论的回复
-    private void doHttpcomment(int isgreat, int greatnum, int commentId) {
+    private void doHttpcomment(final int isgreat, final int greatnum, final int commentId) {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 String trim = text1.getText().toString().trim();
@@ -366,7 +366,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         }
     }
         //查看影评评论回复
-    private void doHttpCriticsComments( int isgreat, int greatnum,int CommentId) {
+    private void doHttpCriticsComments(final int isgreat, final int greatnum, final int CommentId) {
         if(id!=null){
             if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
                 int userId = SharedPreferencesUtils.getInt(context, "userId");

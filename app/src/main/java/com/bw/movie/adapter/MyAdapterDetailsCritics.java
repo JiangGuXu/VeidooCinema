@@ -43,7 +43,7 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHodlerDetailsCritics myViewHodler, int i) {
+    public void onBindViewHolder(@NonNull MyViewHodlerDetailsCritics myViewHodler, final int i) {
         myViewHodler.img.setImageURI(list.get(i).getCommentHeadPic());
         myViewHodler.comments.setText(list.get(i).getCommentContent());
         myViewHodler.name.setText(list.get(i).getCommentUserName());

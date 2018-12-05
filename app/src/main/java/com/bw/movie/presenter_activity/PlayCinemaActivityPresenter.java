@@ -66,14 +66,14 @@ public class PlayCinemaActivityPresenter extends AppDelage{
         film_recycler = get(R.id.film_recycler);
         image_back = get(R.id.image_back);
         //获取传值
-        String name = ((PlayCinemaActivity) context).getIntent().getStringExtra("movie_name");
+        final String name = ((PlayCinemaActivity) context).getIntent().getStringExtra("movie_name");
         String director = ((PlayCinemaActivity) context).getIntent().getStringExtra("Director");
         String type = ((PlayCinemaActivity) context).getIntent().getStringExtra("type");
         String time = ((PlayCinemaActivity) context).getIntent().getStringExtra("time");
         String country = ((PlayCinemaActivity) context).getIntent().getStringExtra("country");
         String logo = ((PlayCinemaActivity) context).getIntent().getStringExtra("logo");
-        String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
-        String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
+        final String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
+        final String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
         int movieId = ((PlayCinemaActivity) context).getIntent().getIntExtra("movieId", 22);
         int cinemaId = ((PlayCinemaActivity) context).getIntent().getIntExtra("cinemaId", 22);
 

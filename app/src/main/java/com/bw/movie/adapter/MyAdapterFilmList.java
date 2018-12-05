@@ -42,7 +42,7 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHodlerFilmList myViewHodlerFilmList, int i) {
+    public void onBindViewHolder(@NonNull MyViewHodlerFilmList myViewHodlerFilmList,final int i) {
         myViewHodlerFilmList.title.setText(titles.get(i));
         myAdapterFilmList_recyler = new MyAdapterFilmList_recyler(context);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
