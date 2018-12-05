@@ -9,16 +9,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.DetailsActivity;
 import com.bw.movie.activity.NearActivity;
 import com.bw.movie.activity.SelectedSetActivity;
 import com.bw.movie.adapter.FilmDetailsAdapterBanner;
 import com.bw.movie.adapter.MyAdapterComments;
 import com.bw.movie.adapter.MyAdapterDetails;
+import com.bw.movie.adapter.MyAdapterDetailsinside;
+import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.adapter.MyAdapterNearcinma;
 import com.bw.movie.bean.Commentsben;
@@ -36,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 /*
  * 附近影院排期页面presenter
@@ -143,6 +148,14 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 Log.i("aaaaaaaaa", mid + "------");
                 doHttp(String.valueOf(cinemasId), String.valueOf(mid));
 
+            }
+        });
+        //轮播图的滑动监听
+        mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+            @Override
+            public void onItemSelected(int position) {
+                mid =  bannerBeanResult.get(position).getId();
+                doHttp(String.valueOf(cinemasId), String.valueOf(mid));
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
