@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
@@ -36,12 +37,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 /*
  * 推荐影院的排期
  * 2018年11月27日 15:18:30
  * 程丹妮
  * 创建了基本的这个presenter
+ * 姜谷蓄修改
  * */
 public class DetailsActivitypersenter extends AppDelage implements View.OnClickListener {
 
@@ -134,6 +137,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
         myAdapterFilmBanner = new FilmDetailsAdapterBanner(context);
         mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
+        //轮播的条目点击事件
         myAdapterFilmBanner.setListener(new FilmDetailsAdapterBanner.RecyclerItemListener() {
             @Override
             public void onClick(int position) {
@@ -145,6 +149,14 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void getmovieId(int movieId) {
                 mid = movieId;
                 Log.i("aaaaaaaaa", mid + "------");
+                doHttp(String.valueOf(cinemasId), String.valueOf(mid));
+            }
+        });
+        //轮播图的滑动监听
+        mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+            @Override
+            public void onItemSelected(int position) {
+                mid =  bannerBeanResult.get(position).getId();
                 doHttp(String.valueOf(cinemasId), String.valueOf(mid));
             }
         });

@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 /*
  * 附近影院排期页面presenter
@@ -143,6 +144,14 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 Log.i("aaaaaaaaa", mid + "------");
                 doHttp(String.valueOf(cinemasId), String.valueOf(mid));
 
+            }
+        });
+        //轮播图的滑动监听
+        mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+            @Override
+            public void onItemSelected(int position) {
+                mid =  bannerBeanResult.get(position).getId();
+                doHttp(String.valueOf(cinemasId), String.valueOf(mid));
             }
         });
         myAdapterDetails = new MyAdapterDetails(context);
