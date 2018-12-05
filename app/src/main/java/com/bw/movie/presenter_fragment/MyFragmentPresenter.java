@@ -2,8 +2,15 @@ package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +21,17 @@ import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.UserAttentionActivity;
 import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
+import com.bw.movie.bean.Latestversionbean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
+import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * 我的页面presenter
@@ -41,6 +54,10 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private RelativeLayout my_attention_layout;
     private TextView my_nickname_text;
     private RelativeLayout my_feedback_layout;
+    private ImageView my_version_imageview;
+    private PopupWindow mPopWindow;
+    private String downloadUrl;
+    private WebView tv1;
 
     @Override
     public int getLayoutId() {
@@ -59,6 +76,9 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
 
         my_nickname_text = get(R.id.my_nickname_text);
 
+        //最新版本
+        my_version_imageview = get(R.id.my_version_imageview);
+        my_version_imageview.setOnClickListener(this);
 
         //头像图片
         my_head_icon = get(R.id.my_head_icon);
@@ -110,7 +130,6 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
                 break;
 
-
             //点击我的关注跳转到关注页面
             case R.id.my_attention_layout:
                 Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
@@ -133,9 +152,62 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-
+            case R.id.my_version_imageview:
+                doHttp();
+                break;
+            case R.id.web_view: { // 点击事件
+                mPopWindow.dismiss();//关闭窗口
+            }
+            break;
         }
+    }
+
+    private void showPopupWindow() {
+        //设置contentView
+        View contentView = LayoutInflater.from(context).inflate(R.layout.activity_popuplayout, null);
+        mPopWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setContentView(contentView);
+        //设置各个控件的点击响应
+        tv1 = (WebView) contentView.findViewById(R.id.web_view);
+        tv1.setOnClickListener(this);
+        //当点击popwindow以外的地方关闭窗口
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopWindow.setOutsideTouchable(true);
+        //显示的位置
+        mPopWindow.showAtLocation(((MainActivity) context).getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+
+    }
+
+    private void doHttp() {
+        String url = "/movieApi/tool/v1/findNewVersion";
+        Map<String, String> map = new HashMap<>();
+        int userId = SharedPreferencesUtils.getInt(context, "userId");
+        String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+        String ak = SharedPreferencesUtils.getString(context, "ak");
+        map.put("userId", userId + "");
+        map.put("sessionId", sessionId);
+        map.put("ak", ak);
+        new HttpUtil().get(url, map, null).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Log.i("cccc", data);
+                Latestversionbean bean = new Gson().fromJson(data, Latestversionbean.class);
+                int flag = bean.getFlag();
+                downloadUrl = bean.getDownloadUrl();
+                if (flag == 1) {
+                    showPopupWindow();
+                } else if (flag == 0) {
+                    Toast.makeText(context, "已经是最新版本 不需要更新", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void fail(String data) {
+
+            }
+        });
     }
 
 

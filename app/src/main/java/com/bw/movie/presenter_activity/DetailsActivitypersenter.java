@@ -35,8 +35,8 @@ import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
-import com.bw.movie.model.FilmListData;
-import com.bw.movie.model.Focus;
+import com.bw.movie.bean.FilmListData;
+import com.bw.movie.bean.Focus;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import recycler.coverflow.RecyclerCoverFlow;
+
 /*
  * 推荐影院的排期
  * 2018年11月27日 15:18:30
@@ -63,7 +64,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private String name1;
     private String address;
     private String logo;
-
+    private Detailsinsidebean.Resultbean result6;
     private RecyclerView mListView;
     private MyAdapterFilmList myAdapterFilmList;
     private List<String> titles = new ArrayList<>();
@@ -81,6 +82,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private String movie_name;
     private int i;
     private RecyclerView view;
+
     private int cinemasId1;
     private TextView textView;
     private TextView start_register;
@@ -89,7 +91,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     private ImageView img1;
     private LinearLayout linear;
     private EditText text;
-    private Detailsinsidebean.Resultbean result4;
+    private TextView textView1;
 
 
     @Override
@@ -102,18 +104,18 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         super.initData();
         //persenter页面控件
         imageView = (SimpleDraweeView) get(R.id.activity_detailss);
-        img1 = (ImageView)get(R.id.activity_img1);
-        linear = get(R.id.details_linear);
-        text = get(R.id.details_text);
+        img1 = (ImageView) get(R.id.activity_img1);
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((DetailsActivity)context).finish();
+                ((DetailsActivity) context).finish();
             }
         });
+        linear = get(R.id.details_linear);
+        text =(EditText) get(R.id.details_text);
         //影院的控件
-        img = (ImageView)  get(R.id.activity_img);
-        textView = (TextView) get(R.id.line_details);
+        img = (ImageView) get(R.id.activity_img);
+        textView1 = (TextView) get(R.id.line_details);
         start_register = (TextView) get(R.id.start_register);
         start_login = (TextView) get(R.id.start_login);
         start_register.setOnClickListener(this);
@@ -121,12 +123,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         //属性动画控件
         view = (RecyclerView) get(R.id.activity_recyclertails);
         layout = (RelativeLayout) get(R.id.start_ctrl);
-        setOnclick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                send();
-            }
-        },R.id.details_send);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +135,13 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 showShopCar();
             }
         });
+
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send();
+            }
+        },R.id.details_send);
         recyclerView = (RecyclerView) get(R.id.activity_scheduling);
         name = (TextView) get(R.id.activity_name);
         detailsname = (TextView) get(R.id.activity_detailsname);
@@ -186,16 +189,40 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 Detailsbean.Resultbean resultbean = result.get(position);
                 //获取banner中的电影名
                 //跳转
-                Intent intent1 = new Intent(context,SelectedSetActivity.class);
+                Intent intent1 = new Intent(context, SelectedSetActivity.class);
                 //传递对象
                 movie_name = bannerBeanResult.get(i).getName();
-                intent1.putExtra("result",resultbean);
-                intent1.putExtra("name",name1);//影院名
-                intent1.putExtra("address",address);//影院的地址
-                intent1.putExtra("movie_name",movie_name);//电影的名称
-                ((DetailsActivity)context).startActivity(intent1);
+                intent1.putExtra("result", resultbean);
+                intent1.putExtra("name", name1);//影院名
+                intent1.putExtra("address", address);//影院的地址
+                intent1.putExtra("movie_name", movie_name);//电影的名称
+                ((DetailsActivity) context).startActivity(intent1);
             }
         });
+    }
+
+    //打开
+    private void showShopCar() {
+        int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(layout, "translationY", heightPixels, 0);
+        objectAnimator.setDuration(1000);
+        objectAnimator.start();
+        layout.setVisibility(View.VISIBLE);
+    }
+
+    //关闭
+    private void hintShopCar() {
+        int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(layout, "translationY", 0, heightPixels);
+        objectAnimator.setDuration(1000);
+        objectAnimator.start();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                layout.setVisibility(View.GONE);
+            }
+        }, 1000);
+
     }
 
     private void send() {
@@ -208,7 +235,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             int userId = SharedPreferencesUtils.getInt(context, "userId");
             String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
             Map<String,String> mapform = new HashMap<>();
-            mapform.put("cinemaId",result4.getId()+"");
+            mapform.put("cinemaId",result6.getId()+"");
             mapform.put("commentContent",s);
             Map<String,String> maphead = new HashMap<>();
             maphead.put("userId",userId+"");
@@ -239,41 +266,21 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
     }
 
 
-    //打开
-    private void showShopCar() {
-        int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(layout, "translationY", heightPixels, 0);
-        objectAnimator.setDuration(1000);
-        objectAnimator.start();
-        layout.setVisibility(View.VISIBLE);
-    }
-
-    //关闭
-    private void hintShopCar() {
-        int heightPixels = context.getResources().getDisplayMetrics().heightPixels;
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(layout, "translationY", 0, heightPixels);
-        objectAnimator.setDuration(1000);
-        objectAnimator.start();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                layout.setVisibility(View.GONE);
-            }
-        }, 1000);
-    }
-
     //影院的详情
     private void doHttpetails() {
         String url2 = "http://mobile.bwstudent.com/movieApi/cinema/v1/findCinemaInfo";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", cinemasId + "");
         new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
+
+
+
             @Override
             public void success(String data) {
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
-                result4 = detailsBean.getResult();
+                result6 = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
-                resultbeans.add(result4);
+                resultbeans.add(result6);
                 Intent intent = ((DetailsActivity) context).getIntent();
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
@@ -311,6 +318,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 recyclerView.setLayoutManager(s);
                 recyclerView.setAdapter(myAdapterDetails);
             }
+
             @Override
             public void fail(String data) {
 
@@ -359,7 +367,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 start_register.setBackgroundResource(R.drawable.almy_details_false);
                 start_login.setBackgroundResource(R.drawable.my_details_true);
                 doHttpetails();
-
                 break;
             case R.id.start_register:
                 linear.setVisibility(View.VISIBLE);
@@ -377,12 +384,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         map.put("cinemaId", String.valueOf(cinemasId));
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil().get(url3, map, null).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Commentsben bean = new Gson().fromJson(data, Commentsben.class);
                 List<Commentsben.Resultbean> result = bean.getResult();
-                MyAdapterComments myAdapterComments = new MyAdapterComments(context,result);
+                MyAdapterComments myAdapterComments = new MyAdapterComments(context, result);
                 LinearLayoutManager s = new LinearLayoutManager(context);
                 s.setOrientation(LinearLayoutManager.VERTICAL);
                 view.setLayoutManager(s);
@@ -395,7 +402,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             }
         });
     }
-
 
 
 }
