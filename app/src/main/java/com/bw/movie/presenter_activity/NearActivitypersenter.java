@@ -7,16 +7,12 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.DetailsActivity;
@@ -33,11 +29,9 @@ import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
-import com.bw.movie.bean.FilmListData;
-import com.bw.movie.bean.Focus;
+import com.bw.movie.model.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
-import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
@@ -82,9 +76,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     private String movie_name;
     private int i;
     private ImageView img1;
-    private Detailsinsidebean.Resultbean result2;
-    private EditText text;
-    private LinearLayout linear;
 
     @Override
     public int getLayoutId() {
@@ -119,14 +110,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
                 showShopCar();
             }
         });
-        setOnclick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                send();
-            }
-        },R.id.details_send1);
-        linear = get(R.id.details_linear1);
-        text =(EditText) get(R.id.details_text1);
         //详情 评论 控件
         start_register1 = (TextView) get(R.id.start_register1);
         start_login1 = (TextView) get(R.id.start_login1);
@@ -135,6 +118,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         //属性动画控件
         view = (RecyclerView) get(R.id.activity_recyclertails);
         layout = (RelativeLayout) get(R.id.start_ctrl);
+
 
         Intent intent = ((NearActivity) context).getIntent();
         //获取值
@@ -165,7 +149,6 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
 
             }
         });
-
         myAdapterDetails = new MyAdapterDetails(context);
         //点击事件
         myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
@@ -219,60 +202,18 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
 
     }
 
-    private void send() {
-        String s = text.getText().toString();
-        if(TextUtils.isEmpty(s)){
-            Toast.makeText(context, "请输入内容", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
-            int userId = SharedPreferencesUtils.getInt(context, "userId");
-            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
-            Map<String,String> mapform = new HashMap<>();
-            mapform.put("cinemaId",result2.getId()+"");
-            mapform.put("commentContent",s);
-            Map<String,String> maphead = new HashMap<>();
-            maphead.put("userId",userId+"");
-            maphead.put("sessionId",sessionId);
-            new HttpUtil().postHead("/movieApi/cinema/v1/verify/cinemaComment",mapform,maphead).result(new HttpUtil.HttpListener() {
-                @Override
-                public void success(String data) {
-                    Gson gson = new Gson();
-                    Focus focus = gson.fromJson(data, Focus.class);
-                    if(focus.getStatus().equals("0000")){
-                        Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
-                        doHttpcomments();
-                    }else{
-                        Toast.makeText(context, "评论失败", Toast.LENGTH_SHORT).show();
-                    }
-                    text.setText("");
-                }
-
-                @Override
-                public void fail(String data) {
-
-                }
-            });
-        }else{
-            Toast.makeText(context, "请登录", Toast.LENGTH_SHORT).show();
-        }
-
-    }
     //详情
     private void doHttnear() {
         String url2 = "http://mobile.bwstudent.com/movieApi/cinema/v1/findCinemaInfo";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", cinemasId + "");
         new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
-
-
-
             @Override
             public void success(String data) {
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
-                result2 = detailsBean.getResult();
+                Detailsinsidebean.Resultbean result = detailsBean.getResult();
                 ArrayList<Detailsinsidebean.Resultbean> resultbeans = new ArrayList<>();
-                resultbeans.add(result2);
+                resultbeans.add(result);
                 Intent intent = ((NearActivity) context).getIntent();
                 String address = intent.getStringExtra("address");
                 String phone1 = intent.getStringExtra("phone");
@@ -357,13 +298,11 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_login1:
-                linear.setVisibility(View.GONE);
                 start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttnear();
                 break;
             case R.id.start_register1:
-                linear.setVisibility(View.VISIBLE);
                 start_login1.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 start_register1.setBackgroundResource(R.drawable.my_attention_title_shape_true);
                 doHttpcomments();
