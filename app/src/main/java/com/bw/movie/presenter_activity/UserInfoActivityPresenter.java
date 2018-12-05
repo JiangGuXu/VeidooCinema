@@ -76,8 +76,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private TextView user_info_name;
     private Boolean isLogin;
     private Button user_info_logout;
-    private ImageView user_info_reset_pwd;
-    private ImageView user_info_reset_info;
+    private LinearLayout user_info_layout_4;
     private RelativeLayout user_info_head_layout;
     private PopupWindow popupWindow;
     private LinearLayout user_info_selecte_camera;
@@ -85,6 +84,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private static String path;//sd路径
     private static Bitmap head;//头像Bitmap
     private Bitmap bitmap1;
+    private LinearLayout user_info_layout_3;
 
 
     @Override
@@ -119,8 +119,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         user_info_emil = get(R.id.user_info_emil);
 
         //重置密码
-        user_info_reset_pwd = get(R.id.user_info_reset_pwd);
-        user_info_reset_pwd.setOnClickListener(this);
+        user_info_layout_3 = get(R.id.user_info_layout_3);
+        user_info_layout_3.setOnClickListener(this);
 
 
         //退出登录
@@ -129,8 +129,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
 
         //修改个人信息
-        user_info_reset_info = get(R.id.user_info_reset_info);
-        user_info_reset_info.setOnClickListener(this);
+        user_info_layout_4 = get(R.id.user_info_layout_4);
+        user_info_layout_4.setOnClickListener(this);
 
 
         //如果登录状态 给页面控件复制用户信息   其实若没有登录是进不来这个页面的
@@ -190,7 +190,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                 break;
 
             //点击重置密码
-            case R.id.user_info_reset_pwd:
+            case R.id.user_info_layout_3:
                 Intent intent = new Intent(context, ReSetpasswordActivity.class);
                 ((UserInfoActivity) context).startActivity(intent);
                 ((UserInfoActivity) context).finish();
@@ -198,7 +198,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
 
             //点击修改个人信息
-            case R.id.user_info_reset_info:
+            case R.id.user_info_layout_4:
                 if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
                     Intent intent1 = new Intent(context, UserReSertInfoActivity.class);
                     ((UserInfoActivity) context).startActivity(intent1);

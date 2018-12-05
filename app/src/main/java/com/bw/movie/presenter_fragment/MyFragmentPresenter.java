@@ -2,6 +2,7 @@ package com.bw.movie.presenter_fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +17,17 @@ import com.bw.movie.activity.MainActivity;
 import com.bw.movie.activity.UserAttentionActivity;
 import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
+import com.bw.movie.activity.UserSystemMessagesActivity;
+import com.bw.movie.bean.UserSystemCountBean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
+import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
 
 /*
  * 我的页面presenter
@@ -44,6 +51,9 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private TextView my_nickname_text;
     private RelativeLayout my_feedback_layout;
     private RelativeLayout my_rccord_layout;
+    private ImageView my_remind;
+    private TextView my_icon_remind_message_count;
+    private RelativeLayout my_icon_remind_relativelayout;
 
     @Override
     public int getLayoutId() {
@@ -58,6 +68,14 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     @Override
     public void initData() {
         super.initData();
+
+        //系统消息
+        my_remind = get(R.id.my_remind);
+        my_remind.setOnClickListener(this);
+
+
+        my_icon_remind_message_count = get(R.id.my_icon_remind_message_count);
+        my_icon_remind_relativelayout = get(R.id.my_icon_remind_relativelayout);
 
 
         my_nickname_text = get(R.id.my_nickname_text);
@@ -91,7 +109,45 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     public void resume() {
         super.resume();
         setHeadAndNickname();
+        doHttpForCount("/movieApi/tool/v1/verify/findUnreadMessageCount");
+    }
 
+
+    private void doHttpForCount(String s) {
+        HashMap<String, String> paramsMap = new HashMap<>();
+
+        HashMap<String, String> headMap = new HashMap<>();
+        String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+        int userId = SharedPreferencesUtils.getInt(context, "userId");
+        headMap.put("userId", userId + "");
+        headMap.put("sessionId", sessionId);
+        new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+
+                Log.i("jhktest", "successcount: " + data);
+                if (data.contains("成功")) {
+                    Gson gson = new Gson();
+                    UserSystemCountBean userSystemCountBean = gson.fromJson(data, UserSystemCountBean.class);
+                    int count = userSystemCountBean.getCount();
+                    if (count > 0) {
+                        my_icon_remind_relativelayout.setVisibility(View.VISIBLE);
+                        my_icon_remind_message_count.setText(count + "");
+                    } else {
+                        my_icon_remind_relativelayout.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    Toast.makeText(context, "请求失败", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void fail(String data) {
+                Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -150,6 +206,15 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
                 break;
 
+            //点击消息图片 跳转到我的消息页面
+            case R.id.my_remind:
+                if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
+                    Intent intent = new Intent(context, UserSystemMessagesActivity.class);
+                    ((MainActivity) context).startActivity(intent);
+                } else {
+                    Toast.makeText(context, "您还没有登录哦~", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 

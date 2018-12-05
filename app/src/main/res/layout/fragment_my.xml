@@ -22,6 +22,28 @@
         android:layout_marginTop="@dimen/dp_24"
         android:src="@drawable/my_icon_remind_default" />
 
+    <RelativeLayout
+        android:id="@+id/my_icon_remind_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@drawable/yuan" />
+
+        <TextView
+            android:id="@+id/my_icon_remind_message_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1"
+            android:textColor="@color/colorffffff"
+            android:textSize="@dimen/sp_12" />
+    </RelativeLayout>
+
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/my_head_icon"

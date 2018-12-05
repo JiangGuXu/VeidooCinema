@@ -71,6 +71,8 @@
         <activity android:name=".activity.FindCinemaActivity"></activity>
         <activity android:name=".activity.PlayCinemaActivity"></activity>
         <activity android:name=".activity.BuyRecordActivity"></activity>
+        <activity android:name=".activity.UserSystemMessagesActivity"></activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
