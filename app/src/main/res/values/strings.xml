@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VeidooCinema</string>
+    <string name="app_name">维度影院</string>
 
     <string name="welcome_page_title">一场电影</string>
     <string name="welcome_page1_title">荡涤你的心</string>
@@ -9,7 +9,7 @@
     <string name="welcome_page4_title2">带你开启一段美好的电影之旅</string>
     <string name="my_name_text">请登录</string>
     <string name="welcome_button_text">立即体验</string>
-
+    <string name="lolg_name">维度影院</string>
     <string name="my_messiage_text">我的信息</string>
     <string name="my_rccord_text">购票记录</string>
     <string name="my_attention_text">我的关注</string>
