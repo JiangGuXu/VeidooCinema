@@ -13,7 +13,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 首页轮播
+ * 赵瑜峰
+ */
 public class MyAdapterFilmBanner extends RecyclerView.Adapter<MyAdapterFilmBanner.MyViewHodlerFilmBanner> {
     private Context context;
 

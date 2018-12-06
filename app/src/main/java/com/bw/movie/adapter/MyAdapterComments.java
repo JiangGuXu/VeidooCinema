@@ -21,6 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ *
+ * 影院的评论
+ * 程丹妮
+ *
+ */
 public class MyAdapterComments extends RecyclerView.Adapter<MyAdapterComments.sMyAdapterComments> {
     private List<Commentsben.Resultbean> list = new ArrayList<>();
     private Context context;

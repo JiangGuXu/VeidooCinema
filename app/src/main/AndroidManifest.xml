@@ -67,7 +67,13 @@
         <activity android:name=".activity.PlayCinemaActivity"></activity>
         <activity android:name=".activity.BuyRecordActivity"></activity>
         <activity android:name=".activity.UserSystemMessagesActivity"></activity>
-
+        <receiver android:name=".utils.net.NetBroadCastReciver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"

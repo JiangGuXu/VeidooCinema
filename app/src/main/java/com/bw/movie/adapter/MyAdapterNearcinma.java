@@ -15,7 +15,10 @@ import com.bw.movie.bean.Detailsinsidebean;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 影院电影场次列表
+ * 程丹妮
+ */
 public class MyAdapterNearcinma extends RecyclerView.Adapter<MyAdapterNearcinma.sMyAdapterNearcinma> {
     private List<Detailsinsidebean.Resultbean> list = new ArrayList<>();
     private Context context;

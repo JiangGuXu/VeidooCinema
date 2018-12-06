@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * search页面电影列表
+ * 赵瑜峰
+ */
 public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchList.MyViewHodlerSearchList> {
     private Context context;
     private List<FilmListData.ResultBean> list = new ArrayList();

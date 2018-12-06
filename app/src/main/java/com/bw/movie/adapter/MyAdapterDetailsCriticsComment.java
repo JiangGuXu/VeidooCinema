@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/**
+ * 影片评论的列表
+ * 赵瑜峰
+ */
 
 public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
     private Context context;

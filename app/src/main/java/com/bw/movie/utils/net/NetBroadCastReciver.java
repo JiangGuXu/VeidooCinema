@@ -7,6 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.widget.Toast;
+
+/***
+ * 广播接受者
+ * 赵瑜峰
+ * 18-12-6
+ */
 
 public class NetBroadCastReciver extends BroadcastReceiver {
 
@@ -40,10 +47,12 @@ public class NetBroadCastReciver extends BroadcastReceiver {
                 //如果当前的网络连接成功并且网络连接可用
                 if (NetworkInfo.State.CONNECTED == info.getState() && info.isAvailable()) {
                     if (info.getType() == ConnectivityManager.TYPE_WIFI || info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                        Log.i("TAG", getConnectionType(info.getType()) + "连上");
+//                        Log.i("TAG", getConnectionType(info.getType()) + "连上");
+                        Toast.makeText(context, getConnectionType(info.getType())+"连上", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.i("TAG", getConnectionType(info.getType()) + "断开");
+//                    Log.i("TAG", getConnectionType(info.getType()) + "断开");
+                    Toast.makeText(context, getConnectionType(info.getType())+"断开", Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -15,7 +15,10 @@ import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-
+/**
+ * 预告片的列表
+ * 赵瑜峰
+ */
 public class MyAdapterDetailsTrailer extends RecyclerView.Adapter<MyAdapterDetailsTrailer.MyViewHodlerDetailsTrailer> {
     private Context context;
     private List<Details.ResultBean.ShortFilmListBean> list = new ArrayList<>();
