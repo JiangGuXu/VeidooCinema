@@ -6,13 +6,28 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.bw.movie.activity.LoginActivity;
+import com.bw.movie.bean.LoginBean;
+import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
+import com.google.gson.Gson;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.util.HashMap;
+
+import static com.bw.movie.presenter_activity.LoginActivityPresenter.longToString;
 
 /**
  * 微信登录相关
@@ -56,8 +71,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
-
                 Log.i("show", "onResp: 1" + result);
+                SendAuth.Resp sendResp = (SendAuth.Resp) baseResp;
+                if (sendResp != null) {
+                    String code = sendResp.code;
+                    Log.i("show", "onResp: " + code);
+                    doWX_login(code);
+                }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
@@ -85,5 +105,62 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             builder.setMessage(baseResp.errCode + "");
             builder.show();
         }
+    }
+
+    private void doWX_login(String code) {
+        HashMap<String, String> headMap = new HashMap<>();
+        headMap.put("Content-Type", "application/x-www-form-urlencoded");
+
+
+        HashMap<String, String> partMap = new HashMap<>();
+        partMap.put("code", code);
+        new HttpUtil().postHead("/movieApi/user/v1/weChatBindingLogin", partMap, headMap).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                if (data.contains("成功")) {
+                    Toast.makeText(WXEntryActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                    //解析数据
+                    Gson gson = new Gson();
+                    LoginBean loginBean = gson.fromJson(data, LoginBean.class);
+                    LoginBean.ResultBean resultBean = loginBean.getResult();
+
+                    //储存userid
+                    SharedPreferencesUtils.putInt(WXEntryActivity.this, "userId", resultBean.getUserId());
+                    //储存sessionId
+                    SharedPreferencesUtils.putString(WXEntryActivity.this, "sessionId", resultBean.getSessionId());
+                    //获取到用户信息的集合
+                    LoginBean.ResultBean.UserInfoBean userInfo = resultBean.getUserInfo();
+                    //登录状态改为true
+                    SharedPreferencesUtils.putBoolean(WXEntryActivity.this, "isLogin", true);
+                    //存储用户头像信息
+                    SharedPreferencesUtils.putString(WXEntryActivity.this, "headpic", userInfo.getHeadPic());
+                    //存储昵称
+                    SharedPreferencesUtils.putString(WXEntryActivity.this, "nickname", userInfo.getNickName());
+                    //存储性别
+                    if (userInfo.getSex() == 1) {
+                        SharedPreferencesUtils.putString(WXEntryActivity.this, "sex", "男");
+                    } else {
+                        SharedPreferencesUtils.putString(WXEntryActivity.this, "sex", "女");
+                    }
+                    //获取出生日期
+                    long birthday = userInfo.getBirthday();
+                    DateFormatForYou dateFormatForYou = new DateFormatForYou();
+                    try {
+                        String s = dateFormatForYou.longToString(birthday, "yyyy-MM-dd");
+                        SharedPreferencesUtils.putString(WXEntryActivity.this, "birthday", s);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    //储存手机号
+                    SharedPreferencesUtils.putString(WXEntryActivity.this, "phone", userInfo.getPhone());
+                }
+            }
+
+            @Override
+            public void fail(String data) {
+                Toast.makeText(WXEntryActivity.this, data, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

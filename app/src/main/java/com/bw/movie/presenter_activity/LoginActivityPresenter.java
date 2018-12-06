@@ -66,13 +66,12 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
         quick_register.setOnClickListener(this);
         btn_login.setOnClickListener(this);
 
+        //与微信连接
+        regToWx();
 
         //微信登录图标
         login_in_weixin = get(R.id.login_in_weixin);
         login_in_weixin.setOnClickListener(this);
-
-        //与微信连接
-        regToWx();
     }
 
     public static String longToString(long currentTime, String formatType)
@@ -194,8 +193,6 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
 
             //点击微信登录图标
             case R.id.login_in_weixin:
-               // send oauth request
-
                 SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";//
 //                req.scope = "snsapi_login";//提示 scope参数错误，或者没有scope权限
