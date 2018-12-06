@@ -46,7 +46,6 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
         return new MyViewHolder(inflate);
     }
 
-    private boolean flag = true;
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
@@ -68,6 +67,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
         }
 
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
         myViewHolder.user_system_messages_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +81,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                     }
                 });
                 alertDialog.show();
-                if (list.get(i).getStatus() == 0 && flag) {
+                if (list.get(i).getStatus() == 0) {
                     Log.i("test1", "onClick: ");
                     doHttpTochangeSysMsgStatus("/movieApi/tool/v1/verify/changeSysMsgStatus");
                 }
@@ -96,6 +96,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                 int userId = SharedPreferencesUtils.getInt(context, "userId");
                 headMap.put("userId", userId + "");
                 headMap.put("sessionId", sessionId);
+
+                list.get(i).setStatus(1);
                 new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
 
 
@@ -104,7 +106,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                         if (data.contains("成功")) {
                             myViewHolder.user_system_messages_item_relativelayout.setVisibility(View.GONE);
                             listener.changed(1);
-                            flag = false;
+
                         } else {
                             Toast.makeText(context, "网络出了点问题~重新登录或者检查下网络~", Toast.LENGTH_SHORT).show();
                         }
@@ -116,6 +118,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                         Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                notifyDataSetChanged();
             }
         });
 
