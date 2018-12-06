@@ -48,7 +48,7 @@ public class NetBroadCastReciver extends BroadcastReceiver {
                 if (NetworkInfo.State.CONNECTED == info.getState() && info.isAvailable()) {
                     if (info.getType() == ConnectivityManager.TYPE_WIFI || info.getType() == ConnectivityManager.TYPE_MOBILE) {
 //                        Log.i("TAG", getConnectionType(info.getType()) + "连上");
-                        Toast.makeText(context, getConnectionType(info.getType())+"连上", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, getConnectionType(info.getType())+"连上", Toast.LENGTH_SHORT).show();
                     }
                 } else {
 //                    Log.i("TAG", getConnectionType(info.getType()) + "断开");
