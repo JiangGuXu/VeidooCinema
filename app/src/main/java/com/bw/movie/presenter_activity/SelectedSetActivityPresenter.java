@@ -24,6 +24,9 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.bw.movie.widget.SeatTable;
 import com.google.gson.Gson;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -51,6 +54,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
     private int userId;
     private String sessionId;
     private OrderBean orderBean;
+    private IWXAPI api;
 
     @Override
     public int getLayoutId() {
@@ -89,6 +93,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
         seatTableView.setScreenName(result.getScreeningHall() + "荧幕");//设置屏幕名称
         movie_text.setText(movie_name);
         seatTableView.setMaxSelected(4);//设置最多选中
+        api = WXAPIFactory.createWXAPI(context, "wx4c96b6b8da494224");
         //微信 支付宝控件
         radio_wechat = (RadioButton) get(R.id.radio_wechat);
         radio_alipay = (RadioButton) get(R.id.radio_alipay);
@@ -184,7 +189,16 @@ public class SelectedSetActivityPresenter extends AppDelage {
                         public void success(String data) {
                             //解析成功之后的数据
                             PayBean payBean = new Gson().fromJson(data, PayBean.class);
-                            Toast.makeText(context,payBean.getMessage(),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context,payBean.getMessage(),Toast.LENGTH_SHORT).show();
+                            PayReq request = new PayReq();
+                            request.appId = payBean.getAppId();
+                            request.partnerId = payBean.getPartnerId();
+                            request.prepayId= payBean.getPrepayId();
+                            request.packageValue = payBean.getPackageValue();
+                            request.nonceStr= payBean.getNonceStr();
+                            request.timeStamp= payBean.getTimeStamp();
+                            request.sign= payBean.getSign();
+                            api.sendReq(request);
                         }
 
                         @Override
