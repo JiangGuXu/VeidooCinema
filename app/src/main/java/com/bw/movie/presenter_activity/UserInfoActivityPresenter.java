@@ -35,8 +35,12 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
+import com.bw.movie.wxapi.WXEntryActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,6 +67,10 @@ import static android.support.v4.app.ActivityCompat.shouldShowRequestPermissionR
  * 2018年12月1日 09:36:21
  * 焦浩康
  * 正在添加修改个人信息的功能
+ * <p>
+ * 2018年12月6日 15:57:43
+ * 焦浩康
+ * 添加了绑定微信帐号的功能
  */
 public class UserInfoActivityPresenter extends AppDelage implements View.OnClickListener {
 
@@ -85,7 +93,10 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private static Bitmap head;//头像Bitmap
     private Bitmap bitmap1;
     private LinearLayout user_info_layout_3;
-
+    private LinearLayout user_info_layout_5;
+    private TextView user_info_is_bind_wx_text;
+    private ImageView user_info_goto_bind_wx_img;
+    private boolean isBindWx = false;
 
     @Override
     public int getLayoutId() {
@@ -101,6 +112,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     public void initData() {
         super.initData();
 
+
+        regToWx();
         path = Environment.getExternalStorageDirectory().getAbsolutePath();
         //点击头像布局
         user_info_head_layout = get(R.id.user_info_head_layout);
@@ -131,6 +144,11 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         //修改个人信息
         user_info_layout_4 = get(R.id.user_info_layout_4);
         user_info_layout_4.setOnClickListener(this);
+
+
+        //绑定微信帐号
+        user_info_layout_5 = get(R.id.user_info_layout_5);
+        user_info_layout_5.setOnClickListener(this);
 
 
         //如果登录状态 给页面控件复制用户信息   其实若没有登录是进不来这个页面的
@@ -165,6 +183,27 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
         user_info_selecte_photo = user_info_selecte_head_popupwindow_layout.findViewById(R.id.user_info_selecte_photo);
         user_info_selecte_photo.setOnClickListener(this);
 
+
+        //绑定微信和是否绑定微信相关
+        user_info_is_bind_wx_text = get(R.id.user_info_is_bind_wx_text);
+        user_info_goto_bind_wx_img = get(R.id.user_info_goto_bind_wx_img);
+
+        //点击绑定微信号回来的回调
+        WXEntryActivity wxEntryActivity = new WXEntryActivity();
+        wxEntryActivity.setWxEntryBindListener(new WXEntryActivity.WXEntryBindListener() {
+            @Override
+            public void onisSucceed(boolean flag) {
+                if (flag) {
+                    isBindWx = true;
+                    Toast.makeText(context, "绑定成功", Toast.LENGTH_SHORT).show();
+                    user_info_is_bind_wx_text.setText("已绑定");
+                } else {
+                    isBindWx = false;
+                    Toast.makeText(context, "绑定失败", Toast.LENGTH_SHORT).show();
+                    user_info_is_bind_wx_text.setText("已绑定");
+                }
+            }
+        });
 
     }
 
@@ -269,9 +308,42 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
                 break;
 
+
+            //点击去绑定微信帐号
+            case R.id.user_info_layout_5:
+                if (!isBindWx) {
+                    Boolean isBindWX = SharedPreferencesUtils.getBoolean(context, "isBindWX");
+                    Boolean isLogin1 = SharedPreferencesUtils.getBoolean(context, "isLogin");
+                    if (isLogin1 && isBindWX == false) {
+                        SendAuth.Req req = new SendAuth.Req();
+                        req.scope = "snsapi_userinfo";//
+//                req.scope = "snsapi_login";//提示 scope参数错误，或者没有scope权限
+                        req.state = "wechat_sdk_微信绑定";
+                        api.sendReq(req);
+
+                    }
+
+                }
+
+                break;
+
         }
     }
 
+
+    // APP_ID 替换为你的应用从官方网站申请到的合法appID
+    private static final String APP_ID = "wxb3852e6a6b7d9516";
+
+    // IWXAPI 是第三方app和微信通信的openApi接口
+    private IWXAPI api;
+
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(context, APP_ID, true);
+
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+    }
 
     @Override
     public void resume() {
@@ -289,7 +361,47 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
             user_info_sex.setText(sex.trim());
             user_info_phone.setText(phone);
             user_info_birthday.setText(birthday);
+
+
+            //判断是否绑定微信
+            if (!isBindWx) {
+                int userId = SharedPreferencesUtils.getInt(context, "userId");
+                HashMap<String, String> parmMap = new HashMap<>();
+                HashMap<String, String> headMap = new HashMap<>();
+
+                headMap.put("userId", userId + "");
+                new HttpUtil().postHead("/movieApi/user/v1/verify/whetherToBindWeChat", parmMap, headMap).result(new HttpUtil.HttpListener() {
+                    @Override
+                    public void success(String data) {
+                        if (data.contains("成功")) {
+                            isBindWx = true;
+                            user_info_is_bind_wx_text.setText("已绑定");
+                            user_info_goto_bind_wx_img.setVisibility(View.GONE);
+                            //这里的未绑定  不知道data 里面有没有包含 自己先写上   因为接口  访问失败
+                        } else if (data.contains("未绑定")) {
+                            isBindWx = false;
+                            user_info_is_bind_wx_text.setText("未绑定");
+                            user_info_goto_bind_wx_img.setVisibility(View.VISIBLE);
+                            Toast.makeText(context, "未绑定", Toast.LENGTH_SHORT).show();
+                        } else {
+                            isBindWx = false;
+                            Toast.makeText(context, "查询是否绑定微信失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void fail(String data) {
+                        Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                user_info_is_bind_wx_text.setText("已绑定");
+                user_info_goto_bind_wx_img.setVisibility(View.GONE);
+
+            }
         }
+
+
     }
 
 
