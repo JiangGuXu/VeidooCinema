@@ -187,7 +187,6 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         myAdapterDetails = new MyAdapterDetails(context);
         //请求轮播数据
         doHttpBanner();
-        Log.i("ccccccccc", cinemasId + "-------");
         //排期数据
         doHttp(String.valueOf(cinemasId), "16");
         doHttpetails();
@@ -210,6 +209,16 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 ((DetailsActivity) context).startActivity(intent1);
             }
         });
+    }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        //请求轮播数据
+        doHttpBanner();
+        //排期数据
+        doHttp(String.valueOf(cinemasId), "16");
+        doHttpetails();
     }
 
     //打开

@@ -58,6 +58,12 @@ public class BuyRecordActivityPresenter extends AppDelage {
         doHttp();
     }
 
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        doHttp();
+    }
+
     private void doHttp() {
         if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
             int userId = SharedPreferencesUtils.getInt(context, "userId");

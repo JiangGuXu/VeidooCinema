@@ -32,6 +32,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
     private Button mHot,mRelease,mComingsoon;
     private RecyclerView mRecyclerView;
     private MyAdapterSearchList myAdapterSearchList;
+    private int id;
 
     @Override
     public int getLayoutId() {
@@ -59,18 +60,18 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         mRelease.setOnClickListener(this);
         mComingsoon.setOnClickListener(this);
         Intent intent = ((SearchActivity) context).getIntent();
-        int id = intent.getIntExtra("position", 0);
+        id = intent.getIntExtra("position", 0);
         mRecyclerView = get(R.id.search_recyler);
         myAdapterSearchList = new MyAdapterSearchList(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(myAdapterSearchList);
-        if(id==0){
+        if(id ==0){
             hot();
-        }else if(id==1){
+        }else if(id ==1){
             release();
-        }else if(id==2){
+        }else if(id ==2){
             comingsoon();
         }
         myAdapterSearchList.result(new MyAdapterSearchList.SearchFouceListener() {
@@ -86,6 +87,18 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
             }
 
         });
+    }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        if(id ==0){
+            hot();
+        }else if(id ==1){
+            release();
+        }else if(id ==2){
+            comingsoon();
+        }
     }
 
     @Override

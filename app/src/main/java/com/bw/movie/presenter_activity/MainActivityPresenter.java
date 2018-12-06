@@ -1,6 +1,11 @@
 package com.bw.movie.presenter_activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.Display;
 import android.view.View;
@@ -14,6 +19,7 @@ import com.bw.movie.fragment.CinemaFragment;
 import com.bw.movie.fragment.FilmFragment;
 import com.bw.movie.fragment.MyFragment;
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.net.NetBroadCastReciver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +138,17 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
                 manager.beginTransaction().hide(filmFragment).commit();
                 break;
         }
+    }
+    private void setBreoadcast() {
+        BroadcastReceiver receiver=new NetBroadCastReciver();
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        context.registerReceiver(receiver,filter);
+    }
+
+    public void initnetword(Bundle savedInstanceState) {
     }
 }
 

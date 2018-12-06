@@ -17,12 +17,15 @@ import com.bw.movie.bean.FilmListData;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 首页电影类型列表
+ * 赵瑜峰
+ */
 public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.MyViewHodlerFilmList>{
     private Context context;
     private List<FilmListData> list = new ArrayList();
     private List<String> titles=new ArrayList<>();
-    private MyAdapterFilmList_recyler myAdapterFilmList_recyler;
+    private MyAdapterFilmListrecyler myAdapterFilmList_recyler;
 
 
     public MyAdapterFilmList (Context context){
@@ -44,7 +47,7 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHodlerFilmList myViewHodlerFilmList,final int i) {
         myViewHodlerFilmList.title.setText(titles.get(i));
-        myAdapterFilmList_recyler = new MyAdapterFilmList_recyler(context);
+        myAdapterFilmList_recyler = new MyAdapterFilmListrecyler(context);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         myViewHodlerFilmList.recyclerView.setLayoutManager(staggeredGridLayoutManager);
         myViewHodlerFilmList.recyclerView.setAdapter(myAdapterFilmList_recyler);
