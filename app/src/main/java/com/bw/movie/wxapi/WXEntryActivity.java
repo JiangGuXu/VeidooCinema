@@ -3,9 +3,11 @@ package com.bw.movie.wxapi;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -77,6 +79,11 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 finish();
                 break;
         }
-
+        if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("支付结果");
+            builder.setMessage(baseResp.errCode + "");
+            builder.show();
+        }
     }
 }
