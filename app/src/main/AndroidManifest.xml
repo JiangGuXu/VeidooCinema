@@ -4,8 +4,6 @@
 
     <!--读取sd卡-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--写入sd卡-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--开启相机的权限-->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
@@ -22,18 +20,16 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name=".utils.net.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/nihao2019"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:windowSoftInputMode="adjustPan|stateHidden"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustPan|stateHidden">
         <service android:name="com.amap.api.location.APSService">
 
         </service>
@@ -71,13 +67,23 @@
         <activity android:name=".activity.PlayCinemaActivity"></activity>
         <activity android:name=".activity.BuyRecordActivity"></activity>
         <activity android:name=".activity.UserSystemMessagesActivity"></activity>
-        <receiver android:name=".utils.net.NetBroadCastReciver" >
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wxb3852e6a6b7d9516" />
             </intent-filter>
-        </receiver>
+        </activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">

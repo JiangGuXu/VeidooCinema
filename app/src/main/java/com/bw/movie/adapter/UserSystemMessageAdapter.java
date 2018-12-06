@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -45,8 +46,9 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
         return new MyViewHolder(inflate);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
 
         myViewHolder.user_system_messages_item_title.setText(list.get(i).getTitle());
         myViewHolder.user_system_messages_item_content.setText(list.get(i).getContent());
@@ -64,7 +66,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
             myViewHolder.user_system_messages_item_relativelayout.setVisibility(View.GONE);
         }
 
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
         myViewHolder.user_system_messages_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +82,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                 });
                 alertDialog.show();
                 if (list.get(i).getStatus() == 0) {
+                    Log.i("test1", "onClick: ");
                     doHttpTochangeSysMsgStatus("/movieApi/tool/v1/verify/changeSysMsgStatus");
                 }
 
@@ -92,12 +96,17 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                 int userId = SharedPreferencesUtils.getInt(context, "userId");
                 headMap.put("userId", userId + "");
                 headMap.put("sessionId", sessionId);
+
+                list.get(i).setStatus(1);
                 new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+
+
                     @Override
                     public void success(String data) {
                         if (data.contains("成功")) {
                             myViewHolder.user_system_messages_item_relativelayout.setVisibility(View.GONE);
                             listener.changed(1);
+
                         } else {
                             Toast.makeText(context, "网络出了点问题~重新登录或者检查下网络~", Toast.LENGTH_SHORT).show();
                         }
@@ -109,6 +118,8 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                         Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                notifyDataSetChanged();
             }
         });
 

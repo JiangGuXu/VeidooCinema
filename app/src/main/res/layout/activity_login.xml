@@ -146,6 +146,7 @@
             android:background="@color/colorffffff"/>
     </RelativeLayout>
     <ImageView
+        android:id="@+id/login_in_weixin"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
         android:src="@drawable/log_icon_weixin_default"
