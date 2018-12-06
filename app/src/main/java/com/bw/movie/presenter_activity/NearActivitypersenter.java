@@ -29,6 +29,7 @@ import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
+
 import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
@@ -152,6 +153,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         myAdapterDetails = new MyAdapterDetails(context);
         //点击事件
         myAdapterDetails.setListener(new MyAdapterDetails.ItemClickListener() {
+
             @Override
             public void onItemClick(int position) {
                 //获取到当前位置的bean对象

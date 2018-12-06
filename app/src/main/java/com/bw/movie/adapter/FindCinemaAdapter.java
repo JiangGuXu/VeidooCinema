@@ -49,7 +49,7 @@ public class FindCinemaAdapter extends RecyclerView.Adapter<FindCinemaAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FindCinemaAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull FindCinemaAdapter.MyViewHolder myViewHolder, final int i) {
         myViewHolder.text.setText(list.get(i).getName());
         myViewHolder.address.setText(list.get(i).getAddress());
         String images = list.get(i).getLogo();
