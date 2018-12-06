@@ -18,6 +18,7 @@ import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
+import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -43,6 +44,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private TextView my_nickname_text;
     private RelativeLayout my_feedback_layout;
     private RelativeLayout my_rccord_layout;
+    private RelativeLayout mIsnetword;
 
     @Override
     public int getLayoutId() {
@@ -60,7 +62,25 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
 
 
         my_nickname_text = get(R.id.my_nickname_text);
+        get(R.id.activity_loca);
+        mIsnetword = get(R.id.film_isnetword);
 
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+        }
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetworkUtils.isConnected(context)){
+                    mIsnetword.setVisibility(View.VISIBLE);
+                }else{
+                    mIsnetword.setVisibility(View.GONE);
+                    setHeadAndNickname();
+                }
+            }
+        },R.id.film_retry_isnetword);
 
         //头像图片
         my_head_icon = get(R.id.my_head_icon);

@@ -59,5 +59,26 @@
         android:layout_below="@+id/activity_layout">
 
     </android.support.v7.widget.RecyclerView>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/film_isnetword"
+        android:background="@color/colorffffff"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/com_notnetwork"
+            android:id="@+id/film_img_notwork"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击重试"
+            android:id="@+id/film_retry_isnetword"
+            android:background="@drawable/settabe_pay_background"
+            android:layout_below="@+id/film_img_notwork"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"/>
+    </RelativeLayout>
 </RelativeLayout>

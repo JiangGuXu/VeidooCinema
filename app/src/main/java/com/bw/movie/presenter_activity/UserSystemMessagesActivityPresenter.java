@@ -86,6 +86,13 @@ public class UserSystemMessagesActivityPresenter extends AppDelage implements Vi
         user_system_messages_messages1 = get(R.id.user_system_messages_messages);
     }
 
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        doHttpForCount("/movieApi/tool/v1/verify/findUnreadMessageCount");
+        doHttp("/movieApi/tool/v1/verify/findAllSysMsgList");
+    }
+
     private void doHttpForCount(String s) {
         HashMap<String, String> paramsMap = new HashMap<>();
 

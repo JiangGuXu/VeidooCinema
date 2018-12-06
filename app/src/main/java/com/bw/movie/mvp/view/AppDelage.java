@@ -76,5 +76,6 @@ public abstract class AppDelage implements IDelage {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
-    ;;
+    public void successnetwork() {
+    }
 }

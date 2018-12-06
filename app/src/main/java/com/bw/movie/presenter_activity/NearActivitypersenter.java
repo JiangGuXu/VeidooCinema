@@ -29,7 +29,7 @@ import com.bw.movie.bean.Commentsben;
 import com.bw.movie.bean.DetailsBannerBean;
 import com.bw.movie.bean.Detailsbean;
 import com.bw.movie.bean.Detailsinsidebean;
-import com.bw.movie.model.FilmListData;
+import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -171,7 +171,17 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         });
         //请求轮播数据
         doHttpBanner();
-        Log.i("ccccccccc", cinemasId + "-------");
+        //排期数据
+        doHttp(String.valueOf(cinemasId), "6");
+        //详情
+        doHttnear();
+    }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        //请求轮播数据
+        doHttpBanner();
         //排期数据
         doHttp(String.valueOf(cinemasId), "6");
         //详情

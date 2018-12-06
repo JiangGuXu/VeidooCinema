@@ -74,26 +74,7 @@ public class FindCinemaActivityPresenter extends AppDelage{
         },R.id.image_back);
         //赋值电影名
         movie_name.setText(name);
-        //请求接口
-        Map<String,String> map = new HashMap();
-        map.put("movieId",String.valueOf(movieId));
-        new HttpUtil().get("/movieApi/movie/v1/findCinemasListByMovieId",map,null).result(new HttpUtil.HttpListener() {
-            @Override
-            public void success(String data) {
-                Recommendedbean json = new Gson().fromJson(data, Recommendedbean.class);
-                bean = json.getResult();
-                adapter.setList(bean);
-                LinearLayoutManager s = new LinearLayoutManager(context);
-                s.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(s);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void fail(String data) {
-
-            }
-        });
+       doHttp();
         adapter.setListener(new FindCinemaAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -114,6 +95,35 @@ public class FindCinemaActivityPresenter extends AppDelage{
                 intent.putExtra("country",country);
                 intent.putExtra("cinemaId",id);
                 ((FindCinemaActivity)context).startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        doHttp();
+    }
+
+    private void doHttp() {
+        //请求接口
+        Map<String,String> map = new HashMap();
+        map.put("movieId",String.valueOf(movieId));
+        new HttpUtil().get("/movieApi/movie/v1/findCinemasListByMovieId",map,null).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Recommendedbean json = new Gson().fromJson(data, Recommendedbean.class);
+                bean = json.getResult();
+                adapter.setList(bean);
+                LinearLayoutManager s = new LinearLayoutManager(context);
+                s.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(s);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void fail(String data) {
+
             }
         });
     }
