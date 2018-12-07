@@ -65,7 +65,7 @@ public class MyAdapterFilm extends XRecyclerView.Adapter<MyAdapterFilm.MyViewHod
                 ((MainActivity)context).startActivity(new Intent(context, SearchActivity.class));
             }
         });
-         myAdapterFilmBanner = new MyAdapterFilmBanner(context);
+        myAdapterFilmBanner = new MyAdapterFilmBanner(context);
         myViewHodlerFilm.mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
         myAdapterFilmBanner.setList(result);
         myViewHodlerFilm.mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
@@ -96,13 +96,12 @@ public class MyAdapterFilm extends XRecyclerView.Adapter<MyAdapterFilm.MyViewHod
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         myViewHodlerFilm.mListView.setLayoutManager(linearLayoutManager);
         myViewHodlerFilm.mListView.setAdapter(myAdapterFilmList);
+        myViewHodlerFilm.mRecyclerCoverFlow.scrollToPosition(result.size()/2);
         //请求影片数据
         list.clear();
         for (int b = 0; b <urls.size(); b++) {
             doHttp(urls.get(b),b);
         }
-
-        myViewHodlerFilm.mRecyclerCoverFlow.scrollToPosition(result.size()/2);
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--2018年11月27日 15:09:01 焦浩康 基本的创建-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -225,26 +226,29 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/film_isnetword"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/film_isnetword"
         android:background="@color/colorffffff"
         android:visibility="gone">
+
         <ImageView
+            android:id="@+id/film_img_notwork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/com_notnetwork"
-            android:id="@+id/film_img_notwork"/>
+            android:src="@drawable/com_notnetwork" />
+
         <Button
+            android:id="@+id/film_retry_isnetword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击重试"
-            android:id="@+id/film_retry_isnetword"
-            android:background="@drawable/settabe_pay_background"
             android:layout_below="@+id/film_img_notwork"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_10"/>
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/settabe_pay_background"
+            android:text="点击重试" />
     </RelativeLayout>
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package com.bw.movie.presenter_activity;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -17,11 +21,13 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
+import com.bw.movie.bean.UserQueryVersionBean;
 import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.fragment.CinemaFragment;
 import com.bw.movie.fragment.FilmFragment;
 import com.bw.movie.fragment.MyFragment;
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -29,6 +35,9 @@ import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.bw.movie.utils.net.NetBroadCastReciver;
+import com.bw.movie.utils.net.NetworkUtils;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +48,10 @@ import java.util.Map;
  * 底部Tab导航键
  * 姜谷蓄
  * 2018-11-27
+ * <p>
+ * 2018年12月7日 19:05:34
+ * 焦浩康
+ * 添加了 打开应用  检查本版更新的功能
  */
 
 public class MainActivityPresenter extends AppDelage implements View.OnClickListener {
@@ -66,6 +79,10 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
     @Override
     public void initData() {
         super.initData();
+
+        //如果登录 去检查本版
+        queryVersion();
+
         MainActivity activity = (MainActivity) this.context;
         main_frame = get(R.id.main_frame);
         main_img_01 = get(R.id.main_img_01);
@@ -195,7 +212,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
                 main_img_02.setImageResource(R.drawable.com_icon_cinema_default);
                 main_img_03.setImageResource(R.drawable.com_icon_my_default);
                 manager.beginTransaction().show(filmFragment).commit();
-                manager.beginTransaction().hide(myFragment).commit();   
+                manager.beginTransaction().hide(myFragment).commit();
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 break;
             case R.id.main_img_02:
@@ -219,15 +236,97 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         }
     }
     private void setBreoadcast() {
-        BroadcastReceiver receiver=new NetBroadCastReciver();
-        IntentFilter filter=new IntentFilter();
+        BroadcastReceiver receiver = new NetBroadCastReciver();
+        IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(receiver,filter);
+        context.registerReceiver(receiver, filter);
     }
 
     public void initnetword(Bundle savedInstanceState) {
+    }
+
+
+    /**
+     * 2018年12月7日 19:08:17
+     * 焦浩康
+     * 检查本版更新
+     */
+    //检查本版更新
+    //首先判断是否有网络
+    public void queryVersion() {
+        NetworkUtils networkUtils = new NetworkUtils();
+        boolean connected = networkUtils.isConnected(context);
+        if (connected) {
+            Boolean isLogin1 = SharedPreferencesUtils.getBoolean(context, "isLogin");
+            if (isLogin1) {
+
+                //访问检查本版接口
+                HashMap<String, String> partMap = new HashMap<String, String>();
+                HashMap<String, String> headMap = new HashMap<String, String>();
+                int userId = SharedPreferencesUtils.getInt(context, "userId");
+                String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+                headMap.put("userId", userId + "");
+                headMap.put("sessionId", sessionId);
+                headMap.put("ak", "010010010000");
+                new HttpUtil().get("/movieApi/tool/v1/findNewVersion", partMap, headMap).result(new HttpUtil.HttpListener() {
+                    @Override
+                    public void success(String data) {
+                        Gson gson = new Gson();
+                        UserQueryVersionBean userQueryVersionBean = gson.fromJson(data, UserQueryVersionBean.class);
+                        int flag = userQueryVersionBean.getFlag();
+                        //判断是否可更新
+                        if (flag == 1) {
+                            String downloadUrl = userQueryVersionBean.getDownloadUrl();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("发现新版本！");
+                            builder.setMessage("是否跳转到浏览器更新?");
+                            builder.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //跳转系统浏览器
+                                    Uri uri = Uri.parse(downloadUrl.trim());
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                    ((MainActivity) context).startActivity(intent);
+                                }
+                            });
+
+                            builder.setNegativeButton("不更新", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    builder.create().dismiss();
+                                }
+                            });
+                            builder.create().show();
+
+                        } else if (flag == 2) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("已经是最新的版本了");
+                            builder.setMessage("您不用更新了目前是最新本版哦~");
+                            builder.setNegativeButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    builder.create().dismiss();
+                                }
+                            });
+                            builder.create().show();
+                        } else {
+                            Toast.makeText(context, "检查版本失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void fail(String data) {
+                        Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(context, "检查本版之前请先去登录哦~", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(context, "您当前没有连接网络哦~", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

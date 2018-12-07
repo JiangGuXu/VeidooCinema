@@ -20,6 +20,7 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
+import com.bw.movie.wxapi.WXEntryActivity;
 import com.google.gson.Gson;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -112,6 +113,20 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
         Date date = null;
         date = formatter.parse(strTime);
         return date;
+    }
+
+
+    @Override
+    public void resume() {
+        super.resume();
+
+
+        //如果微信登录成功 关闭当前页面
+        Boolean isWXlogin = SharedPreferencesUtils.getBoolean(context, "isWXlogin");
+        if (isWXlogin) {
+            ((LoginActivity) context).finish();
+        }
+
     }
 
     @Override

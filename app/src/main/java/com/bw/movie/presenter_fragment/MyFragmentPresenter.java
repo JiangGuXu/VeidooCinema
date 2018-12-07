@@ -1,10 +1,21 @@
 package com.bw.movie.presenter_fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +28,7 @@ import com.bw.movie.activity.UserAttentionActivity;
 import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.activity.UserSystemMessagesActivity;
+import com.bw.movie.bean.UserQueryVersionBean;
 import com.bw.movie.bean.UserSystemCountBean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
@@ -40,6 +52,10 @@ import java.util.HashMap;
  * 添加了点击头像判断的事件
  *
  *
+ *
+ *2018年12月7日 14:13:40
+ * 焦浩康
+ * 添加了本版查询的功能(伪)
  * */
 public class MyFragmentPresenter extends AppDelage implements View.OnClickListener {
 
@@ -55,6 +71,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private TextView my_icon_remind_message_count;
     private RelativeLayout my_icon_remind_relativelayout;
     private RelativeLayout mIsnetword;
+    private RelativeLayout my_version_layout;
 
     @Override
     public int getLayoutId() {
@@ -70,25 +87,31 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     public void initData() {
         super.initData();
 
+        //网络判断
         get(R.id.activity_loca);
         mIsnetword = get(R.id.film_isnetword);
-
-        if (!NetworkUtils.isConnected(context)){
+        if (!NetworkUtils.isConnected(context)) {
             mIsnetword.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mIsnetword.setVisibility(View.GONE);
         }
         setOnclick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!NetworkUtils.isConnected(context)){
+                if (!NetworkUtils.isConnected(context)) {
                     mIsnetword.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mIsnetword.setVisibility(View.GONE);
                     setHeadAndNickname();
                 }
             }
-        },R.id.film_retry_isnetword);
+        }, R.id.film_retry_isnetword);
+
+        //版本查询
+        my_version_layout = get(R.id.my_version_layout);
+        my_version_layout.setOnClickListener(this);
+
+
         //系统消息
         my_remind = get(R.id.my_remind);
         my_remind.setOnClickListener(this);
@@ -129,14 +152,20 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     @Override
     public void resume() {
         super.resume();
-        setHeadAndNickname();
-        Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
-        if (!isLogin) {
-            my_icon_remind_relativelayout.setVisibility(View.GONE);
+        if (!NetworkUtils.isConnected(context)) {
+            mIsnetword.setVisibility(View.VISIBLE);
         } else {
-            my_icon_remind_relativelayout.setVisibility(View.VISIBLE);
-            doHttpForCount("/movieApi/tool/v1/verify/findUnreadMessageCount");
+            mIsnetword.setVisibility(View.GONE);
+            setHeadAndNickname();
+            Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
+            if (!isLogin) {
+                my_icon_remind_relativelayout.setVisibility(View.GONE);
+            } else {
+                my_icon_remind_relativelayout.setVisibility(View.VISIBLE);
+                doHttpForCount("/movieApi/tool/v1/verify/findUnreadMessageCount");
+            }
         }
+
 
     }
 
@@ -243,6 +272,75 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
                 break;
 
+            //检查本版信息
+            case R.id.my_version_layout:
+                Boolean isLogin1 = SharedPreferencesUtils.getBoolean(context, "isLogin");
+                if (isLogin1) {
+
+                    //访问检查本版接口
+                    HashMap<String, String> partMap = new HashMap<String, String>();
+                    HashMap<String, String> headMap = new HashMap<String, String>();
+                    int userId = SharedPreferencesUtils.getInt(context, "userId");
+                    String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
+                    headMap.put("userId", userId + "");
+                    headMap.put("sessionId", sessionId);
+                    headMap.put("ak", "010010010000");
+                    new HttpUtil().get("/movieApi/tool/v1/findNewVersion", partMap, headMap).result(new HttpUtil.HttpListener() {
+                        @Override
+                        public void success(String data) {
+                            Gson gson = new Gson();
+                            UserQueryVersionBean userQueryVersionBean = gson.fromJson(data, UserQueryVersionBean.class);
+                            int flag = userQueryVersionBean.getFlag();
+                            //判断是否可更新
+                            if (flag == 1) {
+                                String downloadUrl = userQueryVersionBean.getDownloadUrl();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("发现新版本！");
+                                builder.setMessage("是否跳转到浏览器更新?");
+                                builder.setPositiveButton("去更新", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //跳转系统浏览器
+                                        Uri uri = Uri.parse(downloadUrl.trim());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                        ((MainActivity) context).startActivity(intent);
+                                    }
+                                });
+
+                                builder.setNegativeButton("不更新", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        builder.create().dismiss();
+                                    }
+                                });
+                                builder.create().show();
+
+                            } else if (flag == 2) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("已经是最新的版本了");
+                                builder.setMessage("您不用更新了目前是最新本版哦~");
+                                builder.setNegativeButton("知道了", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        builder.create().dismiss();
+                                    }
+                                });
+                                builder.create().show();
+                            } else {
+                                Toast.makeText(context, "检查版本失败", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void fail(String data) {
+                            Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(context, "检查本版之前请先去登录哦~", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
         }
     }
 

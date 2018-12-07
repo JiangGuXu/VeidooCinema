@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.BuyRecord;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.text.ParseException;

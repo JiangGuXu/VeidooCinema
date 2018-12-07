@@ -97,6 +97,11 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     private TextView user_info_is_bind_wx_text;
     private ImageView user_info_goto_bind_wx_img;
     private boolean isBindWx = false;
+    // APP_ID 替换为你的应用从官方网站申请到的合法appID
+    private static final String APP_ID = "wxb3852e6a6b7d9516";
+
+    // IWXAPI 是第三方app和微信通信的openApi接口
+    private IWXAPI api;
 
     @Override
     public int getLayoutId() {
@@ -195,12 +200,14 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
             public void onisSucceed(boolean flag) {
                 if (flag) {
                     isBindWx = true;
+                    Log.i("jhktest2", "onisSucceed: 成功");
                     Toast.makeText(context, "绑定成功", Toast.LENGTH_SHORT).show();
                     user_info_is_bind_wx_text.setText("已绑定");
                 } else {
+                    Log.i("jhktest2", "onisSucceed: 失败");
                     isBindWx = false;
                     Toast.makeText(context, "绑定失败", Toast.LENGTH_SHORT).show();
-                    user_info_is_bind_wx_text.setText("已绑定");
+                    user_info_is_bind_wx_text.setText("未绑定");
                 }
             }
         });
@@ -225,6 +232,12 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                     ((UserInfoActivity) context).finish();
                 } else {
                     Toast.makeText(context, "退出成功失败", Toast.LENGTH_SHORT).show();
+                }
+
+                //如果微信登录  取消存值状态
+                Boolean isWXlogin = SharedPreferencesUtils.getBoolean(context, "isWXlogin");
+                if (isWXlogin) {
+                    SharedPreferencesUtils.putBoolean(context, "isWXlogin", false);
                 }
                 break;
 
@@ -331,12 +344,6 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
     }
 
 
-    // APP_ID 替换为你的应用从官方网站申请到的合法appID
-    private static final String APP_ID = "wxb3852e6a6b7d9516";
-
-    // IWXAPI 是第三方app和微信通信的openApi接口
-    private IWXAPI api;
-
     private void regToWx() {
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(context, APP_ID, true);
@@ -364,7 +371,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
 
             //判断是否绑定微信
-            if (!isBindWx) {
+            if (isBindWx == false) {
                 int userId = SharedPreferencesUtils.getInt(context, "userId");
                 HashMap<String, String> parmMap = new HashMap<>();
                 HashMap<String, String> headMap = new HashMap<>();
@@ -376,6 +383,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                         if (data.contains("成功")) {
                             isBindWx = true;
                             user_info_is_bind_wx_text.setText("已绑定");
+                            SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+                            sharedPreferencesUtils.putBoolean(context, "isBindWX", false);
                             user_info_goto_bind_wx_img.setVisibility(View.GONE);
                             //这里的未绑定  不知道data 里面有没有包含 自己先写上   因为接口  访问失败
                         } else if (data.contains("未绑定")) {
@@ -397,7 +406,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
             } else {
                 user_info_is_bind_wx_text.setText("已绑定");
                 user_info_goto_bind_wx_img.setVisibility(View.GONE);
-
+                SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+                sharedPreferencesUtils.putBoolean(context, "isBindWX", false);
             }
         }
 
@@ -624,7 +634,8 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults.length >= 1) {

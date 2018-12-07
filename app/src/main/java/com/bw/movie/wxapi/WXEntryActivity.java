@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.bean.LoginBean;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -22,15 +21,12 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.bw.movie.presenter_activity.LoginActivityPresenter.longToString;
-
 /**
+ * 焦浩康
  * 微信登录相关
  */
 
@@ -124,15 +120,20 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         new HttpUtil().postHead("/movieApi/user/v1/verify/bindWeChat", map, headMap).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
-                Log.i("show", "success: " + data);
+
+                //这里会返回清先登录  !!!!!!!!!
+                Log.i("jhktest2", "success: " + data);
                 if (data.contains("成功")) {
                     wxEntryBindListener.onisSucceed(true);
+                    Log.i("jhktest2", "onisSucceed: 成功");
+                    SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+                    sharedPreferencesUtils.putBoolean(WXEntryActivity.this, "isBindWX", true);
                 }
             }
 
             @Override
             public void fail(String data) {
-                Log.i("show", "fail: " + "绑定失败");
+                Log.i("jhktest2", "fail: " + "绑定失败");
                 wxEntryBindListener.onisSucceed(false);
             }
         });
@@ -150,6 +151,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             @Override
             public void success(String data) {
                 if (data.contains("成功")) {
+
+                    //微信登录成功存值  通知login页面
+                    SharedPreferencesUtils.putBoolean(WXEntryActivity.this, "isWXlogin", true);
                     Toast.makeText(WXEntryActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     //解析数据
                     Gson gson = new Gson();
@@ -192,6 +196,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             @Override
             public void fail(String data) {
                 Toast.makeText(WXEntryActivity.this, data, Toast.LENGTH_SHORT).show();
+                //微信登录失败存值  通知login页面
+                SharedPreferencesUtils.putBoolean(WXEntryActivity.this, "isWXlogin", false);
             }
         });
     }
