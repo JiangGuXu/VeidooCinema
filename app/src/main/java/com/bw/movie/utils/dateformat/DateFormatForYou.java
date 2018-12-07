@@ -1,4 +1,4 @@
-package com.bw.movie.utils.DateFormat;
+package com.bw.movie.utils.dateformat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
