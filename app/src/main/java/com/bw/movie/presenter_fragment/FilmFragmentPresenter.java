@@ -80,7 +80,6 @@ public class FilmFragmentPresenter extends AppDelage {
                 }else{
                     mIsnetword.setVisibility(View.GONE);
                     doHttpBanner();
-
                 }
             }
         },R.id.film_retry_isnetword);
@@ -102,6 +101,16 @@ public class FilmFragmentPresenter extends AppDelage {
         });
     }
 
+    @Override
+    public void resume() {
+        super.resume();
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+            doHttpBanner();
+        }
+    }
 
     private void addlist() {
         titles.add("热门电影");

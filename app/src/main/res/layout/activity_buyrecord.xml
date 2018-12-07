@@ -13,11 +13,11 @@
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_30"
         />
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_54"
-        android:id="@+id/buyrecord_recyler"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/buyrecord_recyler"></com.jcodecraeer.xrecyclerview.XRecyclerView>
     <ImageView
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"

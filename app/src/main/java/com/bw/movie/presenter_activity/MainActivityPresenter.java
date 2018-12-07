@@ -111,6 +111,31 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         }
     }
 
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+
+        if (SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            //开启debug日志数据
+            XGPushConfig.enableDebug(context,true);
+            //信鸽token注册
+            XGPushManager.registerPush(context, new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    //token在设备卸载重装的时候有可能会变
+                    Log.d("TPush", "注册成功，设备token为：" + data);
+                    XGPushManager.bindAccount(context, "XINGE");
+                    XGPushManager.setTag(context,"XINGE");
+                    uploadXgInfo(data);
+                }
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                }
+            });
+        }
+    }
+
     //将信鸽token上传到服务端
     private void uploadXgInfo(Object data) {
         Map<String,String> headMap = new HashMap<>();
@@ -170,7 +195,7 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
                 main_img_02.setImageResource(R.drawable.com_icon_cinema_default);
                 main_img_03.setImageResource(R.drawable.com_icon_my_default);
                 manager.beginTransaction().show(filmFragment).commit();
-                manager.beginTransaction().hide(myFragment).commit();
+                manager.beginTransaction().hide(myFragment).commit();   
                 manager.beginTransaction().hide(cinemaFragment).commit();
                 break;
             case R.id.main_img_02:
