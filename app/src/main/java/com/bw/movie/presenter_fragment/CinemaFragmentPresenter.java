@@ -23,6 +23,7 @@ import com.bw.movie.R;
 import com.bw.movie.bean.Recommendedbean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
@@ -51,6 +52,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     private Button recommendimg;
     private Button near;
     private RelativeLayout relativeLayout;
+    private RelativeLayout mIsnetword;
 
     @Override
     public int getLayoutId() {
@@ -66,6 +68,24 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     public void initData() {
         super.initData();
         get(R.id.activity_loca);
+        mIsnetword = get(R.id.film_isnetword);
+
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+        }
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetworkUtils.isConnected(context)){
+                    mIsnetword.setVisibility(View.VISIBLE);
+                }else{
+                    mIsnetword.setVisibility(View.GONE);
+                    dohttp();
+                }
+            }
+        },R.id.film_retry_isnetword);
         relativeLayout = get(R.id.film_search_relative);
         imageView = (ImageView) get(R.id.activity_loca);
         recommendimg = (Button) get(R.id.activity_recommended);

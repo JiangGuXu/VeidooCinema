@@ -15,11 +15,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class MyAdapterFilmList_recyler extends RecyclerView.Adapter<MyAdapterFilmList_recyler.MyViewHodlerFilmList_recyler> {
+/**
+ * 首页各种了类型电影里的电影列表
+ * 赵瑜峰
+ */
+public class MyAdapterFilmListrecyler extends RecyclerView.Adapter<MyAdapterFilmListrecyler.MyViewHodlerFilmList_recyler> {
     private Context context;
     private List<FilmListData.ResultBean> list = new ArrayList();
-    public MyAdapterFilmList_recyler(Context context){
+    public MyAdapterFilmListrecyler(Context context){
         this.context=context;
     }
     public void setList( List<FilmListData.ResultBean> list ){

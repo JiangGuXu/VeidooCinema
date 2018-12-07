@@ -41,6 +41,8 @@ public class PlayCinemaActivityPresenter extends AppDelage{
     private RecyclerView film_recycler;
     private MyAdapterDetails myAdapter;
     private List<Detailsbean.Resultbean> result;
+    private int movieId;
+    private int cinemaId;
 
     @Override
     public int getLayoutId() {
@@ -66,16 +68,16 @@ public class PlayCinemaActivityPresenter extends AppDelage{
         film_recycler = get(R.id.film_recycler);
         image_back = get(R.id.image_back);
         //获取传值
-        final String name = ((PlayCinemaActivity) context).getIntent().getStringExtra("movie_name");
+        String name = ((PlayCinemaActivity) context).getIntent().getStringExtra("movie_name");
         String director = ((PlayCinemaActivity) context).getIntent().getStringExtra("Director");
         String type = ((PlayCinemaActivity) context).getIntent().getStringExtra("type");
         String time = ((PlayCinemaActivity) context).getIntent().getStringExtra("time");
         String country = ((PlayCinemaActivity) context).getIntent().getStringExtra("country");
         String logo = ((PlayCinemaActivity) context).getIntent().getStringExtra("logo");
-        final String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
-        final String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
-        int movieId = ((PlayCinemaActivity) context).getIntent().getIntExtra("movieId", 22);
-        int cinemaId = ((PlayCinemaActivity) context).getIntent().getIntExtra("cinemaId", 22);
+        String cinemaname = ((PlayCinemaActivity) context).getIntent().getStringExtra("cinema_name");
+        String address = ((PlayCinemaActivity) context).getIntent().getStringExtra("address");
+        movieId = ((PlayCinemaActivity) context).getIntent().getIntExtra("movieId", 22);
+        cinemaId = ((PlayCinemaActivity) context).getIntent().getIntExtra("cinemaId", 22);
 
         //给控件赋值
         cinema_name.setText(cinemaname);
@@ -113,6 +115,13 @@ public class PlayCinemaActivityPresenter extends AppDelage{
             }
         });
     }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        doHttp(String.valueOf(cinemaId),String.valueOf(movieId));
+    }
+
     //排期数据
     private void doHttp(String cinemasId, String mid) {
         String url1 = "/movieApi/movie/v1/findMovieScheduleList";

@@ -14,7 +14,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 剧照的列表
+ * 赵瑜峰
+ */
 public class MyAdapterDetailsStill extends RecyclerView.Adapter<MyAdapterDetailsStill.MyViewHodlerDetailsStill> {
     private Context context;
     private List<String > list = new ArrayList<>();

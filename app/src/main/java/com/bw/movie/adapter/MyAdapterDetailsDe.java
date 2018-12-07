@@ -11,6 +11,11 @@ import com.bw.movie.R;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * 演员列表
+ * 赵瑜峰
+ *
+ */
 
 public class MyAdapterDetailsDe extends RecyclerView.Adapter<MyAdapterDetailsDe.MyViewHodlerDetailsDe> {
     private Context context;

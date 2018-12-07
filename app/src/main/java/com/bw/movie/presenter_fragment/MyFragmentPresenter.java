@@ -22,6 +22,7 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -53,6 +54,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private ImageView my_remind;
     private TextView my_icon_remind_message_count;
     private RelativeLayout my_icon_remind_relativelayout;
+    private RelativeLayout mIsnetword;
 
     @Override
     public int getLayoutId() {
@@ -68,7 +70,25 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     public void initData() {
         super.initData();
 
+        get(R.id.activity_loca);
+        mIsnetword = get(R.id.film_isnetword);
 
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+        }
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetworkUtils.isConnected(context)){
+                    mIsnetword.setVisibility(View.VISIBLE);
+                }else{
+                    mIsnetword.setVisibility(View.GONE);
+                    setHeadAndNickname();
+                }
+            }
+        },R.id.film_retry_isnetword);
         //系统消息
         my_remind = get(R.id.my_remind);
         my_remind.setOnClickListener(this);

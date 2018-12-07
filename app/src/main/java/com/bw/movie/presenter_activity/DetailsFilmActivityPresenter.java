@@ -95,6 +95,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         doHttp();
     }
 
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+        doHttp();
+    }
+
     private void Onclick() {
         setOnclick(new View.OnClickListener() {
             @Override
@@ -508,6 +514,24 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 });
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+                Map<String,String> map = new HashMap<>();
+                map.put("movieId",id);
+                map.put("page","1");
+                map.put("count","5");
+                new HttpUtil().get("/movieApi/movie/v1/findAllMovieComment",map,null).result(new HttpUtil.HttpListener() {
+                    @Override
+                    public void success(String data) {
+                        Gson gson = new Gson();
+                        Critics critics = gson.fromJson(data, Critics.class);
+                        List<Critics.ResultBean> result = critics.getResult();
+                        myAdapterDetailsCritics.setList(result);
+                    }
+
+                    @Override
+                    public void fail(String data) {
+
+                    }
+                });
             }
 
         }
@@ -546,6 +570,29 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 });
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+                Map<String,String> map = new HashMap<>();
+                map.put("movieId",id);
+                new HttpUtil().get("/movieApi/movie/v1/findMoviesDetail",map,null).result(new HttpUtil.HttpListener() {
+                    @Override
+                    public void success(String data) {
+                        Gson gson = new Gson();
+                        details = gson.fromJson(data, Details.class);
+                        mTitle.setText(details.getResult().getName());
+                        mImg.setImageURI(details.getResult().getImageUrl());
+                        img_bg.setImageURI(details.getResult().getImageUrl());
+                        followMovie = details.getResult().isFollowMovie();
+                        if(followMovie){
+                            mFocus.setImageResource(R.drawable.com_icon_collection_default);
+                        }else{
+                            mFocus.setImageResource(R.drawable.com_icon_collection_selected);
+                        }
+                    }
+
+                    @Override
+                    public void fail(String data) {
+
+                    }
+                });
             }
 
         }

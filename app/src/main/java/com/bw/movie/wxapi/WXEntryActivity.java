@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.bw.movie.presenter_activity.LoginActivityPresenter.longToString;
 
@@ -75,8 +76,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 SendAuth.Resp sendResp = (SendAuth.Resp) baseResp;
                 if (sendResp != null) {
                     String code = sendResp.code;
+                    String state = sendResp.state;
                     Log.i("show", "onResp: " + code);
-                    doWX_login(code);
+                    if (state.equals("wechat_sdk_微信登录")) {
+                        doWX_login(code);
+                    } else if (state.equals("wechat_sdk_微信绑定")) {
+                        doWX_bind(code);
+                    }
                 }
                 finish();
                 break;
@@ -105,6 +111,32 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             builder.setMessage(baseResp.errCode + "");
             builder.show();
         }
+    }
+
+    private void doWX_bind(String code) {
+        int userId = SharedPreferencesUtils.getInt(WXEntryActivity.this, "userId");
+        String sessionId = SharedPreferencesUtils.getString(WXEntryActivity.this, "sessionId");
+        Map<String, String> map = new HashMap<>();
+        //拼接参数
+        map.put("code", code);
+        HashMap<String, String> headMap = new HashMap<>();
+        headMap.put("userId", userId + "");
+        new HttpUtil().postHead("/movieApi/user/v1/verify/bindWeChat", map, headMap).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                Log.i("show", "success: " + data);
+                if (data.contains("成功")) {
+                    wxEntryBindListener.onisSucceed(true);
+                }
+            }
+
+            @Override
+            public void fail(String data) {
+                Log.i("show", "fail: " + "绑定失败");
+                wxEntryBindListener.onisSucceed(false);
+            }
+        });
+
     }
 
     private void doWX_login(String code) {
@@ -162,5 +194,15 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 Toast.makeText(WXEntryActivity.this, data, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private WXEntryBindListener wxEntryBindListener;
+
+    public void setWxEntryBindListener(WXEntryBindListener wxEntryBindListener) {
+        this.wxEntryBindListener = wxEntryBindListener;
+    }
+
+    public interface WXEntryBindListener {
+        void onisSucceed(boolean flag);
     }
 }

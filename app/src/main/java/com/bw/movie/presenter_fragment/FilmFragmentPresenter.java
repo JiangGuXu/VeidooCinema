@@ -1,11 +1,13 @@
 package com.bw.movie.presenter_fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
@@ -15,6 +17,7 @@ import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.bean.FilmListData;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
@@ -44,10 +47,12 @@ public class FilmFragmentPresenter extends AppDelage {
     private RecyclerCoverFlow mRecyclerCoverFlow;
     private MyAdapterFilmBanner myAdapterFilmBanner;
     private RelativeLayout mRelativeLayout;
-    private int width;
-    private int widths;
     private View view1;
     private RelativeLayout relativeLayout;
+    private RelativeLayout mIsnetword;
+    private int WinthLeft=0;
+    private int WinthRight=0;
+    private List<FilmListData.ResultBean> result;
 
     @Override
     public int getLayoutId() {
@@ -62,13 +67,35 @@ public class FilmFragmentPresenter extends AppDelage {
     @Override
     public void initData() {
         super.initData();
+        mIsnetword = get(R.id.film_isnetword);
+
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+
+        }
         //添加数据
         addlist();
+        setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetworkUtils.isConnected(context)){
+                    mIsnetword.setVisibility(View.VISIBLE);
+                }else{
+                    mIsnetword.setVisibility(View.GONE);
+                    doHttpBanner();
+                    for (int i = 0; i <urls.size() ; i++) {
+                        doHttp(urls.get(i));
+                    }
+                    myAdapterFilmList.setList(list,titles);
+                }
+            }
+        },R.id.film_retry_isnetword);
         //轮播图
         mRelativeLayout = get(R.id.film_search_relative);
         View view = get(R.id.film_divider_view);
         view1 = get(R.id.film_divider_view1);
-        width = view.getWidth();
         relativeLayout = get(R.id.film_divider_relative);
         mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +109,11 @@ public class FilmFragmentPresenter extends AppDelage {
         mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
-
+                WinthRight=position*(view.getMeasuredWidth()/result.size());
+                ObjectAnimator translationX = ObjectAnimator.ofFloat(view1, "translationX", WinthLeft,WinthRight);
+                translationX.setDuration(50);
+                translationX.start();
+                WinthLeft=WinthRight;
             }
         });
         myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
@@ -156,11 +187,10 @@ public class FilmFragmentPresenter extends AppDelage {
             public void success(String data) {
                 Gson gson = new Gson();
                 FilmListData filmListData = gson.fromJson(data, FilmListData.class);
-                List<FilmListData.ResultBean> result = filmListData.getResult();
+                result = filmListData.getResult();
                 if(result.size()==0){
                     doHttpBanner();
                 }
-                widths = width/result.size();
                 myAdapterFilmBanner.setList(result);
                 mRecyclerCoverFlow.scrollToPosition(result.size()/2);
             }

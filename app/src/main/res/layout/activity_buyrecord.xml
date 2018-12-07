@@ -31,4 +31,5 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/buttom_bg"
         ></View>
+
 </RelativeLayout>

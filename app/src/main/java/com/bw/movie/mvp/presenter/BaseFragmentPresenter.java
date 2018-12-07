@@ -1,14 +1,19 @@
 package com.bw.movie.mvp.presenter;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bw.movie.mvp.view.AppDelage;
+import com.bw.movie.utils.net.NetBroadCastReciver;
 
 /**
  *
@@ -17,6 +22,8 @@ import com.bw.movie.mvp.view.AppDelage;
  */
 public abstract class BaseFragmentPresenter<T extends AppDelage> extends Fragment {
     protected T daleagt;
+    private boolean isRegistered = false;
+    private NetBroadCastReciver netBroadCastReciver;
 
     public abstract Class<T> getClassPresenter();
     public BaseFragmentPresenter(){
@@ -40,6 +47,13 @@ public abstract class BaseFragmentPresenter<T extends AppDelage> extends Fragmen
         super.onActivityCreated(savedInstanceState);
         daleagt.getContext(getActivity());
         daleagt.initData();
+        netBroadCastReciver = new NetBroadCastReciver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        getActivity().registerReceiver(netBroadCastReciver, filter);
+        isRegistered = true;
     }
 
     @Override
@@ -58,5 +72,9 @@ public abstract class BaseFragmentPresenter<T extends AppDelage> extends Fragmen
         super.onDestroy();
         daleagt.destry();
         daleagt=null;
+        if (isRegistered) {
+            getActivity().unregisterReceiver(netBroadCastReciver);
+        }
     }
+
 }

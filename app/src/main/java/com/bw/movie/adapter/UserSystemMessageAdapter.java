@@ -22,7 +22,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * 系统消息提示
+ * 焦浩康
+ */
 public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMessageAdapter.MyViewHolder> {
 
     private Context context;
