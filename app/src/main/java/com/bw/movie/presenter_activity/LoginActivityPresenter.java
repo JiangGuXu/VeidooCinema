@@ -15,12 +15,16 @@ import com.bw.movie.R;
 import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.RegisterActivity;
 import com.bw.movie.bean.LoginBean;
+import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.encrypt.Base64EncryptUtil;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.bw.movie.wxapi.WXEntryActivity;
 import com.google.gson.Gson;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -73,6 +77,8 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
         //微信登录图标
         login_in_weixin = get(R.id.login_in_weixin);
         login_in_weixin.setOnClickListener(this);
+
+
     }
 
     public static String longToString(long currentTime, String formatType)
@@ -193,6 +199,23 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
 
                                 //储存手机号
                                 SharedPreferencesUtils.putString(context, "phone", userInfo.getPhone());
+                                //开启debug日志数据
+                                XGPushConfig.enableDebug(context,true);
+                                //信鸽token注册
+                                XGPushManager.registerPush(context, new XGIOperateCallback() {
+                                    @Override
+                                    public void onSuccess(Object data, int flag) {
+                                    //token在设备卸载重装的时候有可能会变
+                                        Log.d("TPush", "注册成功，设备token为：" + data);
+                                        XGPushManager.bindAccount(context, "XINGE");
+                                        XGPushManager.setTag(context,"XINGE");
+                                        uploadXgInfo(data);
+                                    }
+                                    @Override
+                                    public void onFail(Object data, int errCode, String msg) {
+                                        Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                                    }
+                                });
                                 ((LoginActivity) context).finish();
                             }
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -215,6 +238,30 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                 api.sendReq(req);
                 break;
         }
+    }
+    //将信鸽token上传到服务端
+    private void uploadXgInfo(Object data) {
+        Map<String,String> headMap = new HashMap<>();
+        headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
+        headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
+        headMap.put("Content-Type","application/x-www-form-urlencoded");
+        Map<String,String> bodyMap = new HashMap<>();
+        bodyMap.put("token",String.valueOf(data));
+        bodyMap.put("os","1");
+        //请求接口
+        new HttpUtil().postHead("/movieApi/tool/v1/verify/uploadPushToken",bodyMap,headMap).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
+                Toast.makeText(context,"配置"+bean.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void fail(String data) {
+                RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
+                Toast.makeText(context,"配置"+bean.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

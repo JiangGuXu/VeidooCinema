@@ -17,6 +17,7 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import java.util.Map;
  * search页面电影列表
  * 赵瑜峰
  */
-public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchList.MyViewHodlerSearchList> {
+public class MyAdapterSearchList extends XRecyclerView.Adapter<MyAdapterSearchList.MyViewHodlerSearchList> {
     private Context context;
     private List<FilmListData.ResultBean> list = new ArrayList();
     private String title;
@@ -143,7 +144,7 @@ public class MyAdapterSearchList extends RecyclerView.Adapter<MyAdapterSearchLis
         return list.size();
     }
 
-    public class MyViewHodlerSearchList extends RecyclerView.ViewHolder{
+    public class MyViewHodlerSearchList extends XRecyclerView.ViewHolder{
 
         private SimpleDraweeView img;
         private TextView name,introduction;

@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.UserAttentionCinemaAdapterBean;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

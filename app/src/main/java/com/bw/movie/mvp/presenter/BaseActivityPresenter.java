@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.SplashActivity;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.UltimateBar;
 import com.bw.movie.utils.net.NetBroadCastReciver;
@@ -45,26 +46,35 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
         daleagt.getContext(this);
         daleagt.initData();
         UltimateBar.newImmersionBuilder().applyNav(false).build(this).apply();
-        view = View.inflate(this, R.layout.not_network,null);
-        view.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isNetwork();
-            }
-        });
-        netBroadCastReciver = new NetBroadCastReciver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(netBroadCastReciver, filter);
-        isRegistered = true;
+        if(this instanceof SplashActivity){
+
+        }else {
+            view = View.inflate(this, R.layout.not_network, null);
+            view.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isNetwork();
+                }
+            });
+            netBroadCastReciver = new NetBroadCastReciver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+            filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(netBroadCastReciver, filter);
+            isRegistered = true;
+        }
     }
     @Override
     public void onResume() {
         super.onResume();
-        isNetwork();
-        daleagt.resume();
+
+        if(this instanceof SplashActivity){
+            return;
+        }else {
+            isNetwork();
+            daleagt.resume();
+        }
     }
     public void isNetwork(){
         if(!NetworkUtils.isConnected(this)){

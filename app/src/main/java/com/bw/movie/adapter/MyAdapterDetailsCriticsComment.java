@@ -2,7 +2,6 @@ package com.bw.movie.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,11 +11,12 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.bean.DetailsComment;
 import com.bw.movie.bean.Focus;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.Map;
  * 赵瑜峰
  */
 
-public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
+public class MyAdapterDetailsCriticsComment extends XRecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
     private Context context;
     private List<DetailsComment.ResultBean> list = new ArrayList<>();
     private int isgreat;
@@ -125,7 +125,7 @@ public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapt
         return list.size();
     }
 
-    public class MyViewHodlerDetailsCriticsComment extends RecyclerView.ViewHolder{
+    public class MyViewHodlerDetailsCriticsComment extends XRecyclerView.ViewHolder{
 
         private SimpleDraweeView img;
         private TextView name,comments,time,likeNum;

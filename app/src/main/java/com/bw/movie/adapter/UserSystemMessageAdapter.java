@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.UserSystemMessagesBean;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 

@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.bean.LoginBean;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -22,13 +21,9 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.bw.movie.presenter_activity.LoginActivityPresenter.longToString;
 
 /**
  * 焦浩康

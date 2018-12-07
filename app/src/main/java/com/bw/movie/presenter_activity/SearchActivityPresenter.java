@@ -17,6 +17,7 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,10 +31,10 @@ import java.util.Map;
 public class SearchActivityPresenter extends AppDelage implements View.OnClickListener{
 
     private Button mHot,mRelease,mComingsoon;
-    private RecyclerView mRecyclerView;
+    private XRecyclerView mRecyclerView;
     private MyAdapterSearchList myAdapterSearchList;
     private int id;
-
+    private int type=0;
     @Override
     public int getLayoutId() {
         return R.layout.activity_search;
@@ -67,6 +68,23 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(myAdapterSearchList);
+        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                if(type ==0){
+                    hot();
+                }else if(type ==1){
+                    release();
+                }else if(type ==2){
+                    comingsoon();
+                }
+            }
+
+            @Override
+            public void onLoadMore() {
+                mRecyclerView.loadMoreComplete();
+            }
+        });
         if(id ==0){
             hot();
         }else if(id ==1){
@@ -123,6 +141,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         mRelease.setTextColor(Color.BLACK);
         mComingsoon.setBackgroundResource(R.drawable.corners_selected_search);
         mComingsoon.setTextColor(Color.WHITE);
+        type=2;
         doHttp("/movieApi/movie/v1/findComingSoonMovieList","即将上映");
     }
 
@@ -133,6 +152,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         mRelease.setTextColor(Color.WHITE);
         mComingsoon.setBackgroundResource(R.drawable.corners_search);
         mComingsoon.setTextColor(Color.BLACK);
+        type=1;
         doHttp("/movieApi/movie/v1/findReleaseMovieList","正在上映");
     }
 
@@ -143,6 +163,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
         mRelease.setTextColor(Color.BLACK);
         mComingsoon.setBackgroundResource(R.drawable.corners_search);
         mComingsoon.setTextColor(Color.BLACK);
+        type=0;
         doHttp("/movieApi/movie/v1/findHotMovieList","热门电影");
     }
 
@@ -165,6 +186,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
                 FilmListData filmListData = gson.fromJson(data, FilmListData.class);
                 List<FilmListData.ResultBean> result = filmListData.getResult();
                 myAdapterSearchList.setList(result,title);
+                mRecyclerView.refreshComplete();
             }
 
             @Override

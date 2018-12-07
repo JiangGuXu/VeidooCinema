@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     signingConfigs {
@@ -17,6 +18,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            //根据需要 自行选择添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64', 'mips', 'mips64'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+
+                XG_ACCESS_ID:"2100300660",
+                XG_ACCESS_KEY : "A44FJ9N7N9EY",
+        ]
     }
     buildTypes {
         release {
@@ -31,8 +44,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
 
+}
+greendao {
+    schemaVersion 1  //版本
+    daoPackage 'com.bw.movie.utils.database.greendao' // 一般为app包名+生成文件的文件夹名
+    targetGenDir 'src/main/java/com/bw/movie/utils/database' //生成文件路径
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -54,5 +72,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     //微信第三方登录1
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    //信鸽jar
+    implementation 'com.tencent.xinge:xinge:3.2.7-Release'
+    //jg包
+    implementation'com.tencent.jg:jg:1.1'
+    //wup包
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+    //mid包
+    implementation 'com.tencent.mid:mid:4.0.6-release'
+    implementation project(':xrecyclerview')
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'org.greenrobot:greendao-generator:3.2.2'
+    implementation 'org.robolectric:shadows-multidex:3.3.1'
 }
 

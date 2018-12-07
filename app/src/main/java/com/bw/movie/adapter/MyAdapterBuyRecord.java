@@ -2,20 +2,20 @@ package com.bw.movie.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.BuyRecord;
-import com.bw.movie.utils.DateFormat.DateFormatForYou;
+import com.bw.movie.utils.dateformat.DateFormatForYou;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapterBuyRecord extends RecyclerView.Adapter<MyAdapterBuyRecord.MyViewHodlerBuyRecord> {
+public class MyAdapterBuyRecord extends XRecyclerView.Adapter<MyAdapterBuyRecord.MyViewHodlerBuyRecord> {
     private Context context;
     private List<BuyRecord.ResultBean> list = new ArrayList();
     public MyAdapterBuyRecord(Context context){
@@ -57,7 +57,7 @@ public class MyAdapterBuyRecord extends RecyclerView.Adapter<MyAdapterBuyRecord.
         return list.size();
     }
 
-    public class MyViewHodlerBuyRecord extends RecyclerView.ViewHolder{
+    public class MyViewHodlerBuyRecord extends XRecyclerView.ViewHolder{
 
         private TextView name,time,indent,cinema,screens,time1,num,money;
 

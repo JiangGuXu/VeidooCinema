@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,18 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.bean.UserQueryVersionBean;
+import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.fragment.CinemaFragment;
 import com.bw.movie.fragment.FilmFragment;
 import com.bw.movie.fragment.MyFragment;
 import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.HttpUtil;
+import com.bw.movie.utils.net.SharedPreferencesUtils;
+import com.google.gson.Gson;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.bw.movie.utils.net.NetBroadCastReciver;
 import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
@@ -34,6 +42,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 底部Tab导航键
@@ -97,6 +106,74 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
         main_img_02.setOnClickListener(this);
         main_img_03.setOnClickListener(this);
         main_img_01.callOnClick();
+        //判断用户是否登录成功
+        if (SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            //开启debug日志数据
+            XGPushConfig.enableDebug(context,true);
+            //信鸽token注册
+            XGPushManager.registerPush(context, new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    //token在设备卸载重装的时候有可能会变
+                    Log.d("TPush", "注册成功，设备token为：" + data);
+                    XGPushManager.bindAccount(context, "XINGE");
+                    XGPushManager.setTag(context,"XINGE");
+                    uploadXgInfo(data);
+                }
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void successnetwork() {
+        super.successnetwork();
+
+        if (SharedPreferencesUtils.getBoolean(context,"isLogin")){
+            //开启debug日志数据
+            XGPushConfig.enableDebug(context,true);
+            //信鸽token注册
+            XGPushManager.registerPush(context, new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    //token在设备卸载重装的时候有可能会变
+                    Log.d("TPush", "注册成功，设备token为：" + data);
+                    XGPushManager.bindAccount(context, "XINGE");
+                    XGPushManager.setTag(context,"XINGE");
+                    uploadXgInfo(data);
+                }
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                }
+            });
+        }
+    }
+
+    //将信鸽token上传到服务端
+    private void uploadXgInfo(Object data) {
+        Map<String,String> headMap = new HashMap<>();
+        headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
+        headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
+        headMap.put("Content-Type","application/x-www-form-urlencoded");
+        Map<String,String> bodyMap = new HashMap<>();
+        bodyMap.put("token",String.valueOf(data));
+        bodyMap.put("os","1");
+        //请求接口
+        new HttpUtil().postHead("/movieApi/tool/v1/verify/uploadPushToken",bodyMap,headMap).result(new HttpUtil.HttpListener() {
+            @Override
+            public void success(String data) {
+                RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
+            }
+
+            @Override
+            public void fail(String data) {
+                RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
+            }
+        });
     }
 
     private void addList() {
@@ -158,7 +235,6 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
                 break;
         }
     }
-
     private void setBreoadcast() {
         BroadcastReceiver receiver = new NetBroadCastReciver();
         IntentFilter filter = new IntentFilter();
