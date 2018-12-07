@@ -17,6 +17,7 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.Map;
  * 影片的评论列表
  * 赵瑜峰
  */
-public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetailsCritics.MyViewHodlerDetailsCritics> {
+public class MyAdapterDetailsCritics extends XRecyclerView.Adapter<MyAdapterDetailsCritics.MyViewHodlerDetailsCritics> {
     private Context context;
     private List<Critics.ResultBean> list = new ArrayList<>();
     public MyAdapterDetailsCritics(Context context){
@@ -123,7 +124,7 @@ public class MyAdapterDetailsCritics extends RecyclerView.Adapter<MyAdapterDetai
         return list.size();
     }
 
-    public class MyViewHodlerDetailsCritics extends RecyclerView.ViewHolder{
+    public class MyViewHodlerDetailsCritics extends XRecyclerView.ViewHolder{
 
         private SimpleDraweeView img;
         private TextView name,comments,time,comNum,likeNum;

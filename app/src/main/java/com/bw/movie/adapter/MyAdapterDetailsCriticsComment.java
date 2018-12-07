@@ -17,6 +17,7 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.Map;
  * 赵瑜峰
  */
 
-public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
+public class MyAdapterDetailsCriticsComment extends XRecyclerView.Adapter<MyAdapterDetailsCriticsComment.MyViewHodlerDetailsCriticsComment> {
     private Context context;
     private List<DetailsComment.ResultBean> list = new ArrayList<>();
     private int isgreat;
@@ -125,7 +126,7 @@ public class MyAdapterDetailsCriticsComment extends RecyclerView.Adapter<MyAdapt
         return list.size();
     }
 
-    public class MyViewHodlerDetailsCriticsComment extends RecyclerView.ViewHolder{
+    public class MyViewHodlerDetailsCriticsComment extends XRecyclerView.ViewHolder{
 
         private SimpleDraweeView img;
         private TextView name,comments,time,likeNum;

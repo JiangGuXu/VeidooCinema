@@ -1,17 +1,12 @@
 package com.bw.movie.presenter_fragment;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.bw.movie.R;
-import com.bw.movie.activity.MainActivity;
-import com.bw.movie.activity.SearchActivity;
+import com.bw.movie.adapter.MyAdapterFilm;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
 import com.bw.movie.bean.FilmListData;
@@ -20,13 +15,13 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.NetworkUtils;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 
@@ -39,20 +34,12 @@ import recycler.coverflow.RecyclerCoverFlow;
 public class FilmFragmentPresenter extends AppDelage {
 
     private Context context;
-    private RecyclerView mListView;
-    private MyAdapterFilmList myAdapterFilmList;
     private List<String> titles =new ArrayList<>();
-    private List<FilmListData> list =new ArrayList<>();
     private List<String> urls =new ArrayList<>();
-    private RecyclerCoverFlow mRecyclerCoverFlow;
-    private MyAdapterFilmBanner myAdapterFilmBanner;
-    private RelativeLayout mRelativeLayout;
-    private View view1;
-    private RelativeLayout relativeLayout;
     private RelativeLayout mIsnetword;
-    private int WinthLeft=0;
-    private int WinthRight=0;
     private List<FilmListData.ResultBean> result;
+    private MyAdapterFilm myAdapterFilm;
+    private XRecyclerView xRecyclerView;
 
     @Override
     public int getLayoutId() {
@@ -68,7 +55,7 @@ public class FilmFragmentPresenter extends AppDelage {
     public void initData() {
         super.initData();
         mIsnetword = get(R.id.film_isnetword);
-
+        xRecyclerView = get(R.id.film_xrecycler);
         if (!NetworkUtils.isConnected(context)){
             mIsnetword.setVisibility(View.VISIBLE);
         }else{
@@ -77,6 +64,14 @@ public class FilmFragmentPresenter extends AppDelage {
         }
         //添加数据
         addlist();
+
+        myAdapterFilm = new MyAdapterFilm(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        xRecyclerView.setLayoutManager(linearLayoutManager);
+        xRecyclerView.setAdapter(myAdapterFilm);
+        xRecyclerView.setPullRefreshEnabled(true);
+        doHttpBanner();
         setOnclick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,89 +80,39 @@ public class FilmFragmentPresenter extends AppDelage {
                 }else{
                     mIsnetword.setVisibility(View.GONE);
                     doHttpBanner();
-                    for (int i = 0; i <urls.size() ; i++) {
-                        doHttp(urls.get(i));
-                    }
-                    myAdapterFilmList.setList(list,titles);
+
                 }
             }
         },R.id.film_retry_isnetword);
-        //轮播图
-        mRelativeLayout = get(R.id.film_search_relative);
-        View view = get(R.id.film_divider_view);
-        view1 = get(R.id.film_divider_view1);
-        relativeLayout = get(R.id.film_divider_relative);
-        mRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)context).startActivity(new Intent(context, SearchActivity.class));
-            }
-        });
-        mRecyclerCoverFlow = (RecyclerCoverFlow) get(R.id.film_list_recyler);
-        myAdapterFilmBanner = new MyAdapterFilmBanner(context);
-        mRecyclerCoverFlow.setAdapter(myAdapterFilmBanner);
-        mRecyclerCoverFlow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
-            @Override
-            public void onItemSelected(int position) {
-                WinthRight=position*(view.getMeasuredWidth()/result.size());
-                ObjectAnimator translationX = ObjectAnimator.ofFloat(view1, "translationX", WinthLeft,WinthRight);
-                translationX.setDuration(50);
-                translationX.start();
-                WinthLeft=WinthRight;
-            }
-        });
-        myAdapterFilmBanner.setListener(new MyAdapterFilmBanner.RecyclerItemListener() {
-            @Override
-            public void onClick(int position)  {
-                mRecyclerCoverFlow.scrollToPosition(position);
-            }
 
-            @Override
-            public void getmovieId(int movieId) {
-
-            }
-        });
         //请求轮播数据
-        doHttpBanner();
-        //电影展示
-        mListView =(RecyclerView) get(R.id.film_list_view);
-        myAdapterFilmList = new MyAdapterFilmList(context);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mListView.setLayoutManager(linearLayoutManager);
-        mListView.setAdapter(myAdapterFilmList);
-        //请求影片数据
-        for (int i = 0; i <urls.size() ; i++) {
-            doHttp(urls.get(i));
-        }
-        myAdapterFilmList.setList(list,titles);
+
+
+        xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                doHttpBanner();
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                xRecyclerView.loadMoreComplete();
+            }
+        });
     }
-    //请求数据并放入list集合中
-    private void doHttp( String url) {
-            Map<String,String> map = new HashMap<>();
-            map.put("page","1");
-            map.put("count","10");
-        Map<String,String> mapHead = new HashMap<>();
-        if(SharedPreferencesUtils.getBoolean(context,"isLogin")){
-            int userId = SharedPreferencesUtils.getInt(context, "userId");
-            String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
-            mapHead.put("userId",userId+"");
-            mapHead.put("sessionId",sessionId);
-        }
-            new HttpUtil().get(url,map,mapHead).result(new HttpUtil.HttpListener() {
-                @Override
-                public void success(String data) {
-                    Gson gson = new Gson();
-                    FilmListData filmListData = gson.fromJson(data, FilmListData.class);
-                    list.add(filmListData);
-                }
 
-                @Override
-                public void fail(String data) {
 
-                }
-            });
-        }
+    private void addlist() {
+        titles.add("热门电影");
+        titles.add("正在热映");
+        titles.add("即将上映");
+        urls.add("/movieApi/movie/v1/findHotMovieList");
+        urls.add("/movieApi/movie/v1/findReleaseMovieList");
+        urls.add("/movieApi/movie/v1/findComingSoonMovieList");
+
+
+    }
 
     //请求轮播数据
     private void doHttpBanner() {
@@ -191,8 +136,8 @@ public class FilmFragmentPresenter extends AppDelage {
                 if(result.size()==0){
                     doHttpBanner();
                 }
-                myAdapterFilmBanner.setList(result);
-                mRecyclerCoverFlow.scrollToPosition(result.size()/2);
+                myAdapterFilm.setList(titles,urls,result);
+                xRecyclerView.refreshComplete();
             }
 
             @Override
@@ -200,16 +145,5 @@ public class FilmFragmentPresenter extends AppDelage {
 
             }
         });
-    }
-
-    private void addlist() {
-        titles.add("热门电影");
-        titles.add("正在热映");
-        titles.add("即将上映");
-        urls.add("/movieApi/movie/v1/findHotMovieList");
-        urls.add("/movieApi/movie/v1/findReleaseMovieList");
-        urls.add("/movieApi/movie/v1/findComingSoonMovieList");
-
-
     }
 }
