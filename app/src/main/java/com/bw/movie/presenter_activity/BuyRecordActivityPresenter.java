@@ -2,7 +2,6 @@ package com.bw.movie.presenter_activity;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +14,7 @@ import com.bw.movie.mvp.view.AppDelage;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,9 +27,9 @@ import java.util.Map;
  * */
 public class BuyRecordActivityPresenter extends AppDelage {
 
-    private RecyclerView recyclerView;
+    private XRecyclerView recyclerView;
     private MyAdapterBuyRecord myAdapterBuyRecord;
-
+    private int count=5;
     @Override
     public int getLayoutId() {
         return R.layout.activity_buyrecord;
@@ -56,6 +56,18 @@ public class BuyRecordActivityPresenter extends AppDelage {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapterBuyRecord);
         doHttp();
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                doHttp();
+            }
+
+            @Override
+            public void onLoadMore() {
+                count+=5;
+                doHttp();
+            }
+        });
     }
 
     @Override
@@ -70,7 +82,7 @@ public class BuyRecordActivityPresenter extends AppDelage {
             String sessionId = SharedPreferencesUtils.getString(context, "sessionId");
             Map<String,String> map = new HashMap<>();
             map.put("page","1");
-            map.put("count","5");
+            map.put("count",count+"");
             Map<String,String> mapHead = new HashMap<>();
             mapHead.put("userId",userId+"");
             mapHead.put("sessionId",sessionId);
@@ -84,6 +96,8 @@ public class BuyRecordActivityPresenter extends AppDelage {
                         if(!buyRecord.getMessage().equals("无数据")){
                             List<BuyRecord.ResultBean> result = buyRecord.getResult();
                             myAdapterBuyRecord.setList(result);
+                            recyclerView.refreshComplete();
+                            recyclerView.loadMoreComplete();
                         }
                     }else{
                         Toast.makeText(context, "无数据", Toast.LENGTH_SHORT).show();

@@ -68,7 +68,7 @@
                     android:textColor="@color/color333333"
                     />
             </LinearLayout>
-            <android.support.v7.widget.RecyclerView
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/details_comment_recyler"
@@ -76,7 +76,7 @@
                 android:layout_above="@+id/details_comment_linear"
                 >
 
-            </android.support.v7.widget.RecyclerView>
+            </com.jcodecraeer.xrecyclerview.XRecyclerView>
             <ImageView
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_60"

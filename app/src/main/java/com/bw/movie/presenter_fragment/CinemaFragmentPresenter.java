@@ -104,6 +104,17 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         recommendimg.callOnClick();
     }
 
+    @Override
+    public void resume() {
+        super.resume();
+        if (!NetworkUtils.isConnected(context)){
+            mIsnetword.setVisibility(View.VISIBLE);
+        }else{
+            mIsnetword.setVisibility(View.GONE);
+            dohttp();
+        }
+    }
+
     //附近影院解析
     private void doHttp() {
         String url1 = "/movieApi/cinema/v1/findRecommendCinemas";

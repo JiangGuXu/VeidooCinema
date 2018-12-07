@@ -37,6 +37,7 @@ import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +61,14 @@ public class DetailsFilmActivityPresenter extends AppDelage {
     private EditText text;
     private SimpleDraweeView img_bg;
     private MyAdapterDetailsCriticsComment myAdapterDetailsCriticsComment;
-    private RecyclerView recyclerView;
+    private XRecyclerView recyclerView;
     private EditText text1;
     private PopupWindow popupWindow;
     private RelativeLayout relativeLayout;
     private View view1;
-
+    private int count=5;
+    private int count1=5;
+    private XRecyclerView recyclerView1;
     @Override
     public int getLayoutId() {
         return R.layout.activity_detailsfilm;
@@ -284,7 +287,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY", mRelativeLayout.getMeasuredHeight(), 0);
         translationY.setDuration(time);
         translationY.start();
-        view1.findViewById(R.id.details_critics_under).setOnClickListener(new View.OnClickListener() {
+        view1.findViewById(R.id.details_critics_relative).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ObjectAnimator translationY = ObjectAnimator.ofFloat(mRelativeLayout, "translationY",0, mRelativeLayout.getMeasuredHeight() );
@@ -307,9 +310,25 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapterDetailsCritics);
-
         doHttpCritics();
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                doHttpCritics();
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                count+=5;
+                doHttpCritics();
+            }
+        });
+
         myAdapterDetailsCritics.result(new MyAdapterDetailsCritics.CriticsFouceListener() {
+
+
+
             @Override
             public void criticsChange() {
                 //点击查看评论显示评论列表
@@ -319,7 +338,6 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             @Override
             public void criticsComments(int isgreat, int greatnum,int CommentId) {
                 mRelativeLayout.removeAllViews();
-                recyclerView.setAdapter(myAdapterDetailsCriticsComment);
                 View view = View.inflate(context,R.layout.activity_details_comment,null);
                 mRelativeLayout.addView(view);
                 view.findViewById(R.id.details_comment_under).setOnClickListener(new View.OnClickListener() {
@@ -344,13 +362,25 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                         critics(0);
                     }
                 });
-                RecyclerView recyclerView1 = view.findViewById(R.id.details_comment_recyler);
+                recyclerView1 = view.findViewById(R.id.details_comment_recyler);
                 myAdapterDetailsCriticsComment = new MyAdapterDetailsCriticsComment(context);
                 LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(context);
                 linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView1.setLayoutManager(linearLayoutManager1);
                 recyclerView1.setAdapter(myAdapterDetailsCriticsComment);
                 doHttpCriticsComments(isgreat,greatnum,CommentId);
+                recyclerView1.setLoadingListener(new XRecyclerView.LoadingListener() {
+                    @Override
+                    public void onRefresh() {
+                        doHttpCriticsComments(isgreat,greatnum,CommentId);
+                    }
+
+                    @Override
+                    public void onLoadMore() {
+                        count1+=5;
+                        doHttpCriticsComments(isgreat,greatnum,CommentId);
+                    }
+                });
             }
 
 
@@ -410,7 +440,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> map = new HashMap<>();
                 map.put("commentId",CommentId+"");
                 map.put("page","1");
-                map.put("count","5");
+                map.put("count",count1+"");
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
@@ -423,6 +453,8 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                         if("0000".equals(detailsComment.getStatus())){
                             if(!detailsComment.getMessage().equals("无数据")){
                                 myAdapterDetailsCriticsComment.setList(result,isgreat,greatnum,CommentId);
+                                recyclerView1.refreshComplete();
+                                recyclerView1.loadMoreComplete();
                             }
 
                         }
@@ -494,7 +526,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> map = new HashMap<>();
                 map.put("movieId",id);
                 map.put("page","1");
-                map.put("count","5");
+                map.put("count",count+"");
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
@@ -505,6 +537,8 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                         Critics critics = gson.fromJson(data, Critics.class);
                         List<Critics.ResultBean> result = critics.getResult();
                         myAdapterDetailsCritics.setList(result);
+                        recyclerView.refreshComplete();
+                        recyclerView.loadMoreComplete();
                     }
 
                     @Override

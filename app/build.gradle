@@ -73,5 +73,6 @@ dependencies {
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
+    implementation project(':xrecyclerview')
 }
 

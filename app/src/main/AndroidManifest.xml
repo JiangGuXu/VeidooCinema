@@ -58,7 +58,8 @@
         <activity android:name=".activity.SearchActivity"></activity>
         <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.RegisterActivity"></activity>
-        <activity android:name=".activity.DetailsActivity"></activity>
+        <activity android:name=".activity.DetailsActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".activity.NearActivity"></activity>
         <activity
             android:name=".activity.DetailsFilmActivity"
