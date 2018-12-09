@@ -17,35 +17,38 @@ import com.bw.movie.bean.FilmListData;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 首页电影类型列表
  * 赵瑜峰
  */
-public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.MyViewHodlerFilmList>{
+public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.MyViewHodlerFilmList> {
     private Context context;
     private List<FilmListData> list = new ArrayList();
-    private List<String> titles=new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
     private MyAdapterFilmListrecyler myAdapterFilmList_recyler;
 
 
-    public MyAdapterFilmList (Context context){
-        this.context=context;
+    public MyAdapterFilmList(Context context) {
+        this.context = context;
     }
-    public void setList(List<FilmListData> list,List<String> titles){
-        this.list=list;
-        this.titles=titles;
+
+    public void setList(List<FilmListData> list, List<String> titles) {
+        this.list = list;
+        this.titles = titles;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public MyViewHodlerFilmList onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = View.inflate(context, R.layout.film_list_item,null);
+        View view = View.inflate(context, R.layout.film_list_item, null);
         MyViewHodlerFilmList myViewHodlerFilmList = new MyViewHodlerFilmList(view);
         return myViewHodlerFilmList;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHodlerFilmList myViewHodlerFilmList,final int i) {
+    public void onBindViewHolder(@NonNull MyViewHodlerFilmList myViewHodlerFilmList, final int i) {
         myViewHodlerFilmList.title.setText(titles.get(i));
         myAdapterFilmList_recyler = new MyAdapterFilmListrecyler(context);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
@@ -56,8 +59,8 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SearchActivity.class);
-                intent.putExtra("position",i);
-                ((MainActivity)context).startActivity(intent);
+                intent.putExtra("position", i);
+                ((MainActivity) context).startActivity(intent);
             }
         });
     }
@@ -68,7 +71,7 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
         return list.size();
     }
 
-    public class MyViewHodlerFilmList extends RecyclerView.ViewHolder{
+    public class MyViewHodlerFilmList extends RecyclerView.ViewHolder {
 
         private TextView title;
         private RecyclerView recyclerView;
@@ -76,12 +79,11 @@ public class MyAdapterFilmList extends RecyclerView.Adapter<MyAdapterFilmList.My
 
         public MyViewHodlerFilmList(@NonNull View itemView) {
             super(itemView);
-            title = (TextView)itemView.findViewById(R.id.film_list_title);
-            recyclerView = (RecyclerView)itemView.findViewById(R.id.fiml_list_recyler);
+            title = (TextView) itemView.findViewById(R.id.film_list_title);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.fiml_list_recyler);
             img = itemView.findViewById(R.id.film_list_img);
         }
     }
-
 
 
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/user_attendance_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="签到页面"
+        android:textColor="@color/color333333"
+        android:textSize="@dimen/sp_14" />
+
+
+    <TextView
+        android:id="@+id/user_attendance_geto_attendance"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_below="@+id/user_attendance_title"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@drawable/my_item_layout_shape"
+        android:gravity="fill_vertical"
+        android:paddingLeft="10dp"
+        android:text="去签到" />
+
+    <ImageView
+        android:id="@+id/user_attendance_geto_attendance_img"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignBottom="@+id/user_attendance_geto_attendance"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_30"
+        android:src="@drawable/com_icon_next_default" />
+
+
+    <TextView
+        android:id="@+id/user_attendance_integral"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_below="@+id/user_attendance_geto_attendance"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@drawable/my_item_layout_shape"
+        android:gravity="fill_vertical"
+        android:paddingLeft="10dp"
+        android:text="0积分" />
+
+
+    <ImageView
+        android:id="@+id/user_attendance_back"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:src="@drawable/com_icon_my_default1" />
+</RelativeLayout>
