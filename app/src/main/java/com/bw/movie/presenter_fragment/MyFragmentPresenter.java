@@ -24,6 +24,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.BuyRecordActivity;
 import com.bw.movie.activity.LoginActivity;
 import com.bw.movie.activity.MainActivity;
+import com.bw.movie.activity.UserAttendanceActivity;
 import com.bw.movie.activity.UserAttentionActivity;
 import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
@@ -72,6 +73,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     private RelativeLayout my_icon_remind_relativelayout;
     private RelativeLayout mIsnetword;
     private RelativeLayout my_version_layout;
+    private ImageView my_attendance;
 
     @Override
     public int getLayoutId() {
@@ -106,6 +108,11 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
             }
         }, R.id.film_retry_isnetword);
+
+
+        //用户签到
+        my_attendance = get(R.id.my_attendance);
+        my_attendance.setOnClickListener(this);
 
         //版本查询
         my_version_layout = get(R.id.my_version_layout);
@@ -338,6 +345,18 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     });
                 } else {
                     Toast.makeText(context, "检查本版之前请先去登录哦~", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            //用户签到  进行跳转到用户签到activity
+            case R.id.my_attendance:
+                Boolean isLogin2 = SharedPreferencesUtils.getBoolean(context, "isLogin");
+                if (isLogin2) {
+                    Intent intent = new Intent(context, UserAttendanceActivity.class);
+                    ((MainActivity) context).startActivity(intent);
+                } else {
+                    Toast.makeText(context, "签到之前请先去登录哦~", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
