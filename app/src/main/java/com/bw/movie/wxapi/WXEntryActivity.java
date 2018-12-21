@@ -143,8 +143,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     private void doWX_login(String code) {
         HashMap<String, String> headMap = new HashMap<>();
         headMap.put("Content-Type", "application/x-www-form-urlencoded");
-
-
         HashMap<String, String> partMap = new HashMap<>();
         partMap.put("code", code);
         new HttpUtil().postHead("/movieApi/user/v1/weChatBindingLogin", partMap, headMap).result(new HttpUtil.HttpListener() {

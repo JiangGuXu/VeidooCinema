@@ -120,7 +120,7 @@
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_marginTop="@dimen/dp_12"
             android:layout_toRightOf="@+id/text_style"
-            android:text="53.9"
+            android:text="00.0"
             android:textColor="@color/colorb11450"
             android:textSize="@dimen/sp_36" />
 

@@ -14,11 +14,11 @@ import java.util.Date;
  *                        调用 longToString方法即可
  */
 
-public class DateFormatForYou {
+    public class DateFormatForYou {
 
 
 
-    public  String longToString(long currentTime, String formatType)
+        public  String longToString(long currentTime, String formatType)
             throws ParseException {
         Date date = longToDate(currentTime, formatType); // long类型转成Date类型
         String strTime = dateToString(date, formatType); // date类型转成String
