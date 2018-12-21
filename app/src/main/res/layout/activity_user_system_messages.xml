@@ -27,14 +27,14 @@
         android:textStyle="normal" />
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/user_system_messages_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/user_system_messages_title"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_24"></android.support.v7.widget.RecyclerView>
+        android:layout_marginRight="@dimen/dp_24"></com.jcodecraeer.xrecyclerview.XRecyclerView>
 
     <ImageView
         android:id="@+id/user_system_messages_back"

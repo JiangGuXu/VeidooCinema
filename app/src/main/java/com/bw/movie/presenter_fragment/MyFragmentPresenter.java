@@ -260,6 +260,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                 }
                 break;
 
+            //购票记录
             case R.id.my_rccord_layout:
                 if (SharedPreferencesUtils.getBoolean(context, "isLogin")) {
                     Intent intent = new Intent(context, BuyRecordActivity.class);
