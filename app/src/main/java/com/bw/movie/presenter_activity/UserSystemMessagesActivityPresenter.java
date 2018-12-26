@@ -101,7 +101,7 @@ public class UserSystemMessagesActivityPresenter extends AppDelage implements Vi
         int userId = SharedPreferencesUtils.getInt(context, "userId");
         headMap.put("userId", userId + "");
         headMap.put("sessionId", sessionId);
-        new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
 
@@ -121,7 +121,12 @@ public class UserSystemMessagesActivityPresenter extends AppDelage implements Vi
             public void fail(String data) {
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(s, paramsMap, headMap,"UserSystemMessagesUserSystemCount",true,true);
     }
 
     private void doHttp(String s) {
@@ -134,7 +139,7 @@ public class UserSystemMessagesActivityPresenter extends AppDelage implements Vi
         int userId = SharedPreferencesUtils.getInt(context, "userId");
         headMap.put("userId", userId + "");
         headMap.put("sessionId", sessionId);
-        new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 if (data.contains("成功")) {
@@ -154,7 +159,12 @@ public class UserSystemMessagesActivityPresenter extends AppDelage implements Vi
                 Log.i("jhktest", "fail: " + data);
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(s, paramsMap, headMap,"UserSystemMessagesUserSystemMessages",true,true);
     }
 
     @Override

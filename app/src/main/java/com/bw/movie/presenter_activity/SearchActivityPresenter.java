@@ -179,7 +179,7 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
             mapHead.put("userId",userId+"");
             mapHead.put("sessionId",sessionId);
         }
-        new HttpUtil().get(url,map,mapHead).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -193,6 +193,11 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url,map,mapHead,"SearchFilmListData",true,true);
     }
 }

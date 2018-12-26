@@ -1,6 +1,12 @@
 package com.bw.movie.utils.net;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import com.bw.movie.R;
+import com.bw.movie.utils.cache.CacheUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +37,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class HttpUtil {
 
     private final BaseService baseService;
+    private final LodingDialog lodingDialog;
     private Observable<ResponseBody> observable;
+    private Context context;
+    private String type;
+    private boolean isloading;
+    private boolean iscache;
 
-    public HttpUtil() {
+    public HttpUtil(Context context) {
+        this.context = context;
+        LodingDialog.Builder builder = new LodingDialog.Builder(context);
+        lodingDialog = builder.create();
+
         //拦截器
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @Override
@@ -54,67 +69,184 @@ public class HttpUtil {
     }
 
     //get请求
-    public HttpUtil get(String url, Map<String, String> map, Map<String, String> mapHead) {
-        if (map == null) {
-            map = new HashMap<>();
+    public HttpUtil get(String url, Map<String, String> map, Map<String, String> mapHead,String type, boolean isloading, boolean iscache) {
+        this.type = type;
+        this.isloading = isloading;
+        this.iscache = iscache;
+        if (NetworkUtils.isConnected(context)) {
+            if (isloading) {
+                lodingDialog.show();
+            }
+            if (map == null) {
+                map = new HashMap<>();
+            }
+            if (mapHead == null) {
+                mapHead = new HashMap<>();
+            }
+            observable = baseService.get(url, map, mapHead);
+            setObservable();
+        } else {
+            if (iscache) {
+                String query = CacheUtils.getCacheUtils().query(type);
+                if (query != null) {
+                    listener.success(query);
+                    Toast.makeText(context, "没有网络", Toast.LENGTH_SHORT).show();
+                } else {
+                    View inflate = View.inflate(context, R.layout.not_network, null);
+                    listener.notNetwork(inflate);
+                }
+            } else {
+                View inflate = View.inflate(context, R.layout.not_network, null);
+                listener.notNetwork(inflate);
+            }
         }
-        if (mapHead == null) {
-            mapHead = new HashMap<>();
-        }
-        observable = baseService.get(url, map, mapHead);
-        setObservable();
-        return this;
-    }
+            return this;
 
+    }
     //post请求
-    public HttpUtil post(String url, Map<String, String> map) {
-        if (map == null) {
-            map = new HashMap<>();
+    public HttpUtil post(String url,Map<String, String> map,String type, boolean isloading, boolean iscache) {
+            this.type = type;
+            this.isloading = isloading;
+            this.iscache = iscache;
+            if (NetworkUtils.isConnected(context)) {
+                if (isloading) {
+                    lodingDialog.show();
+                }
+                if (map == null) {
+                    map = new HashMap<>();
+                }
+                observable = baseService.post(url, map);
+                setObservable();
+            } else {
+                if(iscache){
+                    String query = CacheUtils.getCacheUtils().query(type);
+                    if (query != null) {
+                        listener.success(query);
+                        Toast.makeText(context,"没有网络",Toast.LENGTH_SHORT).show();
+                    } else {
+                        View inflate = View.inflate(context, R.layout.not_network, null);
+                        listener.notNetwork(inflate);
+                    }
+                }else{
+                    View inflate = View.inflate(context, R.layout.not_network, null);
+                    listener.notNetwork(inflate);
+                }
         }
-        observable = baseService.post(url, map);
-        setObservable();
+
+
         return this;
     }
 
     //postHead请求
-    public HttpUtil postHead(String url, Map<String, String> map, Map<String, String> mapHead) {
-        if (map == null) {
-            map = new HashMap<>();
+    public HttpUtil postHead(String url, Map<String, String> map, Map<String, String> mapHead,String type, boolean isloading, boolean iscache) {
+        this.type = type;
+        this.isloading = isloading;
+        this.iscache = iscache;
+        if (NetworkUtils.isConnected(context)) {
+            if (isloading) {
+                lodingDialog.show();
+            }
+            if (map == null) {
+                map = new HashMap<>();
+            }
+            if (mapHead == null) {
+                mapHead = new HashMap<>();
+            }
+            observable = baseService.postHead(url, map, mapHead);
+            setObservable();
+        } else {
+            if(iscache){
+                String query = CacheUtils.getCacheUtils().query(type);
+                if (query != null) {
+                    listener.success(query);
+                    Toast.makeText(context,"没有网络",Toast.LENGTH_SHORT).show();
+                } else {
+                    View inflate = View.inflate(context, R.layout.not_network, null);
+                    listener.notNetwork(inflate);
+                }
+            }else{
+                View inflate = View.inflate(context, R.layout.not_network, null);
+                listener.notNetwork(inflate);
+            }
         }
-        if (mapHead == null) {
-            mapHead = new HashMap<>();
-        }
-        observable = baseService.postHead(url, map, mapHead);
-        setObservable();
+
+
         return this;
     }
 
     //postHead请求
-    public HttpUtil postUploadImage(String url, Map<String, File> map, Map<String, String> mapHead) {
-        if (map == null) {
-            map = new HashMap<>();
+    public HttpUtil postUploadImage(String url, Map<String, File> map, Map<String, String> mapHead,String type, boolean isloading, boolean iscache) {
+        this.type = type;
+        this.isloading = isloading;
+        this.iscache = iscache;
+        if (NetworkUtils.isConnected(context)) {
+            if (isloading) {
+                lodingDialog.show();
+            }
+            if (map == null) {
+                map = new HashMap<>();
+            }
+            if (mapHead == null) {
+                mapHead = new HashMap<>();
+            }
+            observable = baseService.postUploadImage(url, map, mapHead);
+            setObservable();
+        } else {
+            if(iscache){
+                String query = CacheUtils.getCacheUtils().query(type);
+                if (query != null) {
+                    listener.success(query);
+                    Toast.makeText(context,"没有网络",Toast.LENGTH_SHORT).show();
+                } else {
+                    View inflate = View.inflate(context, R.layout.not_network, null);
+                    listener.notNetwork(inflate);
+                }
+            }else{
+                View inflate = View.inflate(context, R.layout.not_network, null);
+                listener.notNetwork(inflate);
+            }
         }
-        if (mapHead == null) {
-            mapHead = new HashMap<>();
-        }
-        observable = baseService.postUploadImage(url, map, mapHead);
-        setObservable();
+
         return this;
     }
 
     //postHead请求
-    public HttpUtil postForm(String url, Map<String, String> map, Map<String, String> mapForm, Map<String, String> mapHead) {
-        if (map == null) {
-            mapHead = new HashMap<>();
+    public HttpUtil postForm(String url, Map<String, String> map, Map<String, String> mapForm, Map<String, String> mapHead,String type, boolean isloading, boolean iscache) {
+        this.type = type;
+        this.isloading = isloading;
+        this.iscache = iscache;
+        if (NetworkUtils.isConnected(context)) {
+            if (isloading) {
+                lodingDialog.show();
+            }
+            if (map == null) {
+                mapHead = new HashMap<>();
+            }
+            if (map == null) {
+                mapForm = new HashMap<>();
+            }
+            if (mapHead == null) {
+                mapHead = new HashMap<>();
+            }
+            observable = baseService.postForm(url, map, mapForm, mapHead);
+            setObservable();
+        } else {
+            if(iscache){
+                String query = CacheUtils.getCacheUtils().query(type);
+                if (query != null) {
+                    listener.success(query);
+                    Toast.makeText(context,"没有网络",Toast.LENGTH_SHORT).show();
+                } else {
+                    View inflate = View.inflate(context, R.layout.not_network, null);
+                    listener.notNetwork(inflate);
+                }
+            }else{
+                View inflate = View.inflate(context, R.layout.not_network, null);
+                listener.notNetwork(inflate);
+            }
         }
-        if (map == null) {
-            mapForm = new HashMap<>();
-        }
-        if (mapHead == null) {
-            mapHead = new HashMap<>();
-        }
-        observable = baseService.postForm(url, map, mapForm, mapHead);
-        setObservable();
+
+
         return this;
     }
 
@@ -146,8 +278,12 @@ public class HttpUtil {
         @Override
         public void onNext(ResponseBody responseBody) {
             try {
-                String string = responseBody.string();
-                listener.success(string);
+                String data = responseBody.string();
+                lodingDialog.dismiss();
+                if (iscache) {
+                    CacheUtils.getCacheUtils().insert(data, type);
+                }
+                listener.success(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -155,8 +291,9 @@ public class HttpUtil {
 
         @Override
         public void onError(Throwable e) {
-            String message = e.getMessage();
-            listener.fail(message);
+            String error = e.getMessage();
+            lodingDialog.dismiss();
+            listener.fail(error);
         }
 
         @Override
@@ -167,13 +304,16 @@ public class HttpUtil {
     //接口回调
     private HttpListener listener;
 
-    public void result(HttpListener listener) {
+    public HttpUtil result(HttpListener listener) {
         this.listener = listener;
+        return this;
     }
 
     public interface HttpListener {
         void success(String data);
 
         void fail(String data);
+
+        void notNetwork (View data);
     }
 }

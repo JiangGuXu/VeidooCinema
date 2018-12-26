@@ -124,7 +124,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url1, map,headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success111: " + data);
@@ -142,7 +142,12 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url1, map,headMap,"NearCinema",true,true);
     }
 
     //推荐影院解析
@@ -154,7 +159,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         HashMap<String, String> map = new HashMap<>();
         map.put("page", "1");
         map.put("count", "21");
-        new HttpUtil().get(url, map,headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Log.i("chengtest", "success222: " + data);
@@ -171,7 +176,12 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url, map,headMap,"RecommendedCinema",true,true);
     }
 
     @Override

@@ -91,7 +91,7 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
                     headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
                     headMap.put("Content-Type","application/x-www-form-urlencoded");
                     //请求接口
-                    new HttpUtil().get("/movieApi/cinema/v1/verify/followCinema",map,headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             RegisterBean followBean = new Gson().fromJson(data, RegisterBean.class);
@@ -106,7 +106,12 @@ public class NearAdepter extends RecyclerView.Adapter<NearAdepter.snearAdepter> 
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).get("/movieApi/cinema/v1/verify/followCinema",map,headMap,"",true,false);
                 }else {
                     Toast.makeText(context,"您还未登陆",Toast.LENGTH_SHORT).show();
                 }

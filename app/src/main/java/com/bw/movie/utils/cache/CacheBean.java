@@ -1,23 +1,28 @@
-package com.bw.movie.utils.database;
+package com.bw.movie.utils.cache;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
+/**
+ * author:AbnerMing
+ * date:2018/11/9
+ * 缓存类
+ */
 @Entity
-public class User {
+public class CacheBean {
     @Id(autoincrement = true)
     private Long id;
     private String data;
     private String type;
-    @Generated(hash = 81374066)
-    public User(Long id, String data, String type) {
+    @Generated(hash = 1400961908)
+    public CacheBean(Long id, String data, String type) {
         this.id = id;
         this.data = data;
         this.type = type;
     }
-    @Generated(hash = 586692638)
-    public User() {
+    @Generated(hash = 573552170)
+    public CacheBean() {
     }
     public Long getId() {
         return this.id;
@@ -37,5 +42,5 @@ public class User {
     public void setType(String type) {
         this.type = type;
     }
-
+   
 }

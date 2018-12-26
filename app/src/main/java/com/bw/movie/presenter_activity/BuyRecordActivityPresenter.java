@@ -86,7 +86,7 @@ public class BuyRecordActivityPresenter extends AppDelage {
             Map<String,String> mapHead = new HashMap<>();
             mapHead.put("userId",userId+"");
             mapHead.put("sessionId",sessionId);
-            new HttpUtil().get("/movieApi/user/v1/verify/findUserBuyTicketRecordList",map,mapHead).result(new HttpUtil.HttpListener() {
+            new HttpUtil(context).result(new HttpUtil.HttpListener() {
                 @Override
                 public void success(String data) {
                     Log.i("aaaaa", "success: "+data);
@@ -109,7 +109,12 @@ public class BuyRecordActivityPresenter extends AppDelage {
                 public void fail(String data) {
 
                 }
-            });
+
+                @Override
+                public void notNetwork(View data) {
+
+                }
+            }).get("/movieApi/user/v1/verify/findUserBuyTicketRecordList",map,mapHead,"buyrecord",true,true);
         }else{
             Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
         }

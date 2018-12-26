@@ -103,7 +103,7 @@ public class ReSetpasswordActivityPresenter extends AppDelage implements View.On
                             HashMap<String, String> heanMap = new HashMap<>();
 
 
-                            new HttpUtil().postHead("/movieApi/user/v1/verify/modifyUserPwd", parameterMap, headMap)
+                            new HttpUtil(context)
                                     .result(new HttpUtil.HttpListener() {
                                         @Override
                                         public void success(String data) {
@@ -127,7 +127,12 @@ public class ReSetpasswordActivityPresenter extends AppDelage implements View.On
                                         public void fail(String data) {
                                             Toast.makeText(context, "密码修改失败", Toast.LENGTH_SHORT).show();
                                         }
-                                    });
+
+                                        @Override
+                                        public void notNetwork(View data) {
+
+                                        }
+                                    }).postHead("/movieApi/user/v1/verify/modifyUserPwd", parameterMap, headMap,"",true,false);
 
                         } else {
                             Toast.makeText(context, "新密码和旧密码不能相同", Toast.LENGTH_SHORT).show();

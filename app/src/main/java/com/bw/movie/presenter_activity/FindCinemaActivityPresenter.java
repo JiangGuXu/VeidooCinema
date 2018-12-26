@@ -109,7 +109,7 @@ public class FindCinemaActivityPresenter extends AppDelage{
         //请求接口
         Map<String,String> map = new HashMap();
         map.put("movieId",String.valueOf(movieId));
-        new HttpUtil().get("/movieApi/movie/v1/findCinemasListByMovieId",map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Recommendedbean json = new Gson().fromJson(data, Recommendedbean.class);
@@ -125,6 +125,11 @@ public class FindCinemaActivityPresenter extends AppDelage{
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get("/movieApi/movie/v1/findCinemasListByMovieId",map,null,"Recommended",true,true);
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bw.movie.bean.LoginBean;
@@ -117,7 +118,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         map.put("code", code);
         HashMap<String, String> headMap = new HashMap<>();
         headMap.put("userId", userId + "");
-        new HttpUtil().postHead("/movieApi/user/v1/verify/bindWeChat", map, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(this).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
 
@@ -136,7 +137,12 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 Log.i("jhktest2", "fail: " + "绑定失败");
                 wxEntryBindListener.onisSucceed(false);
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).postHead("/movieApi/user/v1/verify/bindWeChat", map, headMap,"",true,false);
 
     }
 
@@ -147,7 +153,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
         HashMap<String, String> partMap = new HashMap<>();
         partMap.put("code", code);
-        new HttpUtil().postHead("/movieApi/user/v1/weChatBindingLogin", partMap, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(this).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 if (data.contains("成功")) {
@@ -199,7 +205,12 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 //微信登录失败存值  通知login页面
                 SharedPreferencesUtils.putBoolean(WXEntryActivity.this, "isWXlogin", false);
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).postHead("/movieApi/user/v1/weChatBindingLogin", partMap, headMap,"",true,false);
     }
 
     private WXEntryBindListener wxEntryBindListener;

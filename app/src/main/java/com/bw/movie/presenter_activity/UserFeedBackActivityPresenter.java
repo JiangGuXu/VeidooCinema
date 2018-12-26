@@ -83,7 +83,7 @@ public class UserFeedBackActivityPresenter extends AppDelage implements View.OnC
 
                     parameterMap.put("content", feedbackText);
 
-                    new HttpUtil().postHead("/movieApi/tool/v1/verify/recordFeedBack", parameterMap, headMap)
+                    new HttpUtil(context)
                             .result(new HttpUtil.HttpListener() {
                                 @Override
                                 public void success(String data) {
@@ -100,7 +100,12 @@ public class UserFeedBackActivityPresenter extends AppDelage implements View.OnC
                                 public void fail(String data) {
                                     Toast.makeText(context, "反馈失败", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+
+                                @Override
+                                public void notNetwork(View data) {
+
+                                }
+                            }).postHead("/movieApi/tool/v1/verify/recordFeedBack", parameterMap, headMap,"",true,false);
                 } else {
                     Toast.makeText(context, "写点东西吧!", Toast.LENGTH_SHORT).show();
                 }

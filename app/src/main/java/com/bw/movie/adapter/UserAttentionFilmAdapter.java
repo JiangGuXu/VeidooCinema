@@ -92,7 +92,7 @@ public class UserAttentionFilmAdapter extends RecyclerView.Adapter<UserAttention
                         parameterMap.put("movieId", id + "");
                         headMap.put("userId", userId + "");
                         headMap.put("sessionId", sessionId);
-                        new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie", parameterMap, headMap).result(new HttpUtil.HttpListener() {
+                        new HttpUtil(context).result(new HttpUtil.HttpListener() {
                             @Override
                             public void success(String data) {
 
@@ -110,7 +110,12 @@ public class UserAttentionFilmAdapter extends RecyclerView.Adapter<UserAttention
                             public void fail(String data) {
                                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                             }
-                        });
+
+                            @Override
+                            public void notNetwork(View data) {
+
+                            }
+                        }).get("/movieApi/movie/v1/verify/cancelFollowMovie", parameterMap, headMap,"",true,false);
                     }
                 });
 

@@ -177,11 +177,10 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
         int userId = SharedPreferencesUtils.getInt(context, "userId");
         headMap.put("userId", userId + "");
         headMap.put("sessionId", sessionId);
-        new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
 
-                Log.i("jhktest", "successcount: " + data);
                 if (data.contains("成功")) {
                     Gson gson = new Gson();
                     UserSystemCountBean userSystemCountBean = gson.fromJson(data, UserSystemCountBean.class);
@@ -203,7 +202,12 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
             public void fail(String data) {
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(s, paramsMap, headMap,"MyUserSystemCountBean",true,true);
     }
 
     @Override
@@ -285,7 +289,7 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                     headMap.put("userId", userId + "");
                     headMap.put("sessionId", sessionId);
                     headMap.put("ak", "010010010000");
-                    new HttpUtil().get("/movieApi/tool/v1/findNewVersion", partMap, headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             Gson gson = new Gson();
@@ -335,7 +339,12 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
                         public void fail(String data) {
                             Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).get("/movieApi/tool/v1/findNewVersion", partMap, headMap,null,true,false);
                 } else {
                     Toast.makeText(context, "检查本版之前请先去登录哦~", Toast.LENGTH_SHORT).show();
                 }

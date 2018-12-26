@@ -93,7 +93,7 @@ public class MyAdapterDetailsCritics extends XRecyclerView.Adapter<MyAdapterDeta
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
-                new HttpUtil().postHead("/movieApi/movie/v1/verify/movieCommentGreat",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -110,7 +110,12 @@ public class MyAdapterDetailsCritics extends XRecyclerView.Adapter<MyAdapterDeta
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead("/movieApi/movie/v1/verify/movieCommentGreat",map,mapHead,"",true,false);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             }

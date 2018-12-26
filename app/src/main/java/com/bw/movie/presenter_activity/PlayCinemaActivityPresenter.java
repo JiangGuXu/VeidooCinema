@@ -128,7 +128,7 @@ public class PlayCinemaActivityPresenter extends AppDelage{
         Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -144,7 +144,12 @@ public class PlayCinemaActivityPresenter extends AppDelage{
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url1, map,null,"PlayCinemaDetails",true,true);
 
     }
 }

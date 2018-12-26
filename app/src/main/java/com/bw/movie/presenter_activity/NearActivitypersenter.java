@@ -217,7 +217,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         String url2 = "http://mobile.bwstudent.com/movieApi/cinema/v1/findCinemaInfo";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", cinemasId + "");
-        new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsinsidebean detailsBean = new Gson().fromJson(data, Detailsinsidebean.class);
@@ -242,7 +242,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url2, map, null,"NearDetailsinside",true,true);
     }
 
     //排期数据
@@ -251,7 +256,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -268,7 +273,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url1, map,null,"NearDetails",true,true);
 
     }
 
@@ -277,7 +287,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         String url = "/movieApi/movie/v1/findMovieListByCinemaId";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", String.valueOf(cinemasId));
-        new HttpUtil().get(url, map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -293,7 +303,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url, map,null,"NearBanner",true,true);
     }
 
     private Context context;
@@ -326,7 +341,7 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
         map.put("cinemaId", String.valueOf(cinemasId));
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url3,map,null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Commentsben bean = new Gson().fromJson(data, Commentsben.class);
@@ -343,7 +358,12 @@ public class NearActivitypersenter extends AppDelage implements View.OnClickList
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url3,map,null,"NearCommentsben",true,true);
     }
 
 }

@@ -377,7 +377,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                 HashMap<String, String> headMap = new HashMap<>();
 
                 headMap.put("userId", userId + "");
-                new HttpUtil().postHead("/movieApi/user/v1/verify/whetherToBindWeChat", parmMap, headMap).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         if (data.contains("成功")) {
@@ -402,7 +402,12 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                     public void fail(String data) {
                         Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead("/movieApi/user/v1/verify/whetherToBindWeChat", parmMap, headMap,"",true,false);
             } else {
                 user_info_is_bind_wx_text.setText("已绑定");
                 user_info_goto_bind_wx_img.setVisibility(View.GONE);
@@ -475,7 +480,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", "head.png", requestBody);
-        new HttpUtil().part("/movieApi/user/v1/verify/uploadHeadPic", headMap, image).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 if (data.contains("成功")) {
@@ -492,7 +497,7 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                     map.put("phone", phone);
                     map.put("pwd", encrypt_pwd);
                     //请求接口
-                    new HttpUtil().post("/movieApi/user/v1/login", map).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             if (data.contains("成功")) {
@@ -523,7 +528,12 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                         public void fail(String data) {
                             Toast.makeText(context, "上传成功但是头像刷新失败", Toast.LENGTH_SHORT).show();
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).post("/movieApi/user/v1/login", map,"UserInfoLoginBean",true,true);
 
                 } else {
                     Toast.makeText(context, "上传头像失败", Toast.LENGTH_SHORT).show();
@@ -537,7 +547,12 @@ public class UserInfoActivityPresenter extends AppDelage implements View.OnClick
                 Log.i("jhktest", "fail: " + data);
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).part("/movieApi/user/v1/verify/uploadHeadPic", headMap, image);
     }
 
     /***

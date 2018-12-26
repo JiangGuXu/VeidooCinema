@@ -154,7 +154,7 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                     map.put("phone", phone);
                     map.put("pwd", encrypt_pwd);
                     //请求接口
-                    new HttpUtil().post("/movieApi/user/v1/login", map).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             //解析数据
@@ -225,7 +225,12 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).post("/movieApi/user/v1/login", map,null,true,false);
                 }
                 break;
 
@@ -249,7 +254,7 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
         bodyMap.put("token",String.valueOf(data));
         bodyMap.put("os","1");
         //请求接口
-        new HttpUtil().postHead("/movieApi/tool/v1/verify/uploadPushToken",bodyMap,headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
@@ -261,7 +266,12 @@ public class LoginActivityPresenter extends AppDelage implements View.OnClickLis
                 RegisterBean bean = new Gson().fromJson(data, RegisterBean.class);
                 Toast.makeText(context,"配置"+bean.getMessage(),Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).postHead("/movieApi/tool/v1/verify/uploadPushToken",bodyMap,headMap,null,true,false);
     }
 
 

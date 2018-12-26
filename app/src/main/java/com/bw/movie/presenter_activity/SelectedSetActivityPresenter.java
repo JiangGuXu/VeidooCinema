@@ -131,7 +131,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
                     map.put("amount", amount);
                     map.put("sign", sign);
                     //请求下单的接口
-                    new HttpUtil().postHead("/movieApi/movie/v1/verify/buyMovieTicket", map, headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             orderBean = new Gson().fromJson(data, OrderBean.class);
@@ -143,7 +143,12 @@ public class SelectedSetActivityPresenter extends AppDelage {
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).postHead("/movieApi/movie/v1/verify/buyMovieTicket", map, headMap,"",true,false);
                 } else {
                     Toast.makeText(context, "登录后才能购票哦~", Toast.LENGTH_SHORT).show();
                 }
@@ -184,7 +189,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
                     Map<String,String> headMap = new HashMap<>();
                     headMap.put("userId",String.valueOf(userId));
                     headMap.put("sessionId",sessionId);
-                    new HttpUtil().postHead("/movieApi/movie/v1/verify/pay",map,headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             //解析成功之后的数据
@@ -205,7 +210,12 @@ public class SelectedSetActivityPresenter extends AppDelage {
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).postHead("/movieApi/movie/v1/verify/pay",map,headMap,"",true,true);
                 }
 
             }

@@ -405,7 +405,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
                 mapHead.put("Content-Type","application/x-www-form-urlencoded");
-                new HttpUtil().postHead("/movieApi/movie/v1/verify/commentReply",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -424,7 +424,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead("/movieApi/movie/v1/verify/commentReply",map,mapHead,"DetailsFilmFocus",true,true);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             }
@@ -444,7 +449,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
-                new HttpUtil().get("/movieApi/movie/v1/findCommentReply",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -465,7 +470,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get("/movieApi/movie/v1/findCommentReply",map,mapHead,"DetailsFilmDetailsComment",true,true);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             }
@@ -491,7 +501,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
                 mapHead.put("Content-Type","application/x-www-form-urlencoded");
-                new HttpUtil().postHead("/movieApi/movie/v1/verify/movieComment",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -510,7 +520,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead("/movieApi/movie/v1/verify/movieComment",map,mapHead,"DetailsFilmFocusmy",true,true);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             }
@@ -530,7 +545,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
-                new HttpUtil().get("/movieApi/movie/v1/findAllMovieComment",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -545,14 +560,19 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get("/movieApi/movie/v1/findAllMovieComment",map,mapHead,"DetailsFilmCritics",true,true);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
                 Map<String,String> map = new HashMap<>();
                 map.put("movieId",id);
                 map.put("page","1");
                 map.put("count","5");
-                new HttpUtil().get("/movieApi/movie/v1/findAllMovieComment",map,null).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -565,7 +585,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get("/movieApi/movie/v1/findAllMovieComment",map,null,"DetailsFilmCritics",true,true);
             }
 
         }
@@ -581,7 +606,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                 Map<String,String> mapHead = new HashMap<>();
                 mapHead.put("userId",userId+"");
                 mapHead.put("sessionId",sessionId);
-                new HttpUtil().get("/movieApi/movie/v1/findMoviesDetail",map,mapHead).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -601,12 +626,17 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get("/movieApi/movie/v1/findMoviesDetail",map,mapHead,"DetailsFilmDetails",true,true);
             }else{
                 Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
                 Map<String,String> map = new HashMap<>();
                 map.put("movieId",id);
-                new HttpUtil().get("/movieApi/movie/v1/findMoviesDetail",map,null).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         Gson gson = new Gson();
@@ -626,7 +656,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
                     public void fail(String data) {
 
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get("/movieApi/movie/v1/findMoviesDetail",map,null,"DetailsFilmDetails",true,true);
             }
 
         }
@@ -638,7 +673,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         Map<String,String> mapHead = new HashMap<>();
         mapHead.put("userId",userId+"");
         mapHead.put("sessionId",sessionId);
-        new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
 
@@ -656,7 +691,12 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead,"",true,false);
     }
     //关注
     private void doHpptFocus( int userId, String sessionId) {
@@ -665,7 +705,7 @@ public class DetailsFilmActivityPresenter extends AppDelage {
         Map<String,String> mapHead = new HashMap<>();
         mapHead.put("userId",userId+"");
         mapHead.put("sessionId",sessionId);
-        new HttpUtil().get( "/movieApi/movie/v1/verify/followMovie",map,mapHead).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -682,6 +722,11 @@ public class DetailsFilmActivityPresenter extends AppDelage {
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get( "/movieApi/movie/v1/verify/followMovie",map,mapHead,"",true,false);
     }
 }

@@ -76,7 +76,7 @@ public class UserAttentionCinemaAdapter extends RecyclerView.Adapter<UserAttenti
                         parameterMap.put("cinemaId", id + "");
                         headMap.put("userId", userId + "");
                         headMap.put("sessionId", sessionId);
-                        new HttpUtil().get("/movieApi/cinema/v1/verify/cancelFollowCinema", parameterMap, headMap).result(new HttpUtil.HttpListener() {
+                        new HttpUtil(context).result(new HttpUtil.HttpListener() {
                             @Override
                             public void success(String data) {
                                 if (data.contains("取消关注成功")) {
@@ -93,7 +93,12 @@ public class UserAttentionCinemaAdapter extends RecyclerView.Adapter<UserAttenti
                             public void fail(String data) {
                                 Toast.makeText(context, "取消请求失败", Toast.LENGTH_SHORT).show();
                             }
-                        });
+
+                            @Override
+                            public void notNetwork(View data) {
+
+                            }
+                        }).get("/movieApi/cinema/v1/verify/cancelFollowCinema", parameterMap, headMap,"",true,false);
                     }
                 });
 

@@ -84,7 +84,7 @@ public class RegisterActivityPresenter extends AppDelage implements View.OnClick
                     map.put("birthday",birthday);
                     map.put("email",email);
                     //请求接口
-                    new HttpUtil().post("/movieApi/user/v1/registerUser",map).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             //解析数据
@@ -104,7 +104,12 @@ public class RegisterActivityPresenter extends AppDelage implements View.OnClick
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).post("/movieApi/user/v1/registerUser",map,"RegisterRegister",true,true);
                 }
                 break;
         }

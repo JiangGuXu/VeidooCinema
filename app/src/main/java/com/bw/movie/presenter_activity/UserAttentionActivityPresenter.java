@@ -98,7 +98,7 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                             headMap1.put("userId", userId + "");
                             headMap1.put("sessionId", sessionId);
 
-                            new HttpUtil().get("/movieApi/movie/v1/verify/findMoviePageList", parameterMap1, headMap1).result(new HttpUtil.HttpListener() {
+                            new HttpUtil(context).result(new HttpUtil.HttpListener() {
                                 @Override
                                 public void success(String data) {
                                     Gson gson = new Gson();
@@ -111,7 +111,12 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                                 public void fail(String data) {
                                     Toast.makeText(context, "电影请求失败", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+
+                                @Override
+                                public void notNetwork(View data) {
+
+                                }
+                            }).get("/movieApi/movie/v1/verify/findMoviePageList", parameterMap1, headMap1,"UserAttentionUserAttentionFilm",true,true);
 
 
 
@@ -131,7 +136,7 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                             headMap2.put("sessionId", sessionId);
                             HashMap<String, String> heanMap = new HashMap<>();
 
-                            new HttpUtil().get("/movieApi/cinema/v1/verify/findCinemaPageList", parameterMap2, headMap2).result(new HttpUtil.HttpListener() {
+                            new HttpUtil(context).result(new HttpUtil.HttpListener() {
                                 @Override
                                 public void success(String data) {
                                     Log.i("jhktest", "success: " + data);
@@ -144,7 +149,12 @@ public class UserAttentionActivityPresenter extends AppDelage implements View.On
                                 public void fail(String data) {
                                     Log.i("jhktest", "fail: " + data);
                                 }
-                            });
+
+                                @Override
+                                public void notNetwork(View data) {
+
+                                }
+                            }).get("/movieApi/cinema/v1/verify/findCinemaPageList", parameterMap2, headMap2,"UserAttentionUserAttentionCinema",true,true);
                             break;
                     }
                 } else {

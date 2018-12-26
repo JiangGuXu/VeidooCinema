@@ -260,7 +260,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             Map<String,String> maphead = new HashMap<>();
             maphead.put("userId",userId+"");
             maphead.put("sessionId",sessionId);
-            new HttpUtil().postHead("/movieApi/cinema/v1/verify/cinemaComment",mapform,maphead).result(new HttpUtil.HttpListener() {
+            new HttpUtil(context).result(new HttpUtil.HttpListener() {
                 @Override
                 public void success(String data) {
                     Gson gson = new Gson();
@@ -278,7 +278,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
                 public void fail(String data) {
 
                 }
-            });
+
+                @Override
+                public void notNetwork(View data) {
+
+                }
+            }).postHead("/movieApi/cinema/v1/verify/cinemaComment",mapform,maphead,"DetailsFocus",true,true);
         }else{
             Toast.makeText(context, "请登录", Toast.LENGTH_SHORT).show();
         }
@@ -291,7 +296,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         String url2 = "http://mobile.bwstudent.com/movieApi/cinema/v1/findCinemaInfo";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", cinemasId + "");
-        new HttpUtil().get(url2, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
 
 
 
@@ -319,7 +324,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url2, map, null,"Detailsinsi",true,true);
     }
 
     private void doHttp(String cinemasId, String mid) {
@@ -327,7 +337,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         Map<String, String> map = new HashMap<>();
         map.put("cinemasId", cinemasId);
         map.put("movieId", mid);
-        new HttpUtil().get(url1, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Detailsbean bean = new Gson().fromJson(data, Detailsbean.class);
@@ -343,7 +353,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url1, map, null,"DetailsDetails",true,true);
         myAdapterDetails.notifyDataSetChanged();
     }
 
@@ -352,7 +367,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         String url = "/movieApi/movie/v1/findMovieListByCinemaId";
         Map<String, String> map = new HashMap<>();
         map.put("cinemaId", String.valueOf(cinemasId));
-        new HttpUtil().get(url, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -368,7 +383,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url, map, null,"DetailsBanner",true,true);
     }
 
     private Context context;
@@ -404,7 +424,7 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
         map.put("cinemaId", String.valueOf(cinemasId));
         map.put("page", "1");
         map.put("count", "6");
-        new HttpUtil().get(url3, map, null).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Commentsben bean = new Gson().fromJson(data, Commentsben.class);
@@ -420,7 +440,12 @@ public class DetailsActivitypersenter extends AppDelage implements View.OnClickL
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get(url3, map, null,"DetailsComment",true,true);
     }
 
 

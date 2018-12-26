@@ -101,7 +101,7 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                 headMap.put("sessionId", sessionId);
 
                 list.get(i).setStatus(1);
-                new HttpUtil().get(s, paramsMap, headMap).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
 
 
                     @Override
@@ -120,7 +120,12 @@ public class UserSystemMessageAdapter extends RecyclerView.Adapter<UserSystemMes
                     public void fail(String data) {
                         Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).get(s, paramsMap, headMap,"",true,false);
 
                 notifyDataSetChanged();
             }

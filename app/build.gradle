@@ -46,10 +46,11 @@ android {
     }
 
 }
+
 greendao {
     schemaVersion 1  //版本
     daoPackage 'com.bw.movie.utils.database.greendao' // 一般为app包名+生成文件的文件夹名
-    targetGenDir 'src/main/java/com/bw/movie/utils/database' //生成文件路径
+    targetGenDir 'src/main/java' //生成文件路径
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

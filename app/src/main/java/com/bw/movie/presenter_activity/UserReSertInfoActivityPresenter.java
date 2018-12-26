@@ -190,7 +190,7 @@ public class UserReSertInfoActivityPresenter extends AppDelage implements View.O
                 headHashMap.put("sessionId", sessionId);
                 headHashMap.put("Content-Type", "application/x-www-form-urlencoded");
 
-                new HttpUtil().postHead("/movieApi/user/v1/verify/modifyUserInfo", userinfoHashMap, headHashMap).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         if (data.contains("成功")) {
@@ -226,7 +226,12 @@ public class UserReSertInfoActivityPresenter extends AppDelage implements View.O
                     public void fail(String data) {
                         Toast.makeText(context, "请求失败", Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead("/movieApi/user/v1/verify/modifyUserInfo", userinfoHashMap, headHashMap,"",true,false);
 
 
                 break;

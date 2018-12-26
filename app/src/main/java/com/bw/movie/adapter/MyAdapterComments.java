@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.Commentsben;
-import com.bw.movie.bean.Detailsinsidebean;
 import com.bw.movie.utils.net.HttpUtil;
 import com.bw.movie.utils.net.SharedPreferencesUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -68,7 +67,7 @@ public class MyAdapterComments extends RecyclerView.Adapter<MyAdapterComments.sM
                 map1.put("userId", userId + "");
                 map1.put("sessionId", sessionId);
                 map1.put("Content-Type", "application/x-www-form-urlencoded");
-                new HttpUtil().postHead(url3, map, map1).result(new HttpUtil.HttpListener() {
+                new HttpUtil(context).result(new HttpUtil.HttpListener() {
                     @Override
                     public void success(String data) {
                         if(data.contains("成功")){
@@ -86,7 +85,12 @@ public class MyAdapterComments extends RecyclerView.Adapter<MyAdapterComments.sM
                     public void fail(String data) {
                         Log.i("cc", "fail" + data);
                     }
-                });
+
+                    @Override
+                    public void notNetwork(View data) {
+
+                    }
+                }).postHead(url3, map, map1,"",true,false);
 
             }
         });

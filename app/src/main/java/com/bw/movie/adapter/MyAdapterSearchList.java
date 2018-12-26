@@ -91,7 +91,7 @@ public class MyAdapterSearchList extends XRecyclerView.Adapter<MyAdapterSearchLi
         Map<String,String> mapHead = new HashMap<>();
         mapHead.put("userId",userId+"");
         mapHead.put("sessionId",sessionId);
-        new HttpUtil().get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -109,7 +109,12 @@ public class MyAdapterSearchList extends XRecyclerView.Adapter<MyAdapterSearchLi
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get("/movieApi/movie/v1/verify/cancelFollowMovie",map,mapHead,null,true,false);
     }
 
     private void doHpptFocus(int i, int userId, String sessionId) {
@@ -118,7 +123,7 @@ public class MyAdapterSearchList extends XRecyclerView.Adapter<MyAdapterSearchLi
         Map<String,String> mapHead = new HashMap<>();
         mapHead.put("userId",userId+"");
         mapHead.put("sessionId",sessionId);
-        new HttpUtil().get( "/movieApi/movie/v1/verify/followMovie",map,mapHead).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 Gson gson = new Gson();
@@ -136,7 +141,12 @@ public class MyAdapterSearchList extends XRecyclerView.Adapter<MyAdapterSearchLi
             public void fail(String data) {
 
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get( "/movieApi/movie/v1/verify/followMovie",map,mapHead,"",true,true);
     }
 
     @Override

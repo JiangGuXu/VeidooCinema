@@ -77,7 +77,7 @@ public class FindCinemaAdapter extends RecyclerView.Adapter<FindCinemaAdapter.My
                     headMap.put("sessionId",SharedPreferencesUtils.getString(context,"sessionId"));
                     headMap.put("Content-Type","application/x-www-form-urlencoded");
                     //请求接口
-                    new HttpUtil().get("/movieApi/cinema/v1/verify/followCinema",map,headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             RegisterBean followBean = new Gson().fromJson(data, RegisterBean.class);
@@ -92,7 +92,12 @@ public class FindCinemaAdapter extends RecyclerView.Adapter<FindCinemaAdapter.My
                         public void fail(String data) {
 
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).get("/movieApi/cinema/v1/verify/followCinema",map,headMap," FindCinema",true,true);
                 }else {
                     Toast.makeText(context,"您还未登陆",Toast.LENGTH_SHORT).show();
                 }
