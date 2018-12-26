@@ -29,6 +29,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
     private String sessionId;
     private OrderBean orderBean;
     private IWXAPI api;
+    private int num=0;
 
     @Override
     public int getLayoutId() {
@@ -86,6 +88,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
         String name = ((SelectedSetActivity) context).getIntent().getStringExtra("name");
         String address = ((SelectedSetActivity) context).getIntent().getStringExtra("address");
         String movie_name = ((SelectedSetActivity) context).getIntent().getStringExtra("movie_name");
+        price = result.getPrice();
         //赋值
         play_time.setText(result.getBeginTime() + "-" + result.getEndTime());
         activity_name.setText(name);//影院的名字
@@ -240,13 +243,18 @@ public class SelectedSetActivityPresenter extends AppDelage {
 
             @Override
             public void checked(int row, int column) {
-                price = result.getPrice();
-                total_price.setText(price * column + "");
+                num++;
+                BigDecimal b1 = new BigDecimal(Double.toString(num));
+                BigDecimal b2 = new BigDecimal(Double.toString(price));
+                total_price.setText(b1.multiply(b2).doubleValue()+"");
             }
 
             @Override
             public void unCheck(int row, int column) {
-
+                num--;
+                BigDecimal b1 = new BigDecimal(Double.toString(num));
+                BigDecimal b2 = new BigDecimal(Double.toString(price));
+                total_price.setText(b1.multiply(b2).doubleValue()+"");
             }
 
             @Override
@@ -256,6 +264,7 @@ public class SelectedSetActivityPresenter extends AppDelage {
 
         });
         seatTableView.setData(10, 15);
+
     }
 
     //打开

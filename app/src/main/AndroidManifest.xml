@@ -25,6 +25,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".utils.net.App"
         android:allowBackup="true"
@@ -40,10 +41,10 @@
 
         <meta-data
             android:name="design_width_in_dp"
-            android:value="411" />
+            android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="731" />
+            android:value="640" />
 
         <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.SplashActivity">
@@ -58,7 +59,8 @@
         <activity android:name=".activity.SearchActivity"></activity>
         <activity android:name=".activity.UserInfoActivity"></activity>
         <activity android:name=".activity.RegisterActivity"></activity>
-        <activity android:name=".activity.DetailsActivity"
+        <activity
+            android:name=".activity.DetailsActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".activity.NearActivity"></activity>
         <activity
@@ -72,7 +74,7 @@
         <activity android:name=".activity.PlayCinemaActivity"></activity>
         <activity android:name=".activity.BuyRecordActivity"></activity>
         <activity android:name=".activity.UserSystemMessagesActivity"></activity>
-        <receiver android:name=".utils.net.NetBroadCastReciver" >
+        <receiver android:name=".utils.net.NetBroadCastReciver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
@@ -95,6 +97,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.UserAttendanceActivity"></activity>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="b2e8c6c2153f5b1b2eb1da3358ef3347">
