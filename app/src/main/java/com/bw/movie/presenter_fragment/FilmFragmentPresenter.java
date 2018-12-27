@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.MainActivity;
 import com.bw.movie.adapter.MyAdapterFilm;
 import com.bw.movie.adapter.MyAdapterFilmBanner;
 import com.bw.movie.adapter.MyAdapterFilmList;
@@ -54,14 +55,13 @@ public class FilmFragmentPresenter extends AppDelage {
     @Override
     public void initData() {
         super.initData();
-        mIsnetword = get(R.id.film_isnetword);
         xRecyclerView = get(R.id.film_xrecycler);
-        if (!NetworkUtils.isConnected(context)){
-            mIsnetword.setVisibility(View.VISIBLE);
-        }else{
-            mIsnetword.setVisibility(View.GONE);
-
-        }
+//        if (!NetworkUtils.isConnected(context)){
+//            mIsnetword.setVisibility(View.VISIBLE);
+//        }else{
+//            mIsnetword.setVisibility(View.GONE);
+//
+//        }
         //添加数据
         addlist();
 
@@ -104,12 +104,12 @@ public class FilmFragmentPresenter extends AppDelage {
     @Override
     public void resume() {
         super.resume();
-        if (!NetworkUtils.isConnected(context)){
-            mIsnetword.setVisibility(View.VISIBLE);
-        }else{
-            mIsnetword.setVisibility(View.GONE);
-            doHttpBanner();
-        }
+//        if (!NetworkUtils.isConnected(context)){
+//            mIsnetword.setVisibility(View.VISIBLE);
+//        }else{
+//            mIsnetword.setVisibility(View.GONE);
+//            doHttpBanner();
+//        }
     }
 
     private void addlist() {
@@ -156,7 +156,13 @@ public class FilmFragmentPresenter extends AppDelage {
 
             @Override
             public void notNetwork(View data) {
-
+                ((MainActivity)context).setContentView(data);
+                data.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        doHttpBanner();
+                    }
+                });
             }
         }).get(url,map,mapHead,"banner",true,true);
     }

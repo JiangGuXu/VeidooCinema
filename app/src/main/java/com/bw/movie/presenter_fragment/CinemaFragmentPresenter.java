@@ -16,6 +16,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.bw.movie.activity.MainActivity;
 import com.bw.movie.adapter.NearAdepter;
 import com.bw.movie.bean.Nearbean;
 import com.bw.movie.adapter.RecommendedAdepter;
@@ -69,23 +70,6 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
         super.initData();
         get(R.id.activity_loca);
         mIsnetword = get(R.id.film_isnetword);
-
-        if (!NetworkUtils.isConnected(context)){
-            mIsnetword.setVisibility(View.VISIBLE);
-        }else{
-            mIsnetword.setVisibility(View.GONE);
-        }
-        setOnclick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!NetworkUtils.isConnected(context)){
-                    mIsnetword.setVisibility(View.VISIBLE);
-                }else{
-                    mIsnetword.setVisibility(View.GONE);
-                    dohttp();
-                }
-            }
-        },R.id.film_retry_isnetword);
         relativeLayout = get(R.id.film_search_relative);
         imageView = (ImageView) get(R.id.activity_loca);
         recommendimg = (Button) get(R.id.activity_recommended);
@@ -107,16 +91,10 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
     @Override
     public void resume() {
         super.resume();
-        if (!NetworkUtils.isConnected(context)){
-            mIsnetword.setVisibility(View.VISIBLE);
-        }else{
-            mIsnetword.setVisibility(View.GONE);
-            dohttp();
-        }
     }
 
     //附近影院解析
-    private void doHttp() {
+    private void doHttp1() {
         String url1 = "/movieApi/cinema/v1/findRecommendCinemas";
         HashMap<String, String> headMap = new HashMap<>();
         headMap.put("userId", String.valueOf(SharedPreferencesUtils.getInt(context,"userId")));
@@ -179,7 +157,13 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
 
             @Override
             public void notNetwork(View data) {
-
+                ((MainActivity)context).setContentView(data);
+                data.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dohttp();
+                    }
+                });
             }
         }).get(url, map,headMap,"RecommendedCinema",true,true);
     }
@@ -249,7 +233,7 @@ public class CinemaFragmentPresenter extends AppDelage implements AMapLocationLi
                 recommendimg.setTextColor(Color.BLACK);
                 recommendimg.setBackgroundResource(R.drawable.my_attention_title_shape_false);
                 near.setBackgroundResource(R.drawable.my_attention_title_shape_true);
-                doHttp();
+                doHttp1();
                 break;
             case R.id.film_search_relative:
                 if(isclick){

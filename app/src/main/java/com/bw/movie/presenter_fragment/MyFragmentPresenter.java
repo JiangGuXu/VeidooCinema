@@ -92,11 +92,11 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
         //网络判断
         get(R.id.activity_loca);
         mIsnetword = get(R.id.film_isnetword);
-        if (!NetworkUtils.isConnected(context)) {
-            mIsnetword.setVisibility(View.VISIBLE);
-        } else {
-            mIsnetword.setVisibility(View.GONE);
-        }
+//        if (!NetworkUtils.isConnected(context)) {
+//            mIsnetword.setVisibility(View.VISIBLE);
+//        } else {
+//            mIsnetword.setVisibility(View.GONE);
+//        }
         setOnclick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,19 +159,6 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
     @Override
     public void resume() {
         super.resume();
-        if (!NetworkUtils.isConnected(context)) {
-            mIsnetword.setVisibility(View.VISIBLE);
-        } else {
-            mIsnetword.setVisibility(View.GONE);
-            setHeadAndNickname();
-            Boolean isLogin = SharedPreferencesUtils.getBoolean(context, "isLogin");
-            if (!isLogin) {
-                my_icon_remind_relativelayout.setVisibility(View.GONE);
-            } else {
-                my_icon_remind_relativelayout.setVisibility(View.VISIBLE);
-                doHttpForCount("/movieApi/tool/v1/verify/findUnreadMessageCount");
-            }
-        }
 
 
     }
@@ -212,7 +199,13 @@ public class MyFragmentPresenter extends AppDelage implements View.OnClickListen
 
             @Override
             public void notNetwork(View data) {
-
+                ((MainActivity)context).setContentView(data);
+                data.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        doHttpForCount(s);
+                    }
+                });
             }
         }).get(s, paramsMap, headMap,"MyUserSystemCountBean",true,true);
     }

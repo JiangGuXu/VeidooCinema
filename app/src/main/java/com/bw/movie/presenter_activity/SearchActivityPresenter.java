@@ -198,6 +198,6 @@ public class SearchActivityPresenter extends AppDelage implements View.OnClickLi
             public void notNetwork(View data) {
 
             }
-        }).get(url,map,mapHead,"SearchFilmListData",true,true);
+        }).get(url,map,mapHead,"SearchFilmListData"+url,true,true);
     }
 }

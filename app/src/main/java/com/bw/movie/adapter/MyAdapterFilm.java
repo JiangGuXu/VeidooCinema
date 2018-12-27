@@ -161,7 +161,7 @@ public class MyAdapterFilm extends XRecyclerView.Adapter<MyAdapterFilm.MyViewHod
             public void notNetwork(View data) {
 
             }
-        }).get(url,map,mapHead,"MyFilmFilmListData",true,true);
+        }).get(url,map,mapHead,"MyFilmFilmListData"+b,true,true);
     }
 
 }

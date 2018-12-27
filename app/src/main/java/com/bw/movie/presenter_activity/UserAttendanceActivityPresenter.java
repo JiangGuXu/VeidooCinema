@@ -79,7 +79,7 @@ public class UserAttendanceActivityPresenter extends AppDelage implements View.O
 
 
     public void getIntegral(HashMap<String, String> partMap, HashMap<String, String> headMap) {
-        new HttpUtil().get("/movieApi/user/v1/verify/findUserHomeInfo", partMap, headMap).result(new HttpUtil.HttpListener() {
+        new HttpUtil(context).result(new HttpUtil.HttpListener() {
             @Override
             public void success(String data) {
                 if (data.contains("成功")) {
@@ -109,7 +109,12 @@ public class UserAttendanceActivityPresenter extends AppDelage implements View.O
             public void fail(String data) {
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
             }
-        });
+
+            @Override
+            public void notNetwork(View data) {
+
+            }
+        }).get("/movieApi/user/v1/verify/findUserHomeInfo", partMap, headMap,"UserAttendanceBean1",true,true);
     }
 
     @Override
@@ -130,7 +135,7 @@ public class UserAttendanceActivityPresenter extends AppDelage implements View.O
                     headMap.put("userId", userId + "");
                     headMap.put("sessionId", sessionId);
                     HashMap<String, String> partMap = new HashMap<>();
-                    new HttpUtil().get("/movieApi/user/v1/verify/userSignIn", partMap, headMap).result(new HttpUtil.HttpListener() {
+                    new HttpUtil(context).result(new HttpUtil.HttpListener() {
                         @Override
                         public void success(String data) {
                             if (data.contains("成功")) {
@@ -150,7 +155,12 @@ public class UserAttendanceActivityPresenter extends AppDelage implements View.O
                         public void fail(String data) {
                             Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
                         }
-                    });
+
+                        @Override
+                        public void notNetwork(View data) {
+
+                        }
+                    }).get("/movieApi/user/v1/verify/userSignIn", partMap, headMap,"",true,false);
                 }
                 break;
         }

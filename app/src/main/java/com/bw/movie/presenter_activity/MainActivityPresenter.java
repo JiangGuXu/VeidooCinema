@@ -79,10 +79,23 @@ public class MainActivityPresenter extends AppDelage implements View.OnClickList
     @Override
     public void initData() {
         super.initData();
-
+        Boolean ismain = SharedPreferencesUtils.getBoolean(context, "ismain");
         //如果登录 去检查本版
         queryVersion();
-
+        if(!ismain){
+            if(!NetworkUtils.isConnected(context)){
+                View inflate = View.inflate(context, R.layout.not_network,null);
+                ((MainActivity)context).setContentView(inflate);
+                inflate.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        initData();
+                    }
+                });
+                return;
+            }
+        }
+        SharedPreferencesUtils.putBoolean(context,"ismain",true);
         MainActivity activity = (MainActivity) this.context;
         main_frame = get(R.id.main_frame);
         main_img_01 = get(R.id.main_img_01);

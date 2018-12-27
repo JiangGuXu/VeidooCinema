@@ -49,13 +49,13 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
         if(this instanceof SplashActivity){
 
         }else {
-            view = View.inflate(this, R.layout.not_network, null);
-            view.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    isNetwork();
-                }
-            });
+//            view = View.inflate(this, R.layout.not_network, null);
+//            view.findViewById(R.id.film_retry_isnetword).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    isNetwork();
+//                }
+//            });
             netBroadCastReciver = new NetBroadCastReciver();
             IntentFilter filter = new IntentFilter();
             filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -69,12 +69,12 @@ public abstract class BaseActivityPresenter<T extends AppDelage> extends AppComp
     public void onResume() {
         super.onResume();
 
-        if(this instanceof SplashActivity){
-            return;
-        }else {
-            isNetwork();
-            daleagt.resume();
-        }
+//        if(this instanceof SplashActivity){
+//            return;
+//        }else {
+//            isNetwork();
+//            daleagt.resume();
+//        }
     }
     public void isNetwork(){
         if(!NetworkUtils.isConnected(this)){
